@@ -365,5 +365,4 @@ FodyWeavers.xsd
 #Jwt Secret key
 secrets.json
 
-#Seed data
 SeedData.cs
