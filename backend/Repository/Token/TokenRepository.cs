@@ -1,6 +1,5 @@
 ﻿using backend.Data;
-using backend.Models.Domain;
-using backend.Repository.Interface;
+using backend.Models.Domain.Token;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -10,14 +9,14 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace backend.Repository.Class
+namespace backend.Repository.Token
 {
     public class TokenRepository : ITokenRepository
     {
         private readonly IConfiguration configuration;
         private readonly CampusBridgeAuthDbContext campusBridgeAuthDbContext;
 
-        public TokenRepository(IConfiguration configuration, 
+        public TokenRepository(IConfiguration configuration,
             CampusBridgeAuthDbContext campusBridgeAuthDbContext)
         {
             this.configuration = configuration;
@@ -42,7 +41,7 @@ namespace backend.Repository.Class
                 );
             var jwtTokenString = new JwtSecurityTokenHandler().WriteToken(jwtToken);
             var existingToken = await campusBridgeAuthDbContext.AllTokens.FirstOrDefaultAsync(t => t.Token == jwtTokenString);
-            if (existingToken==null)
+            if (existingToken == null)
             {
                 await campusBridgeAuthDbContext.AllTokens.AddAsync(new AllToken
                 {
@@ -58,9 +57,9 @@ namespace backend.Repository.Class
         {
             var expiredToken = await campusBridgeAuthDbContext.AllTokens
                 .FirstOrDefaultAsync(t => t.Token == token);
-            if (expiredToken!=null)
+            if (expiredToken != null)
             {
-                expiredToken.ExpiresAt=DateTime.Now.AddDays(-7);
+                expiredToken.ExpiresAt = DateTime.Now.AddDays(-7);
             }
             await campusBridgeAuthDbContext.SaveChangesAsync();
             return expiredToken;

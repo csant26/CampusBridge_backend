@@ -1,4 +1,4 @@
-﻿using backend.Models.Domain;
+﻿using backend.Models.Domain.Token;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 

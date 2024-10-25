@@ -1,8 +1,8 @@
-﻿using backend.Models.Domain;
+﻿using backend.Models.Domain.Token;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace backend.Repository.Interface
+namespace backend.Repository.Token
 {
     public interface ITokenRepository
     {

@@ -1,7 +1,6 @@
 using backend;
 using backend.Data;
-using backend.Repository.Class;
-using backend.Repository.Interface;
+using backend.Repository.Token;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
