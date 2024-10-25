@@ -1,5 +1,7 @@
 using backend;
 using backend.Data;
+using backend.Repository.Class;
+using backend.Repository.Interface;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -34,17 +36,15 @@ builder.Services.AddSwaggerGen(options =>
             {
                 Reference = new OpenApiReference
                 {
-                    Type=ReferenceType.SecurityScheme,
-                    Id=JwtBearerDefaults.AuthenticationScheme
-                },
-                Scheme="Oauth2",
-                Name = JwtBearerDefaults.AuthenticationScheme,
-                In=ParameterLocation.Header
+                    Type = ReferenceType.SecurityScheme,
+                    Id = JwtBearerDefaults.AuthenticationScheme
+                }
             },
             new List<string>()
-        }
+        } 
     });
 });
+    
 
 //Setting up CORS.
 builder.Services.AddCors(options =>
@@ -63,6 +63,10 @@ builder.Services.AddDbContext<CampusBridgeDbContext>(options=>
     options.UseSqlServer(builder.Configuration.GetConnectionString("GeneralConnection")));
 builder.Services.AddDbContext<CampusBridgeAuthDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("AuthConnection")));
+
+//Setting up repository pattern.
+builder.Services.AddScoped<ITokenRepository, TokenRepository>();
+
 
 builder.Services.AddIdentityCore<IdentityUser>()
     .AddRoles<IdentityRole>()

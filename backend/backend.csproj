@@ -29,10 +29,7 @@
 
   <ItemGroup>
     <Folder Include="Mappings\" />
-    <Folder Include="Models\DTO\" />
     <Folder Include="Models\Domain\" />
-    <Folder Include="Repository\Interface\" />
-    <Folder Include="Repository\Class\" />
   </ItemGroup>
 
 </Project>
