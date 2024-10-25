@@ -29,7 +29,7 @@
 
   <ItemGroup>
     <Folder Include="Mappings\" />
-    <Folder Include="Models\Domain\" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

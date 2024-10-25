@@ -33,7 +33,7 @@ namespace backend.Controllers
                     var role = await userManager.GetRolesAsync(user);
                     if (role != null)
                     {
-                        var jwtToken = tokenRepository.CreateJWTToken(user,role.ToString());
+                        var jwtToken = await tokenRepository.CreateJWTToken(user,role.ToString());
                         var response = new LoginResponseDTO
                         {
                             jwtToken = jwtToken
@@ -54,6 +54,13 @@ namespace backend.Controllers
             {
                 return BadRequest("User doesn't exist.");
             }
-        } 
+        }
+
+        [HttpPost]
+        [Route("Logout")]
+        public async Task<IActionResult> Logout(LogoutRequestDTO logoutRequest)
+        {
+            return Ok(await tokenRepository.DestroyJWTToken(logoutRequest.jwtToken));
+        }
     }
 }

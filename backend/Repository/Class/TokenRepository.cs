@@ -1,5 +1,10 @@
-﻿using backend.Repository.Interface;
+﻿using backend.Data;
+using backend.Models.Domain;
+using backend.Repository.Interface;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -10,12 +15,15 @@ namespace backend.Repository.Class
     public class TokenRepository : ITokenRepository
     {
         private readonly IConfiguration configuration;
+        private readonly CampusBridgeAuthDbContext campusBridgeAuthDbContext;
 
-        public TokenRepository(IConfiguration configuration)
+        public TokenRepository(IConfiguration configuration, 
+            CampusBridgeAuthDbContext campusBridgeAuthDbContext)
         {
             this.configuration = configuration;
+            this.campusBridgeAuthDbContext = campusBridgeAuthDbContext;
         }
-        public string CreateJWTToken(IdentityUser user, string role)
+        public async Task<string> CreateJWTToken(IdentityUser user, string role)
         {
             var claims = new List<Claim>();
 
@@ -32,9 +40,30 @@ namespace backend.Repository.Class
                 expires: DateTime.Now.AddDays(7),
                 signingCredentials: credentials
                 );
+            var jwtTokenString = new JwtSecurityTokenHandler().WriteToken(jwtToken);
+            var existingToken = await campusBridgeAuthDbContext.AllTokens.FirstOrDefaultAsync(t => t.Token == jwtTokenString);
+            if (existingToken==null)
+            {
+                await campusBridgeAuthDbContext.AllTokens.AddAsync(new AllToken
+                {
+                    Token = jwtTokenString,
+                    ExpiresAt = DateTime.Now.AddDays(7)
+                });
+            }
+            await campusBridgeAuthDbContext.SaveChangesAsync();
 
-            return new JwtSecurityTokenHandler().WriteToken(jwtToken);
+            return jwtTokenString;
         }
-
+        public async Task<AllToken> DestroyJWTToken(string token)
+        {
+            var expiredToken = await campusBridgeAuthDbContext.AllTokens
+                .FirstOrDefaultAsync(t => t.Token == token);
+            if (expiredToken!=null)
+            {
+                expiredToken.ExpiresAt=DateTime.Now.AddDays(-7);
+            }
+            await campusBridgeAuthDbContext.SaveChangesAsync();
+            return expiredToken;
+        }
     }
 }
