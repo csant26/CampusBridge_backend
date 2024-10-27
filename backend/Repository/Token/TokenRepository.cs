@@ -39,7 +39,10 @@ namespace backend.Repository.Token
                 expires: DateTime.Now.AddDays(7),
                 signingCredentials: credentials
                 );
+
             var jwtTokenString = new JwtSecurityTokenHandler().WriteToken(jwtToken);
+
+            //Approach 1, Step 1: Adding the freshly created tokens in the AllTokens table.
             var existingToken = await campusBridgeAuthDbContext.AllTokens.FirstOrDefaultAsync(t => t.Token == jwtTokenString);
             if (existingToken == null)
             {
@@ -53,16 +56,38 @@ namespace backend.Repository.Token
 
             return jwtTokenString;
         }
-        public async Task<AllToken> DestroyJWTToken(string token)
+        public async Task<string> DestroyJWTToken(string token)
         {
+            //Approach 1, Step 2: Updating the expiry date of the tokens in the AllTokens table.
             var expiredToken = await campusBridgeAuthDbContext.AllTokens
                 .FirstOrDefaultAsync(t => t.Token == token);
             if (expiredToken != null)
             {
-                expiredToken.ExpiresAt = DateTime.Now.AddDays(-7);
+                expiredToken.ExpiresAt = DateTime.Now;
             }
             await campusBridgeAuthDbContext.SaveChangesAsync();
-            return expiredToken;
+
+            //Approach 2: Adding the revoked tokens to a separate RevokedTokens table.
+            var revokedToken = await campusBridgeAuthDbContext.RevokedTokens
+                .FirstOrDefaultAsync(t=>t.Token==token);
+            if (revokedToken == null)
+            {
+                await campusBridgeAuthDbContext.RevokedTokens.AddAsync(new RevokedToken
+                {
+                    Token = token,
+                    RevokedAt = DateTime.Now
+                });
+            }
+            await campusBridgeAuthDbContext.SaveChangesAsync();
+
+            if (expiredToken != null)
+            {
+                return expiredToken.Token;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

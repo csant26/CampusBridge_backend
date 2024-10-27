@@ -12,8 +12,8 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(CampusBridgeAuthDbContext))]
-    [Migration("20241025111310_adding all tokens")]
-    partial class addingalltokens
+    [Migration("20241027163623_adding revokedtokens table")]
+    partial class addingrevokedtokenstable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -223,7 +223,7 @@ namespace backend.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("backend.Models.Domain.AllToken", b =>
+            modelBuilder.Entity("backend.Models.Domain.Token.AllToken", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -243,7 +243,7 @@ namespace backend.Migrations
                     b.ToTable("AllTokens");
                 });
 
-            modelBuilder.Entity("backend.Models.Domain.RevokedToken", b =>
+            modelBuilder.Entity("backend.Models.Domain.Token.RevokedToken", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -251,9 +251,8 @@ namespace backend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("RevokedAt")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("RevokedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Token")
                         .IsRequired()

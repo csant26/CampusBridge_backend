@@ -7,6 +7,6 @@ namespace backend.Repository.Token
     public interface ITokenRepository
     {
         public Task<string> CreateJWTToken(IdentityUser user, string role);
-        public Task<AllToken> DestroyJWTToken(string token);
+        public Task<string> DestroyJWTToken(string token);
     }
 }

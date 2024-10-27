@@ -1,5 +1,7 @@
 using backend;
 using backend.Data;
+using backend.Mappings;
+using backend.Repository.College;
 using backend.Repository.Token;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -65,6 +67,10 @@ builder.Services.AddDbContext<CampusBridgeAuthDbContext>(options =>
 
 //Setting up repository pattern.
 builder.Services.AddScoped<ITokenRepository, TokenRepository>();
+builder.Services.AddScoped<ICollegeRepository, CollegeRepository>();
+
+//Setting up mapping between Domain and DTOs.
+builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 
 
 builder.Services.AddIdentityCore<IdentityUser>()

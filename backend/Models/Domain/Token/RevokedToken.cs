@@ -4,6 +4,6 @@
     {
         public int Id { get; set; }
         public string Token { get; set; }
-        public string RevokedAt { get; set; }
+        public DateTime RevokedAt { get; set; }
     }
 }

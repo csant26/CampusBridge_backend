@@ -1,4 +1,5 @@
-﻿using backend.Models.DTO;
+﻿using backend.CustomActionFilter;
+using backend.Models.DTO;
 using backend.Models.DTO.Login;
 using backend.Repository.Token;
 using Microsoft.AspNetCore.Http;
@@ -21,6 +22,7 @@ namespace backend.Controllers
             this.tokenRepository = tokenRepository;
         }
         [HttpPost]
+        [ValidateModel]
         [Route("Login")]
         public async Task<IActionResult> Login([FromBody] LoginRequestDTO loginRequest)
         {
@@ -58,10 +60,16 @@ namespace backend.Controllers
         }
 
         [HttpPost]
+        [ValidateModel]
         [Route("Logout")]
         public async Task<IActionResult> Logout(LogoutRequestDTO logoutRequest)
         {
-            return Ok(await tokenRepository.DestroyJWTToken(logoutRequest.jwtToken));
+            var destroyedToken = await tokenRepository.DestroyJWTToken(logoutRequest.jwtToken);
+            var response = new LogoutRequestDTO
+            {
+                jwtToken = destroyedToken
+            };
+            return Ok(response);
         }
     }
 }
