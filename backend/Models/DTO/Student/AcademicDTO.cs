@@ -2,7 +2,7 @@
 {
     public class AcademicDTO
     {
-        public int Id { get; set; }
+        public string AcademicId { get; set; }
         public int Batch { get; set; }
         public string Faculty { get; set; }
     }

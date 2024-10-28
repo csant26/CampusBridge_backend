@@ -1,10 +1,14 @@
-﻿namespace backend.Models.Domain.Student
+﻿using System.Text.Json.Serialization;
+
+namespace backend.Models.Domain.Student
 {
     public class Financial
     {
-        public int Id { get; set; }
+        public string FinancialId { get; set; }
         public bool FeePaid { get; set; }
         public decimal Fee { get; set; }
         public decimal Scholarship { get; set; }=0;
+        [JsonIgnore] //to avoid circular references
+        public List<Student> Students { get; set; } //one-to-many
     }
 }

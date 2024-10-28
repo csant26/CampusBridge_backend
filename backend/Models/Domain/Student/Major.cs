@@ -1,9 +1,12 @@
-﻿namespace backend.Models.Domain.Student
+﻿using System.Text.Json.Serialization;
+
+namespace backend.Models.Domain.Student
 {
     public class Major
     {
-        public int Id { get; set; }
+        public string MajorId { get; set; }
         public string Name { get; set; }
-        public int? StudentId { get; set; }
+        [JsonIgnore] //to avoid circular references
+        public List<Student> Students { get; set; } //one-to-many
     }
 }

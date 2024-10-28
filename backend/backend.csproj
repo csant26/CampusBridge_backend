@@ -29,7 +29,6 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
-    <Folder Include="Migrations\CampusBridgeDb\" />
     <Folder Include="Models\Domain\College\" />
     <Folder Include="Models\Domain\Teacher\" />
     <Folder Include="Models\Domain\University\" />

@@ -22,26 +22,42 @@ namespace backend.Controllers
         }
         [HttpPost]
         [ValidateModel]
-        [Route("CreateStudent")]
         public async Task<IActionResult> CreateStudent([FromBody] AddStudentRequestDTO addStudentDTO)
         {
-            //Map DTO to Domain.
+            //Map DTO to Domain. (only maps some of the properties)
             Student student = mapper.Map<Student>(addStudentDTO);
 
-            //Use the domain to access database through repository pattern.
-            student = await collegeRepository.CreateStudent(student);
+            //Map the remaining relational properties manually.
+            //And, finally use the domain to access the database through repository pattern.
+            student = await collegeRepository.CreateStudent(student,addStudentDTO);
 
             //Map the domain to DTO to pass back to the user.
             return Ok(mapper.Map<StudentDTO>(student));
         }
         [HttpGet]
         [ValidateModel]
-        [Route("GetStudent")]
         public async Task<IActionResult> GetStudent()
         {
             var students = await collegeRepository.GetStudent();
+            //return Ok(students);
             return Ok(mapper.Map<List<StudentDTO>>(students));
         }
+        [HttpPut("{id}")]
+        [ValidateModel]
+        public async Task<IActionResult> UpdateStudent([FromRoute] string id,
+            [FromBody] UpdateStudentRequestDTO updateStudentDTO)
+        {
+            var updatedStudent = mapper.Map<Student>(updateStudentDTO);
 
+            updatedStudent = await collegeRepository.UpdateStudent(id, updatedStudent, updateStudentDTO);
+
+            return Ok(mapper.Map<StudentDTO>(updatedStudent));
+        }
+        [HttpDelete("{id}")]
+        [ValidateModel]
+        public async Task<IActionResult> DeleteStudent([FromRoute] string id)
+        {
+            return Ok(mapper.Map<StudentDTO>(await collegeRepository.DeleteStudent(id)));
+        }
     }
 }

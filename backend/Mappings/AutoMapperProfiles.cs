@@ -9,9 +9,14 @@ namespace backend.Mappings
         public AutoMapperProfiles()
         {
             CreateMap<AddStudentRequestDTO, Student>().ReverseMap();
-            CreateMap<Student, StudentDTO>().ReverseMap();
+            CreateMap<UpdateStudentRequestDTO, Student>().ReverseMap();
+            CreateMap<Student, StudentDTO>()
+                .ForMember(dest => dest.AcademicDTO, opt => opt.MapFrom(src => src.Academic))
+                .ForMember(dest => dest.FinancialDTO, opt => opt.MapFrom(src => src.Financial))
+                .ForMember(dest => dest.MajorsDTO, opt => opt.MapFrom(src => src.Majors))
+                .ForMember(dest => dest.ClubsDTO, opt => opt.MapFrom(src => src.Clubs))
+                .ReverseMap();
             CreateMap<Club, ClubDTO>().ReverseMap();
-            CreateMap<Contact, ContactDTO>().ReverseMap();
             CreateMap<Financial, FinancialDTO>().ReverseMap();
             CreateMap<Major, MajorDTO>().ReverseMap();
             CreateMap<Academic, AcademicDTO>().ReverseMap();
