@@ -1,6 +1,6 @@
 ﻿namespace backend.Models.DTO.Student
 {
-    public class UpdateStudentRequestDTO
+    public class UpdateStudentDTO
     {
         public string Name { get; set; }
         public string Email { get; set; }

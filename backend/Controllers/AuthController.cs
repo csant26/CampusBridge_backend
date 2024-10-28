@@ -1,8 +1,6 @@
 ﻿using backend.CustomActionFilter;
-using backend.Models.DTO;
 using backend.Models.DTO.Login;
 using backend.Repository.Token;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -33,10 +31,11 @@ namespace backend.Controllers
 
                 if (checkPasswordResult)
                 {
-                    var role = await userManager.GetRolesAsync(user);
-                    if (role != null)
+                    var roles = await userManager.GetRolesAsync(user);
+                    var role = roles.FirstOrDefault();
+                    if (role!=null)
                     {
-                        var jwtToken = await tokenRepository.CreateJWTToken(user,role.ToString());
+                        var jwtToken = await tokenRepository.CreateJWTToken(user, role);
                         var response = new LoginResponseDTO
                         {
                             jwtToken = jwtToken

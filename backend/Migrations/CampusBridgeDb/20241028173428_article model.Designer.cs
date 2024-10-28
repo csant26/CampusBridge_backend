@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using backend.Data;
 
@@ -11,9 +12,11 @@ using backend.Data;
 namespace backend.Migrations.CampusBridgeDb
 {
     [DbContext(typeof(CampusBridgeDbContext))]
-    partial class CampusBridgeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241028173428_article model")]
+    partial class articlemodel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,7 +55,7 @@ namespace backend.Migrations.CampusBridgeDb
                     b.ToTable("MajorStudent");
                 });
 
-            modelBuilder.Entity("backend.Models.Domain.Content.Article.Article", b =>
+            modelBuilder.Entity("backend.Models.Domain.Content.Article", b =>
                 {
                     b.Property<string>("ArticleId")
                         .HasColumnType("nvarchar(450)");
@@ -83,20 +86,12 @@ namespace backend.Migrations.CampusBridgeDb
                     b.ToTable("Articles");
                 });
 
-            modelBuilder.Entity("backend.Models.Domain.Content.Article.Author", b =>
+            modelBuilder.Entity("backend.Models.Domain.Content.Author", b =>
                 {
                     b.Property<string>("AuthorId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("AuthorType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CampusId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -237,9 +232,9 @@ namespace backend.Migrations.CampusBridgeDb
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("backend.Models.Domain.Content.Article.Article", b =>
+            modelBuilder.Entity("backend.Models.Domain.Content.Article", b =>
                 {
-                    b.HasOne("backend.Models.Domain.Content.Article.Author", "Author")
+                    b.HasOne("backend.Models.Domain.Content.Author", "Author")
                         .WithMany("Articles")
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -267,7 +262,7 @@ namespace backend.Migrations.CampusBridgeDb
                     b.Navigation("Financial");
                 });
 
-            modelBuilder.Entity("backend.Models.Domain.Content.Article.Author", b =>
+            modelBuilder.Entity("backend.Models.Domain.Content.Author", b =>
                 {
                     b.Navigation("Articles");
                 });

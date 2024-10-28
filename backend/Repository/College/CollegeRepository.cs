@@ -13,7 +13,7 @@ namespace backend.Repository.College
         {
             this.campusBridgeDbContext = campusBridgeDbContext;
         }
-        public async Task<Student> CreateStudent(Student student, AddStudentRequestDTO addStudentDTO)
+        public async Task<Student> CreateStudent(Student student, AddStudentDTO addStudentDTO)
         {
             var academic = await campusBridgeDbContext.Academics.FindAsync(addStudentDTO.AcademicId);
             var financial = await campusBridgeDbContext.Financials.FindAsync(addStudentDTO.FinancialId);
@@ -55,7 +55,7 @@ namespace backend.Repository.College
         }
 
         public async Task<Student> UpdateStudent(string id, Student updatedStudent,
-            UpdateStudentRequestDTO updateStudentDTO)
+            UpdateStudentDTO updateStudentDTO)
         {
             var existingStudent = await campusBridgeDbContext.Students
                 .Include(a => a.Academic).Include(f => f.Financial).Include(c => c.Clubs).Include(m => m.Majors)

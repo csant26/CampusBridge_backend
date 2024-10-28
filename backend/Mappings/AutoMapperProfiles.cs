@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using backend.Models.Domain.Content.Article;
 using backend.Models.Domain.Student;
+using backend.Models.DTO.Content.Article;
 using backend.Models.DTO.Student;
 
 namespace backend.Mappings
@@ -8,8 +10,9 @@ namespace backend.Mappings
     {
         public AutoMapperProfiles()
         {
-            CreateMap<AddStudentRequestDTO, Student>().ReverseMap();
-            CreateMap<UpdateStudentRequestDTO, Student>().ReverseMap();
+            //Student
+            CreateMap<AddStudentDTO, Student>().ReverseMap();
+            CreateMap<UpdateStudentDTO, Student>().ReverseMap();
             CreateMap<Student, StudentDTO>()
                 .ForMember(dest => dest.AcademicDTO, opt => opt.MapFrom(src => src.Academic))
                 .ForMember(dest => dest.FinancialDTO, opt => opt.MapFrom(src => src.Financial))
@@ -20,6 +23,14 @@ namespace backend.Mappings
             CreateMap<Financial, FinancialDTO>().ReverseMap();
             CreateMap<Major, MajorDTO>().ReverseMap();
             CreateMap<Academic, AcademicDTO>().ReverseMap();
+
+            //Article
+            CreateMap<AddArticleDTO, Article>().ReverseMap();
+            CreateMap<AuthorDTO, Author>().ReverseMap();
+            CreateMap<Article, ArticleDTO>()
+                .ForMember(dest => dest.AuthorDTO, opt => opt.MapFrom(src => src.Author))
+                .ReverseMap();
+
         }
     }
 }

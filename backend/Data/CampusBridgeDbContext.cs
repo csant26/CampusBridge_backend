@@ -1,4 +1,5 @@
-﻿using backend.Models.Domain.Student;
+﻿using backend.Models.Domain.Content.Article;
+using backend.Models.Domain.Student;
 using Microsoft.EntityFrameworkCore;
 
 namespace backend.Data
@@ -11,6 +12,7 @@ namespace backend.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            //Student model relationships.
             modelBuilder.Entity<Student>()
                 .HasOne(a => a.Academic)
                 .WithMany(s => s.Students)
@@ -23,11 +25,19 @@ namespace backend.Data
 
             modelBuilder.Entity<Student>()
                 .HasMany(c => c.Clubs)
-                .WithMany(s => s.Students);
+                .WithMany(s => s.Students)
+                ;
 
             modelBuilder.Entity<Student>()
                 .HasMany(m => m.Majors)
                 .WithMany(s => s.Students);
+
+            //Article model relationships.
+            modelBuilder.Entity<Article>()
+                .HasOne(au => au.Author)
+                .WithMany(ar => ar.Articles)
+                .HasForeignKey(x => x.AuthorId);
+
 
         }
 
@@ -37,5 +47,10 @@ namespace backend.Data
         public DbSet<Club> Clubs { get; set; }
         public DbSet<Financial> Financials { get; set; }
         public DbSet<Major> Majors { get; set; }
+        
+        //Article-related Tables.
+        public DbSet<Article> Articles { get; set; }
+        public DbSet<Author> Authors { get; set; }
+
     }
 }

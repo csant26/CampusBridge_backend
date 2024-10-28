@@ -3,6 +3,7 @@ using backend.CustomActionFilter;
 using backend.Models.Domain.Student;
 using backend.Models.DTO.Student;
 using backend.Repository.College;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,7 +23,8 @@ namespace backend.Controllers
         }
         [HttpPost]
         [ValidateModel]
-        public async Task<IActionResult> CreateStudent([FromBody] AddStudentRequestDTO addStudentDTO)
+        [Authorize(Roles = "UniversityAdmin")]
+        public async Task<IActionResult> CreateStudent([FromBody] AddStudentDTO addStudentDTO)
         {
             //Map DTO to Domain. (only maps some of the properties)
             Student student = mapper.Map<Student>(addStudentDTO);
@@ -36,6 +38,7 @@ namespace backend.Controllers
         }
         [HttpGet]
         [ValidateModel]
+        [Authorize(Roles = "UniversityAdmin")]
         public async Task<IActionResult> GetStudent()
         {
             var students = await collegeRepository.GetStudent();
@@ -45,7 +48,7 @@ namespace backend.Controllers
         [HttpPut("{id}")]
         [ValidateModel]
         public async Task<IActionResult> UpdateStudent([FromRoute] string id,
-            [FromBody] UpdateStudentRequestDTO updateStudentDTO)
+            [FromBody] UpdateStudentDTO updateStudentDTO)
         {
             var updatedStudent = mapper.Map<Student>(updateStudentDTO);
 

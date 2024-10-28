@@ -2,6 +2,7 @@ using backend;
 using backend.Data;
 using backend.Mappings;
 using backend.Repository.College;
+using backend.Repository.Content;
 using backend.Repository.Token;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -13,7 +14,6 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -59,6 +59,7 @@ builder.Services.AddCors(options =>
         });
 });
 
+
 //Setting up database.
 builder.Services.AddDbContext<CampusBridgeDbContext>(options=>
     options.UseSqlServer(builder.Configuration.GetConnectionString("GeneralConnection")));
@@ -68,6 +69,7 @@ builder.Services.AddDbContext<CampusBridgeAuthDbContext>(options =>
 //Setting up repository pattern.
 builder.Services.AddScoped<ITokenRepository, TokenRepository>();
 builder.Services.AddScoped<ICollegeRepository, CollegeRepository>();
+builder.Services.AddScoped<IArticleRepository, ArticleRepository>();
 
 //Setting up mapping between Domain and DTOs.
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
