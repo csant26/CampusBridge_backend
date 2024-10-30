@@ -46,20 +46,27 @@ namespace backend.Repository.College
 
         public async Task<List<Student>> GetStudent()
         {
-            return await campusBridgeDbContext.Students
+            var students = await campusBridgeDbContext.Students
                 .Include(a=>a.Academic)
                 .Include(f=>f.Financial)
                 .Include(m=>m.Majors)
                 .Include(c=>c.Clubs)
                 .ToListAsync();
+            if(students != null) { return students; }
+            else { return null; }
         }
-
-        public async Task<Student> UpdateStudent(string id, Student updatedStudent,
-            UpdateStudentDTO updateStudentDTO)
+        public async Task<Student> GetStudentById(string id)
         {
             var existingStudent = await campusBridgeDbContext.Students
                 .Include(a => a.Academic).Include(f => f.Financial).Include(c => c.Clubs).Include(m => m.Majors)
                 .FirstOrDefaultAsync(x => x.StudentId == id);
+            if (existingStudent != null) { return existingStudent; }
+            else { return null; }
+        }
+        public async Task<Student> UpdateStudent(string id, Student updatedStudent,
+            UpdateStudentDTO updateStudentDTO)
+        {
+            var existingStudent = await GetStudentById(id);
 
             if (existingStudent!=null)
             {
@@ -97,15 +104,11 @@ namespace backend.Repository.College
         }
         public async Task<Student> DeleteStudent(string id)
         {
-            var existingStudent = await campusBridgeDbContext.Students
-               .Include(a => a.Academic).Include(f => f.Financial).Include(c => c.Clubs).Include(m => m.Majors)
-               .FirstOrDefaultAsync(x => x.StudentId == id);
-
+            var existingStudent = await GetStudentById(id);
             if (existingStudent == null) { return null; }
             campusBridgeDbContext.Students.Remove(existingStudent);
             await campusBridgeDbContext.SaveChangesAsync();
             return existingStudent;
         }
-
     }
 }

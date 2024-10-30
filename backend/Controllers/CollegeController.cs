@@ -11,6 +11,7 @@ namespace backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    //[Authorize(Roles = "UniversityAdmin")]
     public class CollegeController : ControllerBase
     {
         private readonly IMapper mapper;
@@ -23,7 +24,6 @@ namespace backend.Controllers
         }
         [HttpPost]
         [ValidateModel]
-        [Authorize(Roles = "UniversityAdmin")]
         public async Task<IActionResult> CreateStudent([FromBody] AddStudentDTO addStudentDTO)
         {
             //Map DTO to Domain. (only maps some of the properties)
@@ -38,12 +38,18 @@ namespace backend.Controllers
         }
         [HttpGet]
         [ValidateModel]
-        [Authorize(Roles = "UniversityAdmin")]
         public async Task<IActionResult> GetStudent()
         {
             var students = await collegeRepository.GetStudent();
             //return Ok(students);
             return Ok(mapper.Map<List<StudentDTO>>(students));
+        }
+        [HttpGet]
+        [ValidateModel]
+        [Route("{id}")]
+        public async Task<IActionResult> GetStudentById([FromRoute] string id)
+        {
+            return Ok(mapper.Map<StudentDTO>(await collegeRepository.GetStudentById(id)));
         }
         [HttpPut("{id}")]
         [ValidateModel]

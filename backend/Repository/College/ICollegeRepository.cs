@@ -7,6 +7,7 @@ namespace backend.Repository.College
     {
         Task<Student> CreateStudent(Student student, AddStudentDTO addStudentDTO);
         Task<List<Student>> GetStudent();
+        Task<Student> GetStudentById(string id);
         Task<Student> UpdateStudent(string id, Student updatedStudent,UpdateStudentDTO updateStudentDTO);
         Task<Student> DeleteStudent(string id);
     }
