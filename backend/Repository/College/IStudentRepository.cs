@@ -3,7 +3,7 @@ using backend.Models.DTO.Student;
 
 namespace backend.Repository.College
 {
-    public interface ICollegeRepository
+    public interface IStudentRepository
     {
         Task<Student> CreateStudent(Student student, AddStudentDTO addStudentDTO);
         Task<List<Student>> GetStudent();

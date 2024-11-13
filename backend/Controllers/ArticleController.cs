@@ -4,6 +4,7 @@ using backend.Models.Domain.Content.Article;
 using backend.Models.DTO.Content.Article;
 using backend.Models.DTO.Student;
 using backend.Repository.Content;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -35,6 +36,7 @@ namespace backend.Controllers
         }
         [HttpGet]
         [ValidateModel]
+        [Authorize(Roles = "UniversityAdmin")]
         public async Task<IActionResult> GetArticle()
         {
             var articles = await articleRepository.GetArticle();

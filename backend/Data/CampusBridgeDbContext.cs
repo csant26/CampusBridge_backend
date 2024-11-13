@@ -1,4 +1,5 @@
 ﻿using backend.Models.Domain.Content.Article;
+using backend.Models.Domain.Content.Syllabus;
 using backend.Models.Domain.Student;
 using Microsoft.EntityFrameworkCore;
 
@@ -38,6 +39,17 @@ namespace backend.Data
                 .WithMany(ar => ar.Articles)
                 .HasForeignKey(x => x.AuthorId);
 
+            //Syllabus model relationships
+            modelBuilder.Entity<Syllabus>()
+                .HasMany(co => co.Courses)
+                .WithOne(sy => sy.Syllabus)
+                .HasForeignKey(key => key.SyllabusId);
+
+            modelBuilder.Entity<Course>()
+                .HasMany(un => un.Units)
+                .WithOne(co => co.Course)
+                .HasForeignKey(key => key.CourseId);
+
 
         }
 
@@ -52,5 +64,9 @@ namespace backend.Data
         public DbSet<Article> Articles { get; set; }
         public DbSet<Author> Authors { get; set; }
 
+        //Syllabus-related Tables
+        public DbSet<Syllabus> Syllabus { get; set; }
+        public DbSet<Course> Course { get; set; }
+        public DbSet<Unit> Unit { get; set; }
     }
 }
