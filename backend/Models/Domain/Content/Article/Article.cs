@@ -9,7 +9,7 @@
         public string AuthorId { get; set; } //foreign key
         public Author Author { get; set; } // one-to-one
         public DateTime DatePosted { get; set; }
-        public DateTime DateUpdated { get; set; }
+        public DateTime DateUpdated { get; set; }   
 
     }
 }
