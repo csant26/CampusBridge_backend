@@ -38,7 +38,8 @@ namespace backend.Controllers
                         var jwtToken = await tokenRepository.CreateJWTToken(user, role);
                         var response = new LoginResponseDTO
                         {
-                            jwtToken = jwtToken
+                            jwtToken = jwtToken,
+                            role = role
                         };
                         return Ok(response);
                     }
