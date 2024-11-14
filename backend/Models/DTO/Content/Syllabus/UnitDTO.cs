@@ -9,5 +9,6 @@ namespace backend.Models.DTO.Content.Syllabus
         public string Title { get; set; }
         public int CompletionHours { get; set; }
         public List<string> SubUnits { get; set; }
+
     }
 }

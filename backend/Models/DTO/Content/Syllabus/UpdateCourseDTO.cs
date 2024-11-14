@@ -1,9 +1,6 @@
-﻿using backend.Models.Domain.Content.Syllabus;
-using System.Text.Json.Serialization;
-
-namespace backend.Models.DTO.Content.Syllabus
+﻿namespace backend.Models.DTO.Content.Syllabus
 {
-    public class CourseDTO
+    public class UpdateCourseDTO
     {
         public string CourseId { get; set; }
         public string CourseTitle { get; set; }
@@ -14,6 +11,7 @@ namespace backend.Models.DTO.Content.Syllabus
         public int CreditHour { get; set; }
         public string LabDescription { get; set; }
         public List<string> Books { get; set; }
+        //public string SyllabusId { get; set; }
         public List<UnitDTO> UnitsDTO { get; set; }
     }
 }

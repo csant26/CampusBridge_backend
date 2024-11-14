@@ -22,7 +22,7 @@ namespace backend.Controllers
             this.mapper = mapper;
             this.studentRepository = studentRepository;
         }
-        [HttpPost]
+        [HttpPost("CreateStudent")]
         [ValidateModel]
         public async Task<IActionResult> CreateStudent([FromBody] AddStudentDTO addStudentDTO)
         {
@@ -36,7 +36,7 @@ namespace backend.Controllers
             //Map the domain to DTO to pass back to the user.
             return Ok(mapper.Map<StudentDTO>(student));
         }
-        [HttpGet]
+        [HttpGet("GetStudent")]
         [ValidateModel]
         public async Task<IActionResult> GetStudent()
         {
@@ -44,14 +44,14 @@ namespace backend.Controllers
             //return Ok(students);
             return Ok(mapper.Map<List<StudentDTO>>(students));
         }
-        [HttpGet]
+        [HttpGet("GetStudentById/{id}")]
         [ValidateModel]
-        [Route("{id}")]
+        //[Route("{id}")]
         public async Task<IActionResult> GetStudentById([FromRoute] string id)
         {
             return Ok(mapper.Map<StudentDTO>(await studentRepository.GetStudentById(id)));
         }
-        [HttpPut("{id}")]
+        [HttpPut("UpdateStudent/{id}")]
         [ValidateModel]
         public async Task<IActionResult> UpdateStudent([FromRoute] string id,
             [FromBody] UpdateStudentDTO updateStudentDTO)
@@ -62,7 +62,7 @@ namespace backend.Controllers
 
             return Ok(mapper.Map<StudentDTO>(updatedStudent));
         }
-        [HttpDelete("{id}")]
+        [HttpDelete("DeleteStudent/{id}")]
         [ValidateModel]
         public async Task<IActionResult> DeleteStudent([FromRoute] string id)
         {

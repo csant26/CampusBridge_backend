@@ -13,9 +13,9 @@ namespace backend.Models.Domain.Content.Syllabus
         public int CreditHour { get; set; }
         public string LabDescription {  get; set; }
         public List<string> Books { get; set; }
-        public string SyllabusId {  get; set; } //foreign key
+        public string? SyllabusId { get; set; } = null; //foreign key
         [JsonIgnore]
-        public Syllabus Syllabus { get; set; } //one-to-one
+        public Syllabus? Syllabus { get; set; } = null; //one-to-one
         public List<Unit> Units {  get; set; } //one-to-many
     }
 }

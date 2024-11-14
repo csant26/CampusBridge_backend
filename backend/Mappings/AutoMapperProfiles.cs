@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using backend.Models.Domain.Content.Article;
+using backend.Models.Domain.Content.Syllabus;
 using backend.Models.Domain.Student;
 using backend.Models.DTO.Content.Article;
+using backend.Models.DTO.Content.Syllabus;
 using backend.Models.DTO.Student;
 
 namespace backend.Mappings
@@ -32,6 +34,21 @@ namespace backend.Mappings
                 .ForMember(dest => dest.AuthorDTO, opt => opt.MapFrom(src => src.Author))
                 .ReverseMap();
 
+            //Syllabus
+            CreateMap<Unit, UnitDTO>().ReverseMap();
+            CreateMap<AddCourseDTO, Course>()
+                .ForMember(dest => dest.Units, opt => opt.MapFrom(src => src.UnitsDTO))
+                .ReverseMap();
+            CreateMap<Course, CourseDTO>()
+                .ForMember(dest=>dest.UnitsDTO, opt=>opt.MapFrom(src=>src.Units))
+                .ReverseMap();
+            CreateMap<UpdateCourseDTO, Course>()
+                .ForMember(dest => dest.Units, opt => opt.MapFrom(src => src.UnitsDTO))
+                .ReverseMap();
+
+            CreateMap<AddSyllabusDTO, Syllabus>().ReverseMap();
+            CreateMap<UpdateSyllabusDTO, Syllabus>().ReverseMap();
+            CreateMap<Syllabus, SyllabusDTO>().ReverseMap();
         }
     }
 }

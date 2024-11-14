@@ -23,9 +23,8 @@ namespace backend.Controllers
             this.articleRepository = articleRepository;
             this.mapper = mapper;
         }
-        [HttpPost]
+        [HttpPost("CreateArticle/{creatorId}")]
         [ValidateModel]
-        [Route("{creatorId}")]
         public async Task<IActionResult> CreateArticle([FromRoute]string creatorId, 
             [FromBody] AddArticleDTO addarticleDTO)
         {
@@ -34,7 +33,7 @@ namespace backend.Controllers
             if (article == null) { return BadRequest("Unable to create article."); }
             return Ok(mapper.Map<ArticleDTO>(article));
         }
-        [HttpGet]
+        [HttpGet("GetArticle")]
         [ValidateModel]
         [Authorize(Roles = "UniversityAdmin")]
         public async Task<IActionResult> GetArticle()
@@ -43,7 +42,7 @@ namespace backend.Controllers
             if(articles == null) { return BadRequest("Unable to fetch articles."); };
             return Ok(mapper.Map<List<ArticleDTO>>(articles));
         }
-        [HttpGet("{articleId}")]
+        [HttpGet("GetArticleById/{articleId}")]
         [ValidateModel]
         public async Task<IActionResult> GetArticleById([FromRoute] string articleId)
         {
@@ -51,7 +50,7 @@ namespace backend.Controllers
             if(article == null) { return BadRequest("Unable to fetch article."); };
             return Ok(mapper.Map<ArticleDTO>(article));
         }
-        [HttpPut("{articleId}/{creatorId}")]
+        [HttpPut("UpdateArticle/{articleId}/{creatorId}")]
         [ValidateModel]
         public async Task<IActionResult> UpdateArticle([FromRoute] string articleId,
             [FromRoute] string creatorId,
@@ -62,7 +61,7 @@ namespace backend.Controllers
             if (updatedArticle == null) { return BadRequest("Unable to update article."); };
             return Ok(mapper.Map<ArticleDTO>(updatedArticle));
         }
-        [HttpDelete("{articleId}/{creatorId}")]
+        [HttpDelete("DeleteArticle/{articleId}/{creatorId}")]
         [ValidateModel]
         public async Task<IActionResult> DeleteArticle([FromRoute] string articleId,
             [FromRoute] string creatorId)

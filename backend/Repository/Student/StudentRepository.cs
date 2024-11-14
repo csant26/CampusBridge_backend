@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace backend.Repository.College
 {
-    public class CollegeRepository : ICollegeRepository
+    public class StudentRepository : IStudentRepository
     {
         private readonly CampusBridgeDbContext campusBridgeDbContext;
 
-        public CollegeRepository(CampusBridgeDbContext campusBridgeDbContext)
+        public StudentRepository(CampusBridgeDbContext campusBridgeDbContext)
         {
             this.campusBridgeDbContext = campusBridgeDbContext;
         }

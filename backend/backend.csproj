@@ -35,7 +35,7 @@
     <Folder Include="Models\DTO\College\" />
     <Folder Include="Models\DTO\University\" />
     <Folder Include="Models\DTO\Teacher\" />
-    <Folder Include="Repository\Student\" />
+    <Folder Include="Repository\College\" />
     <Folder Include="Repository\Teacher\" />
     <Folder Include="Repository\University\" />
   </ItemGroup>
