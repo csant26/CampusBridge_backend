@@ -1,4 +1,5 @@
 ﻿using backend.Models.Domain.Content.Article;
+using backend.Models.Domain.Content.Image;
 using backend.Models.Domain.Content.Syllabus;
 using backend.Models.Domain.Student;
 using Microsoft.EntityFrameworkCore;
@@ -68,5 +69,8 @@ namespace backend.Data
         public DbSet<Syllabus> Syllabus { get; set; }
         public DbSet<Course> Course { get; set; }
         public DbSet<Unit> Unit { get; set; }
+
+        //Image-related Tables
+        public DbSet<Image> Images { get; set; }
     }
 }

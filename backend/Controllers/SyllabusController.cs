@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using backend.CustomActionFilter;
 using backend.Models.Domain.Content.Syllabus;
 using backend.Models.DTO.Content.Syllabus;
 using backend.Repository.Content;
@@ -20,6 +21,7 @@ namespace backend.Controllers
             this.syllabusRepository = syllabusRepository;
         }
         [HttpPost("CreateCourse")]
+        [ValidateModel]
         public async Task<IActionResult> CreateCourse([FromBody] AddCourseDTO addCourseDTO)
         {
             var course = mapper.Map<Course>(addCourseDTO);
@@ -30,6 +32,7 @@ namespace backend.Controllers
             else { return Ok(mapper.Map<CourseDTO>(course)); }
         }
         [HttpGet("GetCourse")]
+        [ValidateModel]
         public async Task<IActionResult> GetCourse()
         {
             var courses = await syllabusRepository.GetCourse();
@@ -37,6 +40,7 @@ namespace backend.Controllers
             else { return Ok(mapper.Map<List<CourseDTO>>(courses)); }
         }
         [HttpGet("GetCourseById/{CourseId}")]
+        [ValidateModel]
         public async Task<IActionResult> GetCourseById([FromRoute] string CourseId)
         {
             var course = await syllabusRepository.GetCourseById(CourseId);
@@ -44,6 +48,7 @@ namespace backend.Controllers
             else { return Ok(mapper.Map<CourseDTO>(course)); }
         }
         [HttpPut("UpdateCourse/{CourseId}")]
+        [ValidateModel]
         public async Task<IActionResult> UpdateCourse([FromRoute] string CourseId,
             [FromBody] UpdateCourseDTO updateCourseDTO)
         {
@@ -52,6 +57,7 @@ namespace backend.Controllers
             else { return Ok(mapper.Map<CourseDTO>(course)); }
         }
         [HttpDelete("DeleteCourse/{CourseId}")]
+        [ValidateModel]
         public async Task<IActionResult> DeleteCourse([FromRoute] string CourseId)
         {
             var course = await syllabusRepository.DeleteCourse(CourseId);
@@ -59,6 +65,7 @@ namespace backend.Controllers
             else { return Ok(mapper.Map<CourseDTO>(course)); }
         }
         [HttpPost("CreateSyllabus")]
+        [ValidateModel]
         public async Task<IActionResult> CreateSyllabus([FromBody] AddSyllabusDTO addSyllabusDTO)
         {
             var syllabus = await syllabusRepository.CreateSyllabus(mapper.Map<Syllabus>(addSyllabusDTO),addSyllabusDTO);
@@ -69,6 +76,7 @@ namespace backend.Controllers
             }
         }
         [HttpGet("GetSyllabus")]
+        [ValidateModel]
         public async Task<IActionResult> GetSyllabus()
         {
             var syllabus = await syllabusRepository.GetSyllabus();
@@ -79,6 +87,7 @@ namespace backend.Controllers
             }
         }
         [HttpGet("GetSyllabusById/{SyllabusId}")]
+        [ValidateModel]
         public async Task<IActionResult> GetSyllabusById([FromRoute]string SyllabusId)
         {
             var syllabus = await syllabusRepository.GetSyllabusById(SyllabusId);
@@ -89,6 +98,7 @@ namespace backend.Controllers
             }
         }
         [HttpPut("UpdateSyllabus/{SyllabusId}")]
+        [ValidateModel]
         public async Task<IActionResult> UpdateSyllabus([FromRoute] string SyllabusId,
             [FromBody]UpdateSyllabusDTO updateSyllabusDTO)
         {
@@ -102,6 +112,7 @@ namespace backend.Controllers
             }
         }
         [HttpDelete("DeleteSyllabus/{SyllabusId}")]
+        [ValidateModel]
         public async Task<IActionResult> DeleteSyllabus([FromRoute] string SyllabusId)
         {
             var syllabus = await syllabusRepository.DeleteSyllabus(SyllabusId);

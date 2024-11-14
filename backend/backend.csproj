@@ -24,6 +24,7 @@
     <PackageReference Include="Microsoft.IdentityModel.JsonWebTokens" Version="8.1.2" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="8.1.2" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="8.0.2" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.1.2" />
   </ItemGroup>
 
@@ -34,6 +35,7 @@
     <Folder Include="Models\DTO\College\" />
     <Folder Include="Models\DTO\Teacher\" />
     <Folder Include="Models\DTO\University\" />
+    <Folder Include="Images\" />
     <Folder Include="Repository\College\" />
     <Folder Include="Repository\Teacher\" />
     <Folder Include="Repository\University\" />

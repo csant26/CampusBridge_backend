@@ -7,6 +7,7 @@ using backend.Repository.Token;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
@@ -42,10 +43,10 @@ builder.Services.AddSwaggerGen(options =>
                 }
             },
             new List<string>()
-        } 
+        }
     });
 });
-    
+
 
 //Setting up CORS.
 builder.Services.AddCors(options =>
@@ -53,7 +54,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowReactApp",
         builder =>
         {
-            builder.WithOrigins("http://localhost:3000")
+            builder.AllowAnyOrigin()
                    .AllowAnyHeader()
                    .AllowAnyMethod();
         });
@@ -61,7 +62,7 @@ builder.Services.AddCors(options =>
 
 
 //Setting up database.
-builder.Services.AddDbContext<CampusBridgeDbContext>(options=>
+builder.Services.AddDbContext<CampusBridgeDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("GeneralConnection")));
 builder.Services.AddDbContext<CampusBridgeAuthDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("AuthConnection")));
@@ -71,6 +72,8 @@ builder.Services.AddScoped<ITokenRepository, TokenRepository>();
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 builder.Services.AddScoped<IArticleRepository, ArticleRepository>();
 builder.Services.AddScoped<ISyllabusRepository, SyllabusRepository>();
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddScoped<IImageRepository, ImageRepository>();
 
 //Setting up mapping between Domain and DTOs.
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
@@ -132,6 +135,12 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Images")),
+    RequestPath = "/Image"
+});
 
 app.MapControllers();
 

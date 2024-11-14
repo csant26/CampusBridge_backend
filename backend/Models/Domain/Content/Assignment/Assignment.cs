@@ -9,7 +9,7 @@ namespace backend.Models.Domain.Content.Assignment
         public string Subject {  get; set; }
         public DateTime AssignedDate {  get; set; }
         public DateTime SubmissionDate { get; set; }
-        public string TeacherId {  get; set; }
-        public Teacher Teacher {  get; set; }
+        public string TeacherId {  get; set; } //foreign key
+        public Teacher Teacher {  get; set; } //one-to-one
     }
 }
