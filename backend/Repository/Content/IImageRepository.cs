@@ -1,4 +1,4 @@
-﻿using backend.Models.Domain.Content.Image;
+﻿using backend.Models.Domain.Content.Images;
 
 namespace backend.Repository.Content
 {

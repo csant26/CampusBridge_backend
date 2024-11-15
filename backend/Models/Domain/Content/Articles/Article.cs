@@ -1,4 +1,4 @@
-﻿namespace backend.Models.Domain.Content.Article
+﻿namespace backend.Models.Domain.Content.Articles
 {
     public class Article
     {

@@ -1,4 +1,5 @@
-﻿using backend.Models.Domain.Student;
+﻿using backend.Models.Domain.Students;
+using backend.Models.DTO.Content.Syllabus;
 
 namespace backend.Models.DTO.Student
 {
@@ -12,7 +13,8 @@ namespace backend.Models.DTO.Student
         //Navigation Properties
         public AcademicDTO AcademicDTO { get; set; }
         public FinancialDTO FinancialDTO { get; set; }
-        public List<MajorDTO> MajorsDTO { get; set; }
+        public List<CourseDTO> CourseDTO {  get; set; }
         public List<ClubDTO>? ClubsDTO { get; set; }
+        
     }
 }

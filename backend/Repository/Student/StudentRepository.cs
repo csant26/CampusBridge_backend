@@ -1,5 +1,6 @@
 ﻿using backend.Data;
-using backend.Models.Domain.Student;
+using backend.Models.Domain.Content.Syllabi;
+using backend.Models.Domain.Students;
 using backend.Models.DTO.Student;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,22 +18,47 @@ namespace backend.Repository.College
         {
             var academic = await campusBridgeDbContext.Academics.FindAsync(addStudentDTO.AcademicId);
             var financial = await campusBridgeDbContext.Financials.FindAsync(addStudentDTO.FinancialId);
-            var majors = await campusBridgeDbContext.Majors
-                .Where(m => addStudentDTO.MajorIds.Contains(m.MajorId)).ToListAsync();
             var clubs = await campusBridgeDbContext.Clubs
                 .Where(c => addStudentDTO.ClubIds.Contains(c.ClubId)).ToListAsync();
 
             if(academic != null)
             {
                 student.Academic = academic;
+                var sem = academic.Semester;
+                var syllabus = await campusBridgeDbContext.Syllabus
+                    .Where(x => x.Semester == academic.Semester)
+                    .Include(x => x.Courses)
+                    .FirstOrDefaultAsync();
+                if(syllabus != null)
+                {
+                    var nonElectiveCourses = syllabus.Courses.Where(x => x.isElective == false).ToList();
+                    if (nonElectiveCourses != null)
+                    {
+                        student.Courses = nonElectiveCourses;
+                    }
+                    var allowedElectives = syllabus.AllowedElectiveNo;
+                    var electiveCourses = syllabus.Courses.Where(x => x.isElective == true).ToList();
+                    var selectedElectives = await campusBridgeDbContext.Course
+                        .Where(x => addStudentDTO.ElectiveIds.Contains(x.CourseId))
+                        .ToListAsync();
+                    var electivesToAdd = new List<Course>();
+                    foreach (var elective in selectedElectives)
+                    {
+                        if (electiveCourses.Contains(elective))
+                        {
+                            while (allowedElectives > 0)
+                            {
+                                electivesToAdd.AddRange(new List<Course> { elective }); 
+                                allowedElectives--;
+                            }
+                        }
+                    }
+                    student.Courses.AddRange(electivesToAdd);
+                }
             }
             if(financial != null)
             {
                 student.Financial = financial;
-            }
-            if(majors != null)
-            {
-                student.Majors = majors;
             }
             if(clubs != null)
             {
@@ -49,7 +75,6 @@ namespace backend.Repository.College
             var students = await campusBridgeDbContext.Students
                 .Include(a=>a.Academic)
                 .Include(f=>f.Financial)
-                .Include(m=>m.Majors)
                 .Include(c=>c.Clubs)
                 .ToListAsync();
             if(students != null) { return students; }
@@ -58,7 +83,7 @@ namespace backend.Repository.College
         public async Task<Student> GetStudentById(string id)
         {
             var existingStudent = await campusBridgeDbContext.Students
-                .Include(a => a.Academic).Include(f => f.Financial).Include(c => c.Clubs).Include(m => m.Majors)
+                .Include(a => a.Academic).Include(f => f.Financial).Include(c => c.Clubs)
                 .FirstOrDefaultAsync(x => x.StudentId == id);
             if (existingStudent != null) { return existingStudent; }
             else { return null; }
@@ -75,19 +100,43 @@ namespace backend.Repository.College
                 existingStudent.Phone = updatedStudent.Phone;
                 existingStudent.Location = updatedStudent.Location;
 
+                var syllabus = await campusBridgeDbContext.Syllabus
+                    .Where(x => x.Semester == updateStudentDTO.Semseter)
+                    .FirstOrDefaultAsync();
+                if (syllabus != null)
+                {
+                    var nonElectiveCourses = syllabus.Courses.Where(x => x.isElective == false).ToList();
+                    if (nonElectiveCourses != null)
+                    {
+                        updatedStudent.Courses = nonElectiveCourses;
+                    }
+                    var allowedElectives = syllabus.AllowedElectiveNo;
+                    var electiveCourses = syllabus.Courses.Where(x => x.isElective == true).ToList();
+                    var selectedElectives = await campusBridgeDbContext.Course
+                        .Where(x => updateStudentDTO.ElectiveIds.Contains(x.CourseId))
+                        .ToListAsync();
+                    var electivesToAdd = new List<Course>();
+                    foreach (var elective in selectedElectives)
+                    {
+                        if (electiveCourses.Contains(elective))
+                        {
+                            while (allowedElectives > 0)
+                            {
+                                electivesToAdd.AddRange(new List<Course> { elective });
+                                allowedElectives--;
+                            }
+                        }
+                    }
+                    updatedStudent.Courses.AddRange(electivesToAdd);
+                }
+
                 var financial = await campusBridgeDbContext.Financials.FindAsync(updateStudentDTO.FinancialId);
-                var majors = await campusBridgeDbContext.Majors
-                    .Where(m => updateStudentDTO.MajorIds.Contains(m.MajorId)).ToListAsync();
                 var clubs = await campusBridgeDbContext.Clubs
                     .Where(m => updateStudentDTO.ClubIds.Contains(m.ClubId)).ToListAsync();
 
                 if (financial != null)
                 {
                     existingStudent.Financial = financial;
-                }
-                if (majors != null)
-                {
-                    existingStudent.Majors = majors;
                 }
                 if (clubs != null)
                 {

@@ -33,7 +33,6 @@
     <Folder Include="Models\Domain\College\" />
     <Folder Include="Models\Domain\University\" />
     <Folder Include="Models\DTO\College\" />
-    <Folder Include="Models\DTO\Teacher\" />
     <Folder Include="Models\DTO\University\" />
     <Folder Include="Images\" />
     <Folder Include="Repository\College\" />

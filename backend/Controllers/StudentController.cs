@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using backend.CustomActionFilter;
-using backend.Models.Domain.Student;
+using backend.Models.Domain.Students;
 using backend.Models.DTO.Student;
 using backend.Repository.College;
 using Microsoft.AspNetCore.Authorization;

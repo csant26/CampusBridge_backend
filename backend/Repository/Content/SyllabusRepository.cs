@@ -1,5 +1,5 @@
 ﻿using backend.Data;
-using backend.Models.Domain.Content.Syllabus;
+using backend.Models.Domain.Content.Syllabi;
 using backend.Models.DTO.Content.Syllabus;
 using Microsoft.EntityFrameworkCore;
 
@@ -133,9 +133,10 @@ namespace backend.Repository.Content
             if(existingSyllabus== null) { return null; }
             existingSyllabus.SyllabusId = syllabus.SyllabusId;
             existingSyllabus.Semester = syllabus.Semester;
-
+            existingSyllabus.AllowedElectiveNo = syllabus.AllowedElectiveNo;
+            var id = updateSyllabusDTO.SyllabusId;
             var courses = await campusBridgeDbContext.Course
-                .Where(x => updateSyllabusDTO.SyllabusId.Contains(x.CourseId))
+                .Where(x => updateSyllabusDTO.CourseId.Contains(x.CourseId))
                 .ToListAsync();
             if (courses != null)
             {

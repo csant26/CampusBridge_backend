@@ -1,4 +1,4 @@
-﻿using backend.Models.Domain.Student;
+﻿using backend.Models.Domain.Students;
 using backend.Models.DTO.Student;
 
 namespace backend.Repository.College

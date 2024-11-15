@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using backend.Data;
 
@@ -11,9 +12,11 @@ using backend.Data;
 namespace backend.Migrations.CampusBridgeDb
 {
     [DbContext(typeof(CampusBridgeDbContext))]
-    partial class CampusBridgeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241114170111_teacher assignment course")]
+    partial class teacherassignmentcourse
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,21 +40,6 @@ namespace backend.Migrations.CampusBridgeDb
                     b.ToTable("ClubStudent");
                 });
 
-            modelBuilder.Entity("CourseStudent", b =>
-                {
-                    b.Property<string>("CoursesCourseId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("StudentsStudentId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("CoursesCourseId", "StudentsStudentId");
-
-                    b.HasIndex("StudentsStudentId");
-
-                    b.ToTable("CourseStudent");
-                });
-
             modelBuilder.Entity("CourseTeacher", b =>
                 {
                     b.Property<string>("CoursesCourseId")
@@ -67,7 +55,22 @@ namespace backend.Migrations.CampusBridgeDb
                     b.ToTable("CourseTeacher");
                 });
 
-            modelBuilder.Entity("backend.Models.Domain.Content.Articles.Article", b =>
+            modelBuilder.Entity("MajorStudent", b =>
+                {
+                    b.Property<string>("MajorsMajorId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("StudentsStudentId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("MajorsMajorId", "StudentsStudentId");
+
+                    b.HasIndex("StudentsStudentId");
+
+                    b.ToTable("MajorStudent");
+                });
+
+            modelBuilder.Entity("backend.Models.Domain.Content.Article.Article", b =>
                 {
                     b.Property<string>("ArticleId")
                         .HasColumnType("nvarchar(450)");
@@ -101,7 +104,7 @@ namespace backend.Migrations.CampusBridgeDb
                     b.ToTable("Articles");
                 });
 
-            modelBuilder.Entity("backend.Models.Domain.Content.Articles.Author", b =>
+            modelBuilder.Entity("backend.Models.Domain.Content.Article.Author", b =>
                 {
                     b.Property<string>("AuthorId")
                         .HasColumnType("nvarchar(450)");
@@ -123,7 +126,7 @@ namespace backend.Migrations.CampusBridgeDb
                     b.ToTable("Authors");
                 });
 
-            modelBuilder.Entity("backend.Models.Domain.Content.Assignments.Assignment", b =>
+            modelBuilder.Entity("backend.Models.Domain.Content.AssignmentDomain.Assignment", b =>
                 {
                     b.Property<string>("AssignmentId")
                         .HasColumnType("nvarchar(450)");
@@ -155,34 +158,9 @@ namespace backend.Migrations.CampusBridgeDb
                     b.ToTable("Assignments");
                 });
 
-            modelBuilder.Entity("backend.Models.Domain.Content.Assignments.Submission", b =>
-                {
-                    b.Property<string>("SubmissionId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("AssignmentId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("StudentId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("SubmissionId");
-
-                    b.HasIndex("AssignmentId");
-
-                    b.HasIndex("StudentId");
-
-                    b.ToTable("Submissions");
-                });
-
-            modelBuilder.Entity("backend.Models.Domain.Content.Images.Image", b =>
+            modelBuilder.Entity("backend.Models.Domain.Content.Image.Image", b =>
                 {
                     b.Property<string>("ImageId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("AssignmentId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("FileDescription")
@@ -203,19 +181,12 @@ namespace backend.Migrations.CampusBridgeDb
                     b.Property<long>("FileSizeInBytes")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("SubmissionId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("ImageId");
-
-                    b.HasIndex("AssignmentId");
-
-                    b.HasIndex("SubmissionId");
 
                     b.ToTable("Images");
                 });
 
-            modelBuilder.Entity("backend.Models.Domain.Content.Syllabi.Course", b =>
+            modelBuilder.Entity("backend.Models.Domain.Content.Syllabus.Course", b =>
                 {
                     b.Property<string>("CourseId")
                         .HasColumnType("nvarchar(450)");
@@ -254,9 +225,6 @@ namespace backend.Migrations.CampusBridgeDb
                     b.Property<string>("SyllabusId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<bool>("isElective")
-                        .HasColumnType("bit");
-
                     b.HasKey("CourseId");
 
                     b.HasIndex("SyllabusId");
@@ -264,13 +232,10 @@ namespace backend.Migrations.CampusBridgeDb
                     b.ToTable("Course");
                 });
 
-            modelBuilder.Entity("backend.Models.Domain.Content.Syllabi.Syllabus", b =>
+            modelBuilder.Entity("backend.Models.Domain.Content.Syllabus.Syllabus", b =>
                 {
                     b.Property<string>("SyllabusId")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AllowedElectiveNo")
-                        .HasColumnType("int");
 
                     b.Property<string>("Semester")
                         .IsRequired()
@@ -281,7 +246,7 @@ namespace backend.Migrations.CampusBridgeDb
                     b.ToTable("Syllabus");
                 });
 
-            modelBuilder.Entity("backend.Models.Domain.Content.Syllabi.Unit", b =>
+            modelBuilder.Entity("backend.Models.Domain.Content.Syllabus.Unit", b =>
                 {
                     b.Property<string>("UnitId")
                         .HasColumnType("nvarchar(450)");
@@ -308,20 +273,15 @@ namespace backend.Migrations.CampusBridgeDb
                     b.ToTable("Unit");
                 });
 
-            modelBuilder.Entity("backend.Models.Domain.Students.Academic", b =>
+            modelBuilder.Entity("backend.Models.Domain.Student.Academic", b =>
                 {
                     b.Property<string>("AcademicId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Batch")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Batch")
+                        .HasColumnType("int");
 
                     b.Property<string>("Faculty")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Semester")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -330,7 +290,7 @@ namespace backend.Migrations.CampusBridgeDb
                     b.ToTable("Academics");
                 });
 
-            modelBuilder.Entity("backend.Models.Domain.Students.Club", b =>
+            modelBuilder.Entity("backend.Models.Domain.Student.Club", b =>
                 {
                     b.Property<string>("ClubId")
                         .HasColumnType("nvarchar(450)");
@@ -344,7 +304,7 @@ namespace backend.Migrations.CampusBridgeDb
                     b.ToTable("Clubs");
                 });
 
-            modelBuilder.Entity("backend.Models.Domain.Students.Financial", b =>
+            modelBuilder.Entity("backend.Models.Domain.Student.Financial", b =>
                 {
                     b.Property<string>("FinancialId")
                         .HasColumnType("nvarchar(450)");
@@ -363,7 +323,21 @@ namespace backend.Migrations.CampusBridgeDb
                     b.ToTable("Financials");
                 });
 
-            modelBuilder.Entity("backend.Models.Domain.Students.Student", b =>
+            modelBuilder.Entity("backend.Models.Domain.Student.Major", b =>
+                {
+                    b.Property<string>("MajorId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("MajorId");
+
+                    b.ToTable("Majors");
+                });
+
+            modelBuilder.Entity("backend.Models.Domain.Student.Student", b =>
                 {
                     b.Property<string>("StudentId")
                         .HasColumnType("nvarchar(450)");
@@ -401,7 +375,7 @@ namespace backend.Migrations.CampusBridgeDb
                     b.ToTable("Students");
                 });
 
-            modelBuilder.Entity("backend.Models.Domain.Teachers.Teacher", b =>
+            modelBuilder.Entity("backend.Models.Domain.TeacherDomain.Teacher", b =>
                 {
                     b.Property<string>("TeacherId")
                         .HasColumnType("nvarchar(450)");
@@ -425,28 +399,13 @@ namespace backend.Migrations.CampusBridgeDb
 
             modelBuilder.Entity("ClubStudent", b =>
                 {
-                    b.HasOne("backend.Models.Domain.Students.Club", null)
+                    b.HasOne("backend.Models.Domain.Student.Club", null)
                         .WithMany()
                         .HasForeignKey("ClubsClubId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("backend.Models.Domain.Students.Student", null)
-                        .WithMany()
-                        .HasForeignKey("StudentsStudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("CourseStudent", b =>
-                {
-                    b.HasOne("backend.Models.Domain.Content.Syllabi.Course", null)
-                        .WithMany()
-                        .HasForeignKey("CoursesCourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("backend.Models.Domain.Students.Student", null)
+                    b.HasOne("backend.Models.Domain.Student.Student", null)
                         .WithMany()
                         .HasForeignKey("StudentsStudentId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -455,22 +414,37 @@ namespace backend.Migrations.CampusBridgeDb
 
             modelBuilder.Entity("CourseTeacher", b =>
                 {
-                    b.HasOne("backend.Models.Domain.Content.Syllabi.Course", null)
+                    b.HasOne("backend.Models.Domain.Content.Syllabus.Course", null)
                         .WithMany()
                         .HasForeignKey("CoursesCourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("backend.Models.Domain.Teachers.Teacher", null)
+                    b.HasOne("backend.Models.Domain.TeacherDomain.Teacher", null)
                         .WithMany()
                         .HasForeignKey("TeachersTeacherId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("backend.Models.Domain.Content.Articles.Article", b =>
+            modelBuilder.Entity("MajorStudent", b =>
                 {
-                    b.HasOne("backend.Models.Domain.Content.Articles.Author", "Author")
+                    b.HasOne("backend.Models.Domain.Student.Major", null)
+                        .WithMany()
+                        .HasForeignKey("MajorsMajorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("backend.Models.Domain.Student.Student", null)
+                        .WithMany()
+                        .HasForeignKey("StudentsStudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("backend.Models.Domain.Content.Article.Article", b =>
+                {
+                    b.HasOne("backend.Models.Domain.Content.Article.Author", "Author")
                         .WithMany("Articles")
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -479,15 +453,15 @@ namespace backend.Migrations.CampusBridgeDb
                     b.Navigation("Author");
                 });
 
-            modelBuilder.Entity("backend.Models.Domain.Content.Assignments.Assignment", b =>
+            modelBuilder.Entity("backend.Models.Domain.Content.AssignmentDomain.Assignment", b =>
                 {
-                    b.HasOne("backend.Models.Domain.Content.Syllabi.Course", "Course")
+                    b.HasOne("backend.Models.Domain.Content.Syllabus.Course", "Course")
                         .WithMany("Assignments")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("backend.Models.Domain.Teachers.Teacher", "Teacher")
+                    b.HasOne("backend.Models.Domain.TeacherDomain.Teacher", "Teacher")
                         .WithMany("Assignments")
                         .HasForeignKey("TeacherId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -498,52 +472,18 @@ namespace backend.Migrations.CampusBridgeDb
                     b.Navigation("Teacher");
                 });
 
-            modelBuilder.Entity("backend.Models.Domain.Content.Assignments.Submission", b =>
+            modelBuilder.Entity("backend.Models.Domain.Content.Syllabus.Course", b =>
                 {
-                    b.HasOne("backend.Models.Domain.Content.Assignments.Assignment", "Assignment")
-                        .WithMany("Submissions")
-                        .HasForeignKey("AssignmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("backend.Models.Domain.Students.Student", "Student")
-                        .WithMany("Submissions")
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Assignment");
-
-                    b.Navigation("Student");
-                });
-
-            modelBuilder.Entity("backend.Models.Domain.Content.Images.Image", b =>
-                {
-                    b.HasOne("backend.Models.Domain.Content.Assignments.Assignment", "Assignment")
-                        .WithMany("QuestionImage")
-                        .HasForeignKey("AssignmentId");
-
-                    b.HasOne("backend.Models.Domain.Content.Assignments.Submission", "Submission")
-                        .WithMany("AnswerImage")
-                        .HasForeignKey("SubmissionId");
-
-                    b.Navigation("Assignment");
-
-                    b.Navigation("Submission");
-                });
-
-            modelBuilder.Entity("backend.Models.Domain.Content.Syllabi.Course", b =>
-                {
-                    b.HasOne("backend.Models.Domain.Content.Syllabi.Syllabus", "Syllabus")
+                    b.HasOne("backend.Models.Domain.Content.Syllabus.Syllabus", "Syllabus")
                         .WithMany("Courses")
                         .HasForeignKey("SyllabusId");
 
                     b.Navigation("Syllabus");
                 });
 
-            modelBuilder.Entity("backend.Models.Domain.Content.Syllabi.Unit", b =>
+            modelBuilder.Entity("backend.Models.Domain.Content.Syllabus.Unit", b =>
                 {
-                    b.HasOne("backend.Models.Domain.Content.Syllabi.Course", "Course")
+                    b.HasOne("backend.Models.Domain.Content.Syllabus.Course", "Course")
                         .WithMany("Units")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -552,15 +492,15 @@ namespace backend.Migrations.CampusBridgeDb
                     b.Navigation("Course");
                 });
 
-            modelBuilder.Entity("backend.Models.Domain.Students.Student", b =>
+            modelBuilder.Entity("backend.Models.Domain.Student.Student", b =>
                 {
-                    b.HasOne("backend.Models.Domain.Students.Academic", "Academic")
+                    b.HasOne("backend.Models.Domain.Student.Academic", "Academic")
                         .WithMany("Students")
                         .HasForeignKey("AcademicId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("backend.Models.Domain.Students.Financial", "Financial")
+                    b.HasOne("backend.Models.Domain.Student.Financial", "Financial")
                         .WithMany("Students")
                         .HasForeignKey("FinancialId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -571,51 +511,34 @@ namespace backend.Migrations.CampusBridgeDb
                     b.Navigation("Financial");
                 });
 
-            modelBuilder.Entity("backend.Models.Domain.Content.Articles.Author", b =>
+            modelBuilder.Entity("backend.Models.Domain.Content.Article.Author", b =>
                 {
                     b.Navigation("Articles");
                 });
 
-            modelBuilder.Entity("backend.Models.Domain.Content.Assignments.Assignment", b =>
-                {
-                    b.Navigation("QuestionImage");
-
-                    b.Navigation("Submissions");
-                });
-
-            modelBuilder.Entity("backend.Models.Domain.Content.Assignments.Submission", b =>
-                {
-                    b.Navigation("AnswerImage");
-                });
-
-            modelBuilder.Entity("backend.Models.Domain.Content.Syllabi.Course", b =>
+            modelBuilder.Entity("backend.Models.Domain.Content.Syllabus.Course", b =>
                 {
                     b.Navigation("Assignments");
 
                     b.Navigation("Units");
                 });
 
-            modelBuilder.Entity("backend.Models.Domain.Content.Syllabi.Syllabus", b =>
+            modelBuilder.Entity("backend.Models.Domain.Content.Syllabus.Syllabus", b =>
                 {
                     b.Navigation("Courses");
                 });
 
-            modelBuilder.Entity("backend.Models.Domain.Students.Academic", b =>
+            modelBuilder.Entity("backend.Models.Domain.Student.Academic", b =>
                 {
                     b.Navigation("Students");
                 });
 
-            modelBuilder.Entity("backend.Models.Domain.Students.Financial", b =>
+            modelBuilder.Entity("backend.Models.Domain.Student.Financial", b =>
                 {
                     b.Navigation("Students");
                 });
 
-            modelBuilder.Entity("backend.Models.Domain.Students.Student", b =>
-                {
-                    b.Navigation("Submissions");
-                });
-
-            modelBuilder.Entity("backend.Models.Domain.Teachers.Teacher", b =>
+            modelBuilder.Entity("backend.Models.Domain.TeacherDomain.Teacher", b =>
                 {
                     b.Navigation("Assignments");
                 });

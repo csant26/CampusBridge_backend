@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using backend.CustomActionFilter;
-using backend.Models.Domain.Content.Syllabus;
+using backend.Models.Domain.Content.Syllabi;
 using backend.Models.DTO.Content.Syllabus;
 using backend.Repository.Content;
 using Microsoft.AspNetCore.Http;

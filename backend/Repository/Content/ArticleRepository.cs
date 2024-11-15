@@ -1,5 +1,5 @@
 ﻿using backend.Data;
-using backend.Models.Domain.Content.Article;
+using backend.Models.Domain.Content.Articles;
 using backend.Models.DTO.Content.Article;
 using Microsoft.EntityFrameworkCore;
 

@@ -1,4 +1,4 @@
-﻿using backend.Models.Domain.Content.Syllabus;
+﻿using backend.Models.Domain.Content.Syllabi;
 using backend.Models.DTO.Content.Syllabus;
 
 namespace backend.Repository.Content

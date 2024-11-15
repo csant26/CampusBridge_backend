@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using backend.Data;
 
@@ -11,9 +12,11 @@ using backend.Data;
 namespace backend.Migrations.CampusBridgeDb
 {
     [DbContext(typeof(CampusBridgeDbContext))]
-    partial class CampusBridgeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241115005913_assignment")]
+    partial class assignment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -269,9 +272,6 @@ namespace backend.Migrations.CampusBridgeDb
                     b.Property<string>("SyllabusId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("AllowedElectiveNo")
-                        .HasColumnType("int");
-
                     b.Property<string>("Semester")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -313,15 +313,10 @@ namespace backend.Migrations.CampusBridgeDb
                     b.Property<string>("AcademicId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Batch")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Batch")
+                        .HasColumnType("int");
 
                     b.Property<string>("Faculty")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Semester")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

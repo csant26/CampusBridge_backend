@@ -6,8 +6,9 @@
         public string Email { get; set; }
         public string Phone { get; set; }
         public string Location { get; set; }
+        public string Semseter { get; set; }
+        public List<string>? ElectiveIds { get; set; } = null;
         public string FinancialId { get; set; }
-        public List<string> MajorIds { get; set; }
         public List<string>? ClubIds { get; set; }
     }
 }

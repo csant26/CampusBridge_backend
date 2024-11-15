@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace backend.Models.Domain.Student
+namespace backend.Models.Domain.Students
 {
     public class Financial
     {

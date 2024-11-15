@@ -1,11 +1,9 @@
 ﻿using AutoMapper;
 using backend.CustomActionFilter;
-using backend.Models.Domain.Content.Article;
+using backend.Models.Domain.Content.Articles;
 using backend.Models.DTO.Content.Article;
-using backend.Models.DTO.Student;
 using backend.Repository.Content;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Controllers

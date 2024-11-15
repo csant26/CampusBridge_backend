@@ -6,6 +6,7 @@
         public string CourseTitle { get; set; }
         public string CourseDescription { get; set; }
         public string CourseObjective { get; set; }
+        public bool isElective { get; set; } = false;
         public string FullMarks { get; set; }
         public string PassMarks { get; set; }
         public int CreditHour { get; set; }

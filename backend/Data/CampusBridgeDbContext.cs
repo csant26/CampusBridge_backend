@@ -1,7 +1,9 @@
-﻿using backend.Models.Domain.Content.Article;
-using backend.Models.Domain.Content.Image;
-using backend.Models.Domain.Content.Syllabus;
-using backend.Models.Domain.Student;
+﻿using backend.Models.Domain.Content.Articles;
+using backend.Models.Domain.Content.Assignments;
+using backend.Models.Domain.Content.Images;
+using backend.Models.Domain.Content.Syllabi;
+using backend.Models.Domain.Students;
+using backend.Models.Domain.Teachers;
 using Microsoft.EntityFrameworkCore;
 
 namespace backend.Data
@@ -31,8 +33,9 @@ namespace backend.Data
                 ;
 
             modelBuilder.Entity<Student>()
-                .HasMany(m => m.Majors)
+                .HasMany(m => m.Courses)
                 .WithMany(s => s.Students);
+
 
             //Article model relationships.
             modelBuilder.Entity<Article>()
@@ -51,7 +54,40 @@ namespace backend.Data
                 .WithOne(co => co.Course)
                 .HasForeignKey(key => key.CourseId);
 
+            //Assignment related relationships
+            modelBuilder.Entity<Teacher>()
+                .HasMany(co => co.Courses)
+                .WithMany(te => te.Teachers);
 
+            modelBuilder.Entity<Teacher>()
+                .HasMany(a=>a.Assignments)
+                .WithOne(te => te.Teacher)
+                .HasForeignKey(key => key.TeacherId);
+
+            modelBuilder.Entity<Course>()
+                .HasMany(a => a.Assignments)
+                .WithOne(c => c.Course)
+                .HasForeignKey(key => key.CourseId);
+
+            modelBuilder.Entity<Assignment>()
+                .HasMany(i => i.QuestionImage)
+                .WithOne(i => i.Assignment)
+                .HasForeignKey(key => key.AssignmentId);
+
+            modelBuilder.Entity<Submission>()
+                .HasMany(i => i.AnswerImage)
+                .WithOne(i => i.Submission)
+                .HasForeignKey(key => key.SubmissionId);
+
+            modelBuilder.Entity<Assignment>()
+                .HasMany(s=>s.Submissions)
+                .WithOne(a => a.Assignment)
+                .HasForeignKey(key => key.AssignmentId);
+
+            modelBuilder.Entity<Submission>()
+                .HasOne(s => s.Student)
+                .WithMany(i => i.Submissions)
+                .HasForeignKey(key => key.StudentId);
         }
 
         //Student-related Tables.
@@ -59,7 +95,6 @@ namespace backend.Data
         public DbSet<Academic> Academics {  get; set; }
         public DbSet<Club> Clubs { get; set; }
         public DbSet<Financial> Financials { get; set; }
-        public DbSet<Major> Majors { get; set; }
         
         //Article-related Tables.
         public DbSet<Article> Articles { get; set; }
@@ -72,5 +107,13 @@ namespace backend.Data
 
         //Image-related Tables
         public DbSet<Image> Images { get; set; }
+
+        //Assignment-related Tables
+        public DbSet<Assignment> Assignments {  get; set; }
+        public DbSet<Submission> Submissions { get; set; }
+
+        //Teacher-related Tables
+        public DbSet<Teacher> Teachers { get; set; }
+
     }
 }

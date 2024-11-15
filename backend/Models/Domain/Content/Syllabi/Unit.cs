@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace backend.Models.Domain.Content.Syllabus
+namespace backend.Models.Domain.Content.Syllabi
 {
     public class Unit
     {
