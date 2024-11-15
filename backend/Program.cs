@@ -74,6 +74,7 @@ builder.Services.AddScoped<IArticleRepository, ArticleRepository>();
 builder.Services.AddScoped<ISyllabusRepository, SyllabusRepository>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<IImageRepository, ImageRepository>();
+builder.Services.AddScoped<IAssignmentRepository, AssignmentRepository>();
 
 //Setting up mapping between Domain and DTOs.
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));

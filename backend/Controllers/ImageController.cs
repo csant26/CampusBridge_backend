@@ -1,6 +1,6 @@
 ﻿using backend.CustomActionFilter;
 using backend.Models.Domain.Content.Images;
-using backend.Models.DTO.Content.Image;
+using backend.Models.DTO.Content.Images;
 using backend.Repository.Content;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

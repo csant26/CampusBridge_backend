@@ -1,4 +1,5 @@
 ﻿using backend.Models.Domain.Content.Syllabi;
+using backend.Models.DTO.Content.Assignment;
 using backend.Models.DTO.Student;
 using backend.Models.DTO.Teacher;
 using System.Text.Json.Serialization;
@@ -20,5 +21,6 @@ namespace backend.Models.DTO.Content.Syllabus
         public List<UnitDTO> UnitsDTO { get; set; }
         public List<TeacherDTO> TeacherDTO { get; set; }
         public List<StudentDTO>? StudentDTO { get; set; } = null;
+        public List<AssignmentDTO>? AssignmentDTO { get; set; }
     }
 }

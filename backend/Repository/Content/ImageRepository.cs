@@ -1,6 +1,6 @@
 ﻿using backend.Data;
 using backend.Models.Domain.Content.Images;
-using backend.Models.DTO.Content.Image;
+using backend.Models.DTO.Content.Images;
 
 namespace backend.Repository.Content
 {

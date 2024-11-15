@@ -9,7 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.11" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10">
@@ -33,7 +33,7 @@
     <Folder Include="Models\Domain\College\" />
     <Folder Include="Models\Domain\University\" />
     <Folder Include="Models\DTO\College\" />
-    <Folder Include="Models\DTO\University\" />
+    <Folder Include="Models\DTO\Universities\" />
     <Folder Include="Images\" />
     <Folder Include="Repository\College\" />
     <Folder Include="Repository\Teacher\" />

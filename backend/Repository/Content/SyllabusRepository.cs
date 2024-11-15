@@ -55,7 +55,6 @@ namespace backend.Repository.Content
                     unit.CourseId = course.CourseId;
                     unit.Course = course;
                 }
-                existingCourse.CourseId = course.CourseId;
                 existingCourse.CourseTitle = course.CourseTitle;
                 existingCourse.CourseDescription = course.CourseDescription;
                 existingCourse.CourseObjective = course.CourseObjective;
@@ -131,10 +130,8 @@ namespace backend.Repository.Content
         {
             var existingSyllabus = await GetSyllabusById(SyllabusId);
             if(existingSyllabus== null) { return null; }
-            existingSyllabus.SyllabusId = syllabus.SyllabusId;
             existingSyllabus.Semester = syllabus.Semester;
             existingSyllabus.AllowedElectiveNo = syllabus.AllowedElectiveNo;
-            var id = updateSyllabusDTO.SyllabusId;
             var courses = await campusBridgeDbContext.Course
                 .Where(x => updateSyllabusDTO.CourseId.Contains(x.CourseId))
                 .ToListAsync();

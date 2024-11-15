@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace backend.Models.DTO.Content.Image
+namespace backend.Models.DTO.Content.Images
 {
     public class ImageUploadRequestDTO
     {
