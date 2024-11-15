@@ -9,7 +9,7 @@
         public bool isElective { get; set; } = false;
         public string FullMarks { get; set; }
         public string PassMarks { get; set; }
-        public int CreditHour { get; set; }
+        public string CreditHour { get; set; }
         public string LabDescription { get; set; }
         public List<string> Books { get; set; }
         //public string SyllabusId { get; set; }

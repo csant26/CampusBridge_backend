@@ -7,7 +7,8 @@ namespace backend.Models.Domain.Content.Assignments
     public class Submission
     {
         public string SubmissionId { get; set; }
-        public List<Image>? AnswerImage { get; set; } = null;
+        public string Answer {  get; set; }
+        public string? ImagePath { get; set; } = null;
         public string StudentId { get; set; } //foreign key
         [JsonIgnore]
         public Student Student { get; set; } //one-to-one

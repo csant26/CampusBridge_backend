@@ -70,16 +70,6 @@ namespace backend.Data
                 .HasForeignKey(key => key.CourseId);
 
             modelBuilder.Entity<Assignment>()
-                .HasMany(i => i.QuestionImage)
-                .WithOne(i => i.Assignment)
-                .HasForeignKey(key => key.AssignmentId);
-
-            modelBuilder.Entity<Submission>()
-                .HasMany(i => i.AnswerImage)
-                .WithOne(i => i.Submission)
-                .HasForeignKey(key => key.SubmissionId);
-
-            modelBuilder.Entity<Assignment>()
                 .HasMany(s=>s.Submissions)
                 .WithOne(a => a.Assignment)
                 .HasForeignKey(key => key.AssignmentId);

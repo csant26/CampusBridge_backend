@@ -14,12 +14,5 @@ namespace backend.Models.Domain.Content.Images
         public string FileExtension { get; set; }
         public long FileSizeInBytes { get; set; }
         public string FilePath { get; set; }
-
-        public string? AssignmentId { get; set; } = null;
-        [JsonIgnore]
-        public Assignment? Assignment { get; set; } = null; //one-to-one
-        public string? SubmissionId {  get; set; } = null;
-        [JsonIgnore]
-        public Submission? Submission { get; set; } = null; //one-to-one
     }
 }

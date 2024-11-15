@@ -11,10 +11,11 @@ namespace backend.Models.DTO.Content.Assignment
     {
         public string AssignmentId { get; set; }
         public string Question { get; set; }
-        public IFormFile? QuestionFile { get; set; } = null;
+        public string? ImagePath { get; set; } = null;
         public CourseDTO CourseDTO { get; set; }
         public DateTime AssignedDate { get; set; }
         public DateTime SubmissionDate { get; set; }
         public TeacherDTO TeacherDTO { get; set; }
+        public List<SubmissionDTO> SubmissionDTO {  get; set; }
     }
 }

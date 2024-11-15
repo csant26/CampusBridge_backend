@@ -1,5 +1,6 @@
 ﻿using backend.Controllers;
 using backend.Data;
+using backend.Images;
 using backend.Models.Domain.Content.Assignments;
 using backend.Models.Domain.Content.Images;
 using backend.Models.DTO.Content.Assignment;
@@ -12,19 +13,22 @@ namespace backend.Repository.Content
     {
         private readonly CampusBridgeDbContext campusBridgeDbContext;
         private readonly IImageRepository imageRepository;
+        private readonly ImageHandling imageHandling;
 
         public AssignmentRepository(CampusBridgeDbContext campusBridgeDbContext,
-            IImageRepository imageRepository)
+            IImageRepository imageRepository,
+            ImageHandling imageHandling)
         {
             this.campusBridgeDbContext = campusBridgeDbContext;
             this.imageRepository = imageRepository;
+            this.imageHandling = imageHandling;
         }
         public async Task<Assignment> CreateAssignment(Assignment assignment,
-            AddAssignmentDTO addAssignmentDTO)
+            ImageUploadRequestDTO imageUploadRequestDTO)
         {
-            var course = await campusBridgeDbContext.Course.FindAsync(addAssignmentDTO.CourseId);
+            var course = await campusBridgeDbContext.Course.FindAsync(assignment.CourseId);
             var teacher = await campusBridgeDbContext.Teachers
-                .FirstOrDefaultAsync(x => x.TeacherId == addAssignmentDTO.TeacherId);
+                .FirstOrDefaultAsync(x => x.TeacherId == assignment.TeacherId);
             if (course != null)
             {
                 assignment.Course = course;
@@ -33,26 +37,11 @@ namespace backend.Repository.Content
             {
                 assignment.Teacher = teacher;
             }
-            var images = new List<Image>();
-            if(addAssignmentDTO.QuestionImage != null)
+            var imagePath = await imageHandling.UploadImage(imageUploadRequestDTO);
+            if (imagePath != null)
             {
-                foreach(var image in addAssignmentDTO.QuestionImage)
-                {
-                    var img = new Image
-                    {
-                        ImageId = image.FileId,
-                        File = image.File,
-                        FileName = image.FileName,
-                        FileDescription = image.FileDescription,
-                        FileExtension = Path.GetExtension(image.File.FileName),
-                        FileSizeInBytes = image.File.Length,
-                    };
-                    var uploadedImage = await imageRepository.UploadImage(img);
-                    img.FilePath = uploadedImage.FilePath;
-                    images.Add(img);
-                }
+                assignment.ImagePath = imagePath;
             }
-            assignment.QuestionImage = images;
             await campusBridgeDbContext.Assignments.AddAsync(assignment);
             await campusBridgeDbContext.SaveChangesAsync();
             return assignment;
@@ -76,7 +65,7 @@ namespace backend.Repository.Content
 
         public async Task<Assignment> UpdateAssignment(string AssignmentId,
             Assignment assignment,
-            UpdateAssignmentDTO updateAssignmentDTO)
+            ImageUploadRequestDTO imageUploadRequestDTO)
         {
             var existingAssignment = await GetAssignmentById(AssignmentId);
             if (existingAssignment == null) { return null; }
@@ -86,38 +75,22 @@ namespace backend.Repository.Content
             existingAssignment.AssignedDate = assignment.AssignedDate;
             existingAssignment.SubmissionDate = assignment.SubmissionDate;
 
-            var course = await campusBridgeDbContext.Course.FindAsync(updateAssignmentDTO.CourseId);
+            var course = await campusBridgeDbContext.Course.FindAsync(assignment.CourseId);
             var teacher = await campusBridgeDbContext.Teachers
-                .FirstOrDefaultAsync(x => x.TeacherId == updateAssignmentDTO.TeacherId);
+                .FirstOrDefaultAsync(x => x.TeacherId == assignment.TeacherId);
             if (course != null)
             {
-                assignment.Course = course;
+                existingAssignment.Course = course;
             }
             if (teacher != null)
             {
-                assignment.Teacher = teacher;
+                existingAssignment.Teacher = teacher;
             }
-
-            var images = new List<Image>();
-            if (updateAssignmentDTO.QuestionImage != null)
+            var imagePath = await imageHandling.UploadImage(imageUploadRequestDTO);
+            if (imagePath != null)
             {
-                foreach (var image in updateAssignmentDTO.QuestionImage)
-                {
-                    var img = new Image
-                    {
-                        ImageId = image.FileId,
-                        File = image.File,
-                        FileName = image.FileName,
-                        FileDescription = image.FileDescription,
-                        FileExtension = Path.GetExtension(image.File.FileName),
-                        FileSizeInBytes = image.File.Length,
-                    };
-                    var uploadedImage = await imageRepository.UploadImage(img);
-                    img.FilePath = uploadedImage.FilePath;
-                    images.Add(img);
-                }
+                existingAssignment.ImagePath = imagePath;
             }
-            existingAssignment.QuestionImage= images;
             await campusBridgeDbContext.SaveChangesAsync();
             return existingAssignment;
 
