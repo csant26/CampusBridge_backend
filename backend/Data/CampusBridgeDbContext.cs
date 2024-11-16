@@ -1,6 +1,7 @@
 ﻿using backend.Models.Domain.Content.Articles;
 using backend.Models.Domain.Content.Assignments;
 using backend.Models.Domain.Content.Files;
+using backend.Models.Domain.Content.Notices;
 using backend.Models.Domain.Content.Syllabi;
 using backend.Models.Domain.Students;
 using backend.Models.Domain.Teachers;
@@ -106,8 +107,12 @@ namespace backend.Data
         public DbSet<Assignment> Assignments {  get; set; }
         public DbSet<Submission> Submissions { get; set; }
 
+        //Notice-related Tables
+        public DbSet<Notice> Notices { get; set; }
+
         //Teacher-related Tables
         public DbSet<Teacher> Teachers { get; set; }
+
 
     }
 }

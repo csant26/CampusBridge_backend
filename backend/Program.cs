@@ -77,6 +77,8 @@ builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<IFileRepository, FileRepository>();
 builder.Services.AddScoped<IAssignmentRepository, AssignmentRepository>();
 builder.Services.AddScoped<FileHandling>();
+builder.Services.AddScoped<INoticeRepository, NoticeRepository>();
+
 
 //Setting up mapping between Domain and DTOs.
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
