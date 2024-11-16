@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
-using backend.Images;
 using backend.Models.Domain.Content.Assignments;
 using backend.Models.DTO.Content.Assignment;
-using backend.Models.DTO.Content.Images;
+using backend.Models.DTO.Content.File;
 using backend.Repository.Content;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -23,11 +22,11 @@ namespace backend.Controllers
         [HttpPost("CreateAssignment")]
         ///[Consumes("multipart/form-data")]
         public async Task<IActionResult> CreateAssignment([FromBody] AddAssignmentDTO addAssignmentDTO,
-            [FromForm]ImageUploadRequestDTO imageUploadRequestDTO)
+            [FromForm]FileUploadRequestDTO fileUploadRequestDTO)
         {
             var assignment = await assignmentRepository.CreateAssignment(
                 mapper.Map<Assignment>(addAssignmentDTO),
-                imageUploadRequestDTO);
+                fileUploadRequestDTO);
             if (assignment == null) { return BadRequest("Assignment couldn't be created."); }
             else { return Ok(mapper.Map<AssignmentDTO>(assignment)); }
 
@@ -50,7 +49,7 @@ namespace backend.Controllers
         public async Task<IActionResult> UpdateAssignment(
             [FromRoute] string AssignmentId,
             [FromBody] UpdateAssignmentDTO updateAssignmentDTO,
-            [FromForm] ImageUploadRequestDTO imageUploadRequestDTO)
+            [FromForm] FileUploadRequestDTO imageUploadRequestDTO)
         {
             var assignment = await assignmentRepository.UpdateAssignment(AssignmentId, 
                 mapper.Map<Assignment>(updateAssignmentDTO),

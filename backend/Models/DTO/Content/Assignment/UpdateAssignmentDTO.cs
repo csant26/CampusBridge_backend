@@ -1,6 +1,4 @@
-﻿using backend.Models.DTO.Content.Images;
-
-namespace backend.Models.DTO.Content.Assignment
+﻿namespace backend.Models.DTO.Content.Assignment
 {
     public class UpdateAssignmentDTO
     {

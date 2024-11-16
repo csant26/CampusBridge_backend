@@ -1,7 +1,5 @@
-﻿using backend.Models.Domain.Content.Images;
-using backend.Models.Domain.Content.Syllabi;
+﻿using backend.Models.Domain.Content.Syllabi;
 using backend.Models.Domain.Teachers;
-using backend.Models.DTO.Content.Images;
 using backend.Models.DTO.Content.Syllabus;
 using backend.Models.DTO.Teacher;
 

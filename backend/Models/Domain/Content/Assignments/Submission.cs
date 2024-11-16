@@ -1,5 +1,4 @@
-﻿using backend.Models.Domain.Content.Images;
-using backend.Models.Domain.Students;
+﻿using backend.Models.Domain.Students;
 using System.Text.Json.Serialization;
 
 namespace backend.Models.Domain.Content.Assignments

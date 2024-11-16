@@ -1,6 +1,6 @@
 ﻿using backend.Models.Domain.Content.Articles;
 using backend.Models.Domain.Content.Assignments;
-using backend.Models.Domain.Content.Images;
+using backend.Models.Domain.Content.Files;
 using backend.Models.Domain.Content.Syllabi;
 using backend.Models.Domain.Students;
 using backend.Models.Domain.Teachers;
@@ -95,8 +95,8 @@ namespace backend.Data
         public DbSet<Course> Course { get; set; }
         public DbSet<Unit> Unit { get; set; }
 
-        //Image-related Tables
-        public DbSet<Image> Images { get; set; }
+        //File-related Tables
+        public DbSet<FileDomain> Files { get; set; }
 
         //Assignment-related Tables
         public DbSet<Assignment> Assignments {  get; set; }

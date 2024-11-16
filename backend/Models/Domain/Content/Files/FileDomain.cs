@@ -2,13 +2,13 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
-namespace backend.Models.Domain.Content.Images
+namespace backend.Models.Domain.Content.Files
 {
-    public class Image
+    public class FileDomain
     {
-        public string ImageId { get; set; }
+        public string FileId { get; set; }
         [NotMapped]
-        public IFormFile File { get; set; }
+        public IFormFile FileToUpload { get; set; }
         public string FileName { get; set; }
         public string? FileDescription { get; set; }
         public string FileExtension { get; set; }

@@ -1,13 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace backend.Models.DTO.Content.Images
+namespace backend.Models.DTO.Content.File
 {
-    public class ImageUploadRequestDTO
+    public class FileUploadRequestDTO
     {
         [Required]
         public string FileId {  get; set; }
         [Required]
-        public IFormFile File { get; set; }
+        public IFormFile FileToUpload { get; set; }
         [Required]
         public string FileName { get; set; }
         public string? FileDescription { get; set; }

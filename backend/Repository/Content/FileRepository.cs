@@ -1,16 +1,14 @@
 ﻿using backend.Data;
-using backend.Models.Domain.Content.Images;
-using backend.Models.DTO.Content.Images;
-
+using backend.Models.Domain.Content.Files;
 namespace backend.Repository.Content
 {
-    public class ImageRepository : IImageRepository
+    public class FileRepository : IFileRepository
     {
         private readonly CampusBridgeDbContext campusBridgeDbContext;
         private readonly IWebHostEnvironment webHostEnvironment;
         private readonly IHttpContextAccessor httpContextAccessor;
 
-        public ImageRepository(CampusBridgeDbContext campusBridgeDbContext
+        public FileRepository(CampusBridgeDbContext campusBridgeDbContext
             ,IWebHostEnvironment webHostEnvironment,
             IHttpContextAccessor httpContextAccessor)
         {
@@ -18,29 +16,29 @@ namespace backend.Repository.Content
             this.webHostEnvironment = webHostEnvironment;
             this.httpContextAccessor = httpContextAccessor;
         }
-        public async Task<Image> UploadImage(Image image)
+        public async Task<FileDomain> UploadFile(FileDomain fileDomain)
         {
             var localFilePath = Path.Combine(webHostEnvironment.ContentRootPath,
-                "Images",
-                $"{image.FileName}{image.FileExtension}");
+                "Files",
+                $"{fileDomain.FileName}{fileDomain.FileExtension}");
 
             using var stream = new FileStream(localFilePath, FileMode.Create);
-            await image.File.CopyToAsync(stream);
+            await fileDomain.FileToUpload.CopyToAsync(stream);
 
             //URL path to access the image
-            //https://localhost:1234/images/abc.jpg
+            //https://localhost:1234/files/abc.jpg
             var urlFilePath = $"{httpContextAccessor.HttpContext.Request.Scheme}://" +
                 $"{httpContextAccessor.HttpContext.Request.Host}" +
                 $"{httpContextAccessor.HttpContext.Request.PathBase}" +
-                $"/Image/{image.FileName}{image.FileExtension}";
+                $"/Files/{fileDomain.FileName}{fileDomain.FileExtension}";
 
 
-            image.FilePath = urlFilePath;
+            fileDomain.FilePath = urlFilePath;
 
-            await campusBridgeDbContext.Images.AddAsync(image);
+            await campusBridgeDbContext.Files.AddAsync(fileDomain);
             await campusBridgeDbContext.SaveChangesAsync();
 
-            return image;
+            return fileDomain;
         }
     }
 }
