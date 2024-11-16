@@ -78,6 +78,10 @@ namespace backend.Data
                 .HasOne(s => s.Student)
                 .WithMany(i => i.Submissions)
                 .HasForeignKey(key => key.StudentId);
+
+            modelBuilder.Entity<FileDomain>()
+                .HasKey(key => key.FileId);
+
         }
 
         //Student-related Tables.

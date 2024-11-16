@@ -11,7 +11,7 @@ namespace backend.Models.DTO.Content.Assignment
     {
         public string AssignmentId { get; set; }
         public string Question { get; set; }
-        public string? ImagePath { get; set; } = null;
+        public string? FilePath { get; set; } = null;
         public CourseDTO CourseDTO { get; set; }
         public DateTime AssignedDate { get; set; }
         public DateTime SubmissionDate { get; set; }

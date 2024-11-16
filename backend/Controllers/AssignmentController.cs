@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using backend.CustomActionFilter;
+using backend.Migrations.CampusBridgeDb;
 using backend.Models.Domain.Content.Assignments;
 using backend.Models.DTO.Content.Assignment;
 using backend.Models.DTO.Content.File;
@@ -14,61 +16,113 @@ namespace backend.Controllers
     {
         private readonly IAssignmentRepository assignmentRepository;
         private readonly IMapper mapper;
-        public AssignmentController(IAssignmentRepository assignmentRepository,IMapper mapper)
+        public AssignmentController(IAssignmentRepository assignmentRepository, IMapper mapper)
         {
             this.assignmentRepository = assignmentRepository;
             this.mapper = mapper;
         }
         [HttpPost("CreateAssignment")]
-        ///[Consumes("multipart/form-data")]
-        public async Task<IActionResult> CreateAssignment([FromBody] AddAssignmentDTO addAssignmentDTO,
-            [FromForm]FileUploadRequestDTO fileUploadRequestDTO)
+        [ValidateModel]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> CreateAssignment(
+            [FromRoute]string TeacherId,
+            [FromForm] AddAssignmentDTO addAssignmentDTO,
+            [FromForm] FileUploadRequestDTO fileUploadRequestDTO)
         {
             var assignment = await assignmentRepository.CreateAssignment(
                 mapper.Map<Assignment>(addAssignmentDTO),
                 fileUploadRequestDTO);
             if (assignment == null) { return BadRequest("Assignment couldn't be created."); }
             else { return Ok(mapper.Map<AssignmentDTO>(assignment)); }
-
         }
         [HttpGet("GetAssignment")]
+        [ValidateModel]
         public async Task<IActionResult> GetAssignment()
         {
             var assignments = await assignmentRepository.GetAssignment();
             if (assignments == null) { return BadRequest("No assignments found."); }
-            return Ok(assignments);
+            return Ok(mapper.Map<List<AssignmentDTO>>(assignments));
         }
         [HttpGet("GetAssignmentById/{AssignmentId}")]
+        [ValidateModel]
         public async Task<IActionResult> GetAssignmentById([FromRoute] string AssignmentId)
         {
             var assignment = await assignmentRepository.GetAssignmentById(AssignmentId);
             if (assignment == null) { return BadRequest("No assignment found."); }
-            return Ok(assignment);
+            return Ok(mapper.Map<AssignmentDTO>(assignment));
         }
-        [HttpPut("UpdateAssignment/{AssignmentId}")]
+        [HttpPut("UpdateAssignment/{AssignmentId}/{TeacherId}")]
+        [ValidateModel]
+        [Consumes("multipart/form-data")]
         public async Task<IActionResult> UpdateAssignment(
             [FromRoute] string AssignmentId,
             [FromBody] UpdateAssignmentDTO updateAssignmentDTO,
             [FromForm] FileUploadRequestDTO imageUploadRequestDTO)
         {
-            var assignment = await assignmentRepository.UpdateAssignment(AssignmentId, 
+            var assignment = await assignmentRepository.UpdateAssignment(AssignmentId,
                 mapper.Map<Assignment>(updateAssignmentDTO),
                 imageUploadRequestDTO);
             if (assignment == null) { return BadRequest("Assignment couldn't be updated."); }
-            return Ok(assignment);
+            return Ok(mapper.Map<AssignmentDTO>(assignment));
         }
-        [HttpDelete("DeleteAssignment/{AssignmentId}")]
-        public async Task<IActionResult> DeleteAssignment([FromRoute]string AssignmentId)
+        [HttpDelete("DeleteAssignment/{AssignmentId}/{TeacherId}")]
+        [ValidateModel]
+        public async Task<IActionResult> DeleteAssignment(
+            [FromRoute]string TeacherId,
+            [FromRoute] string AssignmentId)
         {
-            var assignment = await assignmentRepository.DeleteAssignment(AssignmentId);
+            var assignment = await assignmentRepository.DeleteAssignment(AssignmentId,TeacherId);
             if (assignment == null) { return BadRequest("Assignment couldn't be deleted."); }
-            return Ok(assignment);
+            return Ok(mapper.Map<AssignmentDTO>(assignment));
         }
-        //[HttpPost("SubmitAssignment")]
-        //public async Task<IActionResult> SubmitAssignment([FromBody])
-        //{
-
-        //}
+        [HttpPost("SubmitAssignment")]
+        [ValidateModel]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> SubmitAssignment([FromForm] AddSubmissionDTO addSubmissionDTO,
+            [FromForm] FileUploadRequestDTO fileUploadRequestDTO)
+        {
+            var submittedAssignment = await assignmentRepository
+                .SubmitAssignment(mapper.Map<Submission>(addSubmissionDTO), fileUploadRequestDTO);
+            if (submittedAssignment == null) { return BadRequest("Assignment couldn't be submitted."); }
+            return Ok(mapper.Map<SubmissionDTO>(submittedAssignment));
+        }
+        [HttpGet("GetSubmission")]
+        [ValidateModel]
+        public async Task<IActionResult> GetSubmission()
+        {
+            var submissions = await assignmentRepository.GetSubmission();
+            if (submissions == null) { return BadRequest("No submissions found."); }
+            return Ok(mapper.Map<List<SubmissionDTO>>(submissions));
+        }
+        [HttpGet("GetSubmissionById/{SubmissionId}")]
+        [ValidateModel]
+        public async Task<IActionResult> GetSubmissionById([FromRoute] string SubmissionId)
+        {
+            var submission = await assignmentRepository.GetSubmissionById(SubmissionId);
+            if (submission == null) { return BadRequest("No submissions found."); }
+            return Ok(mapper.Map<SubmissionDTO>(submission));
+        }
+        [HttpPut("UpdateSubmission/{SubmissionId}")]
+        [ValidateModel]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> UpdateSubmission([FromRoute] string SubmissionId,
+            [FromForm] UpdateSubmissionDTO updateSubmissionDTO,
+            [FromForm] FileUploadRequestDTO fileUploadRequestDTO)
+        {
+            var submission = await assignmentRepository.UpdateSubmission(SubmissionId,
+                mapper.Map<Submission>(updateSubmissionDTO),
+                fileUploadRequestDTO);
+            if (submission == null) { return BadRequest("Submission unchanged."); }
+            return Ok(mapper.Map<SubmissionDTO>(submission));
+        }
+        [HttpDelete("DeleteSubmission/{SubmissionId}")]
+        [ValidateModel]
+        public async Task<IActionResult> DeleteSubmission([FromRoute] string SubmissionId)
+        {
+            var submission = await assignmentRepository.DeleteSubmission(SubmissionId);
+            if (submission == null) { return BadRequest("Submission couldn't be deleted."); }
+            return Ok(mapper.Map<SubmissionDTO>(submission));
+        }
     }
 }
 

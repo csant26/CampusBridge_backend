@@ -1,5 +1,7 @@
 ﻿using backend.Models.Domain.Content.Assignments;
 using backend.Models.Domain.Content.Syllabi;
+using backend.Models.DTO.Content.Assignment;
+using backend.Models.DTO.Content.Syllabus;
 using System.Text.Json.Serialization;
 
 namespace backend.Models.DTO.Teacher
@@ -10,7 +12,7 @@ namespace backend.Models.DTO.Teacher
         public string Name { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
-        public List<Course> Courses { get; set; }
-        public List<Assignment>? Assignments { get; set; } = null;
+        public List<CourseDTO> CourseDTO { get; set; }
+        public List<AssignmentDTO>? AssignmentDTO { get; set; } = null;
     }
 }

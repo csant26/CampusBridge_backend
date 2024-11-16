@@ -13,6 +13,7 @@ namespace backend.Models.Domain.Teachers
         public string Phone { get; set; }
         [JsonIgnore]
         public List<Course> Courses {  get; set; } //one-to-many
+        [JsonIgnore]
         public List<Assignment>? Assignments { get; set; } = null; //one-to-many
         //subject, positions, working hours
     }
