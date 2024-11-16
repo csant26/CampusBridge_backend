@@ -22,7 +22,7 @@ namespace backend.Repository.Content
             var roles = await userManager.GetRolesAsync(user);
             var role = roles.FirstOrDefault();
             if (role == null) { return null; }
-            else if (role == "CollegeAdmin" || role =="UniveristyAdmin" ) { notice.Creator = role; }
+            else if (role == "CollegeAdmin" || role =="UniversityAdmin" ) { notice.Creator = role; }
             else { return null; }
             notice.DateUpdated = notice.DatePosted;
             await campusBridgeDbContext.Notices.AddAsync(notice);

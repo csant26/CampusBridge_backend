@@ -1,6 +1,7 @@
 ﻿using backend.Models.Domain.Content.Articles;
 using backend.Models.Domain.Content.Assignments;
 using backend.Models.Domain.Content.Files;
+using backend.Models.Domain.Content.Help;
 using backend.Models.Domain.Content.Notices;
 using backend.Models.Domain.Content.Syllabi;
 using backend.Models.Domain.Students;
@@ -109,6 +110,10 @@ namespace backend.Data
 
         //Notice-related Tables
         public DbSet<Notice> Notices { get; set; }
+
+        //Help-related Tables
+        public DbSet<Question> Questions { get; set; }
+        public DbSet<Answer> Answers { get; set; }
 
         //Teacher-related Tables
         public DbSet<Teacher> Teachers { get; set; }

@@ -1,4 +1,5 @@
 ﻿using backend.Models.Domain.Content.Assignments;
+using backend.Models.Domain.Content.Help;
 using backend.Models.Domain.Content.Syllabi;
 using System.Text.Json.Serialization;
 
@@ -23,5 +24,7 @@ namespace backend.Models.Domain.Students
         public List<Submission>? Submissions { get; set; } = null; //one-to-many
         [JsonIgnore]
         public List<Course> Courses { get; set; } //one-to-many
+        [JsonIgnore]
+        public List<Question> Questions { get; set; } //one-to-many
     }
 }

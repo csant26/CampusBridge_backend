@@ -78,7 +78,7 @@ builder.Services.AddScoped<IFileRepository, FileRepository>();
 builder.Services.AddScoped<IAssignmentRepository, AssignmentRepository>();
 builder.Services.AddScoped<FileHandling>();
 builder.Services.AddScoped<INoticeRepository, NoticeRepository>();
-
+builder.Services.AddScoped<IHelpRepository, HelpRepository>();
 
 //Setting up mapping between Domain and DTOs.
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
