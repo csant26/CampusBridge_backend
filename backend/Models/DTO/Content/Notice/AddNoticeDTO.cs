@@ -13,6 +13,10 @@ namespace backend.Models.DTO.Content.Notice
         [Required]
         public string Description { get; set; }
         [Required]
+        public List<string> DirectedTo { get; set; }
+        [Required]
         public DateTime DatePosted { get; set; }
+        public string CreatorId { get; set; } //Supplied for validation only
+
     }
 }

@@ -8,7 +8,10 @@ namespace backend.Models.DTO.Content.Notice
         public string Title { get; set; }
         [Required]
         public string Description { get; set; }
-        [Required]  
+        [Required]
+        public List<string> DirectedTo { get; set; }
+        [Required]
         public DateTime DateUpdated { get; set; }
+        public string CreatorId { get; set; } //Supplied for validation only
     }
 }

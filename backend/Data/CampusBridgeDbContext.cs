@@ -1,4 +1,5 @@
-﻿using backend.Models.Domain.Content.Articles;
+﻿using backend.Models.Domain.Colleges;
+using backend.Models.Domain.Content.Articles;
 using backend.Models.Domain.Content.Assignments;
 using backend.Models.Domain.Content.Events;
 using backend.Models.Domain.Content.Files;
@@ -32,13 +33,11 @@ namespace backend.Data
 
             modelBuilder.Entity<Student>()
                 .HasMany(c => c.Clubs)
-                .WithMany(s => s.Students)
-                ;
+                .WithMany(s => s.Students);
 
             modelBuilder.Entity<Student>()
                 .HasMany(m => m.Courses)
                 .WithMany(s => s.Students);
-
 
             //Article model relationships.
             modelBuilder.Entity<Article>()
@@ -84,6 +83,17 @@ namespace backend.Data
 
             modelBuilder.Entity<FileDomain>()
                 .HasKey(key => key.FileId);
+
+
+            //College-related relationships
+            modelBuilder.Entity<College>()
+                .HasMany(st => st.Students)
+                .WithOne(co => co.College)
+                .HasForeignKey(key => key.CollegeId);
+
+            modelBuilder.Entity<College>()
+                .HasMany(te => te.Teachers)
+                .WithMany(co => co.Colleges);
 
         }
 

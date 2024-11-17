@@ -21,5 +21,6 @@ namespace backend.Models.DTO.Student
         public List<string>? ElectiveIds { get; set; } = null;
         public string FinancialId { get; set; }
         public List<string>? ClubIds { get; set; }
+        public string CreatorId { get; set; } //Creator: College or Student
     }
 }

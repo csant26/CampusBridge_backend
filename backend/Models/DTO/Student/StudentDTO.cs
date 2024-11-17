@@ -1,4 +1,5 @@
 ﻿using backend.Models.Domain.Students;
+using backend.Models.DTO.College;
 using backend.Models.DTO.Content.Assignment;
 using backend.Models.DTO.Content.Help;
 using backend.Models.DTO.Content.Syllabus;
@@ -28,5 +29,6 @@ namespace backend.Models.DTO.Student
         public List<ClubDTO>? ClubsDTO { get; set; }
         public List<SubmissionDTO>? SubmissionDTO { get; set; }
         public List<QuestionDTO>? QuestionDTO { get; set; }
+        public CollegeDTO CollegeDTO {  get; set; }
     }
 }

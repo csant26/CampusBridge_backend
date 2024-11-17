@@ -22,10 +22,9 @@ namespace backend.Controllers
         }
         [HttpPost("CreateNotice/{CreatorId}")]
         [ValidateModel]
-        public async Task<IActionResult> CreateNotice([FromRoute] string CreatorId,
-            [FromBody] AddNoticeDTO addNoticeDTO)
+        public async Task<IActionResult> CreateNotice([FromBody] AddNoticeDTO addNoticeDTO)
         {
-            var notice = await noticeRepository.CreateNotice(CreatorId, mapper.Map<Notice>(addNoticeDTO));
+            var notice = await noticeRepository.CreateNotice(mapper.Map<Notice>(addNoticeDTO));
             if (notice == null) { return BadRequest("Notice couldn't be created."); }
             return Ok(mapper.Map<NoticeDTO>(notice));
         }
@@ -45,22 +44,28 @@ namespace backend.Controllers
             if (notice == null) { return BadRequest("No notice found."); }
             return Ok(mapper.Map<NoticeDTO>(notice));
         }
-        [HttpGet("GetNoticeByRole/{RoleName}")]
+        [HttpGet("GetNoticeByCreator/{Creator}")]
         [ValidateModel]
-        public async Task<IActionResult> GetNoticeByRole([FromRoute] string RoleName)
+        public async Task<IActionResult> GetNoticeByRole([FromRoute] string Creator)
         {
-            var notices = await noticeRepository.GetNoticeByRole(RoleName);
+            var notices = await noticeRepository.GetNoticeByCreator(Creator);
             if (notices == null) { return BadRequest("No notice found."); }
             return Ok(mapper.Map<List<NoticeDTO>>(notices));
         }
-        [HttpPut("UpdateNotice/{NoticeId}/{CreatorId}")]
+        [HttpGet("GetNoticeByAudience/{Audience}")]
+        [ValidateModel]
+        public async Task<IActionResult> GetNoticeByAudience([FromRoute] string Audience)
+        {
+            var notices = await noticeRepository.GetNoticeByAudience(Audience);
+            if (notices == null) { return BadRequest("No notice found."); }
+            return Ok(mapper.Map<List<NoticeDTO>>(notices));
+        }
+        [HttpPut("UpdateNotice/{NoticeId}")]
         [ValidateModel]
         public async Task<IActionResult> UpdateNotice([FromRoute] string NoticeId,
-            [FromRoute] string CreatorId,
             [FromBody] UpdateNoticeDTO updateNoticeDTO)
         {
             var notice = await noticeRepository.UpdateNotice(NoticeId,
-                CreatorId,
                 mapper.Map<Notice>(updateNoticeDTO));
             if (notice == null) { return BadRequest("Notice couldn't be updated."); }
             return Ok(mapper.Map<NoticeDTO>(notice));

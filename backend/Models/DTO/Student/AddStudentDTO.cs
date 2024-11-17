@@ -14,5 +14,6 @@
         public string AcademicId {  get; set; }
         public List<string>? ElectiveIds { get; set; } = null;
         public List<string>? ClubIds { get; set; } = null;
+        public string CollegeId { get; set; }
     }
 }
