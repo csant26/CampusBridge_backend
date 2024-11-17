@@ -13,6 +13,6 @@ namespace backend.Models.DTO.Content.Assignment
         [Required]
         public DateTime SubmissionDate { get; set; }
         [Required]
-        public string TeacherId { get; set; }
+        public string TeacherId { get; set; } //Submitted for validation
     }
 }

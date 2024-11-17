@@ -7,7 +7,7 @@ namespace backend.Models.DTO.Content.Help
     {
         public string AnswerId { get; set; }
         public string AnswerDetails { get; set; }
-        public string AnswerBy { get; set; }
+        public string AnswerById { get; set; }
         public QuestionDTO QuestionDTO { get; set; }
     }
 }

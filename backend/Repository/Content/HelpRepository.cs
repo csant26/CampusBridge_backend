@@ -1,5 +1,7 @@
 ﻿using backend.Data;
 using backend.Models.Domain.Content.Help;
+using backend.Models.Domain.Students;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace backend.Repository.Content
@@ -7,10 +9,13 @@ namespace backend.Repository.Content
     public class HelpRepository : IHelpRepository
     {
         private readonly CampusBridgeDbContext campusBridgeDbContext;
+        private readonly UserManager<IdentityUser> userManager;
 
-        public HelpRepository(CampusBridgeDbContext campusBridgeDbContext)
+        public HelpRepository(CampusBridgeDbContext campusBridgeDbContext,
+            UserManager<IdentityUser> userManager)
         {
             this.campusBridgeDbContext = campusBridgeDbContext;
+            this.userManager = userManager;
         }
         public async Task<Question> CreateQuestion(Question question)
         {
@@ -55,46 +60,80 @@ namespace backend.Repository.Content
             return questionsToReturn;
         }
         public async Task<Question> UpdateQuestion(string QuestionId,
-            string StudentId,
             Question question)
         {
             var existingQuestion = await GetQuestionById(QuestionId);
             if (existingQuestion == null) { return null; }
 
-            if (existingQuestion.StudentId == StudentId)
-            {
-                existingQuestion.QuestionDetails = question.QuestionDetails;
-                existingQuestion.DirectedTo = question.DirectedTo;
-            }
+            if (existingQuestion.StudentId != question.StudentId) { return null; }
+
+            existingQuestion.QuestionDetails = question.QuestionDetails;
+            existingQuestion.DirectedTo = question.DirectedTo;
             await campusBridgeDbContext.SaveChangesAsync();
             return existingQuestion;
         }
 
-        public Task<Question> DeleteQuestion(string QuestionId)
+        public async Task<Question> DeleteQuestion(string QuestionId, string StudentId)
         {
-            throw new NotImplementedException();
+            var existingQuestion = await GetQuestionById(QuestionId);
+            if (existingQuestion == null) { return null; }
+            if (existingQuestion.StudentId != StudentId) { return null; }
+            campusBridgeDbContext.Questions.Remove(existingQuestion);
+            await campusBridgeDbContext.SaveChangesAsync();
+            return existingQuestion;
         }
 
-        public Task<Answer> AddAnswer(string CreatorId, Answer answer)
+        public async Task<Answer> AddAnswer(Answer answer)
         {
-            throw new NotImplementedException();
+            var user = await userManager.FindByEmailAsync(answer.AnswerById);
+            var roles = await userManager.GetRolesAsync(user);
+            var role = roles.FirstOrDefault();
+            var question = await campusBridgeDbContext.Questions.FindAsync(answer.QuestionId);
+            if (question.DirectedTo.Contains(role))
+            {
+                answer.Question = question;
+                await campusBridgeDbContext.Answers.AddAsync(answer);
+                await campusBridgeDbContext.SaveChangesAsync();
+                return answer;
+            }
+            return null;
         }
 
-        public Task<List<Answer>> GetAnswer()
+        public async Task<List<Answer>> GetAnswer()
         {
-            throw new NotImplementedException();
+            var answers = await campusBridgeDbContext.Answers
+                .Include(x => x.Question)
+                .ToListAsync();
+            if (answers == null) { return null;  }
+            return answers;
         }
-        public Task<Answer> GetAnswerById(string AnswerId)
+        public async Task<Answer> GetAnswerById(string AnswerId)
         {
-            throw new NotImplementedException();
+            var answer = await campusBridgeDbContext.Answers
+                .Include(x => x.Question)
+                .FirstOrDefaultAsync(x=>x.AnswerId == AnswerId);
+            if (answer == null) { return null; }
+            return answer;
         }
-        public Task<Answer> UpdateAnswer(string AnswerId, string CreatorId, Answer answer)
+        public async Task<Answer> UpdateAnswer(string AnswerId, Answer answer)
         {
-            throw new NotImplementedException();
+            var exisitingAnswer = await GetAnswerById(AnswerId);
+            if (exisitingAnswer == null) { return null; }
+
+            if (exisitingAnswer.AnswerById != answer.AnswerById) { return null; }
+
+            exisitingAnswer.AnswerDetails = answer.AnswerDetails;
+            await campusBridgeDbContext.SaveChangesAsync();
+            return exisitingAnswer;
         }
-        public Task<Answer> DeleteAnswer(string AnswerId, string CreatorId)
+        public async Task<Answer> DeleteAnswer(string AnswerId, string CreatorId)
         {
-            throw new NotImplementedException();
+            var existingAnswer = await GetAnswerById(AnswerId);
+            if (existingAnswer == null) { return null; }
+            if (existingAnswer.AnswerById != CreatorId) { return null; }
+            campusBridgeDbContext.Answers.Remove(existingAnswer);
+            await campusBridgeDbContext.SaveChangesAsync();
+            return existingAnswer;
         }
     }
 }

@@ -6,7 +6,7 @@ namespace backend.Models.Domain.Content.Help
     {
         public string AnswerId { get; set; }
         public string AnswerDetails {  get; set; }
-        public string AnswerBy {  get; set; }
+        public string AnswerById {  get; set; }
         public string QuestionId { get; set; } //foreign key
         [JsonIgnore]
         public Question Question { get; set; } //one-to-one

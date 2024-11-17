@@ -22,7 +22,7 @@ namespace backend.Repository.Content
         Task<Submission> UpdateSubmission(string SubmissionId, 
             Submission submission,
             FileUploadRequestDTO fileUploadRequestDTO);
-        Task<Submission> DeleteSubmission(string SubmissionId);
+        Task<Submission> DeleteSubmission(string SubmissionId, string StudentId);
 
 
     }

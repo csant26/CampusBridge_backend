@@ -73,6 +73,8 @@ namespace backend.Repository.Content
                 .FirstOrDefaultAsync(x => x.TeacherId == assignment.TeacherId);
 
             if (!teacher.Courses.Contains(course)) { return null; }
+            if (existingAssignment.TeacherId != assignment.TeacherId) { return null; }
+
 
             if (course != null)
             {
@@ -152,10 +154,11 @@ namespace backend.Repository.Content
             FileUploadRequestDTO fileUploadRequestDTO)
         {
             var existingSubmission = await GetSubmissionById(SubmissionId);
-            if (existingSubmission != null)
-            {
-                existingSubmission.Answer = submission.Answer;
-            }
+            if (existingSubmission == null) { return null; }
+
+            if (existingSubmission.StudentId != submission.StudentId) { return null; }
+
+            existingSubmission.Answer = submission.Answer;
             var filePath = await fileHandling.UploadFile(fileUploadRequestDTO);
             if (filePath != null)
             {
@@ -166,15 +169,16 @@ namespace backend.Repository.Content
 
         }
 
-        public async Task<Submission> DeleteSubmission(string SubmissionId)
+        public async Task<Submission> DeleteSubmission(string SubmissionId, string StudentId)
         {
             var existingSubmission = await GetSubmissionById(SubmissionId);
-            if (existingSubmission != null)
-            {
-                campusBridgeDbContext.Submissions.Remove(existingSubmission);
-                await campusBridgeDbContext.SaveChangesAsync();
-                return existingSubmission;
-            }
+            if (existingSubmission == null) { return null; }
+
+            if (existingSubmission.StudentId != StudentId) { return null; }
+
+            campusBridgeDbContext.Submissions.Remove(existingSubmission);
+            await campusBridgeDbContext.SaveChangesAsync();
+            return existingSubmission;
             return null;
         }
     }

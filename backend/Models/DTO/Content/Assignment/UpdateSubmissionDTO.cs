@@ -6,5 +6,6 @@ namespace backend.Models.DTO.Content.Assignment
     {
         [Required]
         public string Answer { get; set; }
+        public string StudentId {  get; set; } //Submitted for validation
     }
 }
