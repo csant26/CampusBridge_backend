@@ -12,6 +12,7 @@ namespace backend.Models.Domain.Students
         public string Email { get; set; }
         public string Phone { get; set; }
         public string Location { get; set; }
+        public bool? isClubHead { get; set; } = false;
         //public string SymbolNo { get; set; }
         //public string RegistrationNo {  get; set; }
         //Foreign Keys

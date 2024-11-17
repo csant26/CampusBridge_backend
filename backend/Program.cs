@@ -2,8 +2,8 @@ using backend;
 using backend.Data;
 using backend.Files;
 using backend.Mappings;
-using backend.Repository.College;
 using backend.Repository.Content;
+using backend.Repository.Students;
 using backend.Repository.Token;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -79,6 +79,7 @@ builder.Services.AddScoped<IAssignmentRepository, AssignmentRepository>();
 builder.Services.AddScoped<FileHandling>();
 builder.Services.AddScoped<INoticeRepository, NoticeRepository>();
 builder.Services.AddScoped<IHelpRepository, HelpRepository>();
+builder.Services.AddScoped<IClubRepository, ClubRepository>();
 
 //Setting up mapping between Domain and DTOs.
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));

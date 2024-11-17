@@ -7,6 +7,7 @@ namespace backend.Models.DTO.Content.Help
     public class AddAnswerDTO
     {
         [Required]
+        [MinLength(3)]
         public string AnswerId { get; set; }
         [Required]
         public string AnswerDetails { get; set; }

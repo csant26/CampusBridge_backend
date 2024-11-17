@@ -115,11 +115,12 @@ namespace backend.Controllers
             if (submission == null) { return BadRequest("Submission unchanged."); }
             return Ok(mapper.Map<SubmissionDTO>(submission));
         }
-        [HttpDelete("DeleteSubmission/{SubmissionId}")]
+        [HttpDelete("DeleteSubmission/{SubmissionId}/{StudentId}")]
         [ValidateModel]
-        public async Task<IActionResult> DeleteSubmission([FromRoute] string SubmissionId)
+        public async Task<IActionResult> DeleteSubmission([FromRoute] string SubmissionId,
+            [FromRoute]string StudentId)
         {
-            var submission = await assignmentRepository.DeleteSubmission(SubmissionId);
+            var submission = await assignmentRepository.DeleteSubmission(SubmissionId, StudentId);
             if (submission == null) { return BadRequest("Submission couldn't be deleted."); }
             return Ok(mapper.Map<SubmissionDTO>(submission));
         }

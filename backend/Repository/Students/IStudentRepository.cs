@@ -1,7 +1,7 @@
 ﻿using backend.Models.Domain.Students;
 using backend.Models.DTO.Student;
 
-namespace backend.Repository.College
+namespace backend.Repository.Students
 {
     public interface IStudentRepository
     {

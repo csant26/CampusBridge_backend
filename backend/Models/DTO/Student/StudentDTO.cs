@@ -12,6 +12,7 @@ namespace backend.Models.DTO.Student
         public string Email { get; set; }
         public string Phone { get; set; }
         public string Location { get; set; }
+        public bool? isClubHead { get; set; } = false;
         //Navigation Properties
         public AcademicDTO AcademicDTO { get; set; }
         public FinancialDTO FinancialDTO { get; set; }
