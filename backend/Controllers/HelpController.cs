@@ -94,6 +94,14 @@ namespace backend.Controllers
             if (answer == null) { return BadRequest("No answers found."); }
             return Ok(mapper.Map<AnswerDTO>(answer));
         }
+        [HttpGet("GetAnswerByRoleId/{RoleId}")]
+        [ValidateModel]
+        public async Task<IActionResult> GetAnswerByRoleId([FromRoute] string RoleId)
+        {
+            var answer = await helpRepository.GetAnswerByRoleId(RoleId);
+            if (answer == null) { return BadRequest("No answers found."); }
+            return Ok(mapper.Map<List<AnswerDTO>>(answer));
+        }
         [HttpPut("UpdateAnswer/{AnswerId}")]
         [ValidateModel]
         public async Task<IActionResult> UpdateAnswer([FromRoute] string AnswerId,

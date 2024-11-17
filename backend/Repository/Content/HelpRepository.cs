@@ -87,16 +87,18 @@ namespace backend.Repository.Content
         {
             var user = await userManager.FindByEmailAsync(answer.AnswerById);
             var roles = await userManager.GetRolesAsync(user);
-            var role = roles.FirstOrDefault();
             var question = await campusBridgeDbContext.Questions.FindAsync(answer.QuestionId);
-            if (question.DirectedTo.Contains(role))
+            foreach(var role in roles)
             {
-                answer.Question = question;
-                await campusBridgeDbContext.Answers.AddAsync(answer);
-                await campusBridgeDbContext.SaveChangesAsync();
-                return answer;
+                if (!question.DirectedTo.Contains(role))
+                {
+                    return null;
+                }
             }
-            return null;
+            answer.Question = question;
+            await campusBridgeDbContext.Answers.AddAsync(answer);
+            await campusBridgeDbContext.SaveChangesAsync();
+            return answer;
         }
 
         public async Task<List<Answer>> GetAnswer()
@@ -114,6 +116,13 @@ namespace backend.Repository.Content
                 .FirstOrDefaultAsync(x=>x.AnswerId == AnswerId);
             if (answer == null) { return null; }
             return answer;
+        }
+        public async Task<List<Answer>> GetAnswerByRoleId(string RoleId)
+        {
+            var answers = await campusBridgeDbContext.Answers.Where(x => x.AnswerById == RoleId).ToListAsync();
+            if(answers == null) { return null; }
+            return answers;
+            
         }
         public async Task<Answer> UpdateAnswer(string AnswerId, Answer answer)
         {

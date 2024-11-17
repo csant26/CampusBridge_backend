@@ -1,5 +1,6 @@
 ﻿using backend.Data;
 using backend.Models.Domain.Students;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace backend.Repository.Students
@@ -7,20 +8,35 @@ namespace backend.Repository.Students
     public class ClubRepository : IClubRepository
     {
         private readonly CampusBridgeDbContext campusBridgeDbContext;
+        private readonly UserManager<IdentityUser> userManager;
 
-        public ClubRepository(CampusBridgeDbContext campusBridgeDbContext)
+        public ClubRepository(CampusBridgeDbContext campusBridgeDbContext, UserManager<IdentityUser> userManager)
         {
             this.campusBridgeDbContext = campusBridgeDbContext;
+            this.userManager = userManager;
         }
         public async Task<Club> CreateClub(Club club)
         {
-            var student = await campusBridgeDbContext.Students
-                .FirstOrDefaultAsync(x => x.StudentId == club.ClubHeadId);
-            if (student == null) { return null; }
-            if (student.isClubHead == false) { return null; }
+            //Approach 1
+            var userCheck = await userManager.FindByEmailAsync(club.ClubHeadId);
+            var roles = await userManager.GetRolesAsync(userCheck);
+            if (!roles.Contains("ClubHead")) { return null; }
+            //Approach 2
+            //var student = await campusBridgeDbContext.Students
+            //    .FirstOrDefaultAsync(x => x.StudentId == club.ClubHeadId);
+            //if (student == null) { return null; }
+            //if (student.isClubHead == false) { return null; }
+            
             var students = await campusBridgeDbContext.Students
                 .Where(x=>club.ClubId.Contains(x.StudentId))
                 .ToListAsync();
+            if (students == null) { return null; }
+            foreach(var clubStudent in students)
+            {
+                var existingUser = await userManager.FindByEmailAsync(clubStudent.Email);
+                if (existingUser == null) { return null; }
+                await userManager.AddToRoleAsync(existingUser, "ClubMember");
+            }
             club.Students = students;
             await campusBridgeDbContext.Clubs.AddAsync(club);
             await campusBridgeDbContext.SaveChangesAsync();
@@ -45,11 +61,26 @@ namespace backend.Repository.Students
             var exisitingClub = await GetClubById(ClubId);
             if (exisitingClub == null) { return null; }
             if(exisitingClub.ClubHeadId!= club.ClubHeadId) { return null; }
+
             exisitingClub.Name = club.Name;
             exisitingClub.Description = club.Description;
+
+            foreach(var member in exisitingClub.Students)
+            {
+                var existingClubUser = await userManager.FindByEmailAsync(member.StudentId);
+                if (existingClubUser == null) { return null; }
+                await userManager.RemoveFromRoleAsync(existingClubUser, "ClubMember");
+            }
+
             var students = await campusBridgeDbContext.Students
                 .Where(x => club.ClubId.Contains(x.StudentId))
                 .ToListAsync();
+            foreach (var clubStudent in students)
+            {
+                var existingUser = await userManager.FindByEmailAsync(clubStudent.Email);
+                if (existingUser == null) { return null; }
+                await userManager.AddToRoleAsync(existingUser, "ClubMember");
+            }
             exisitingClub.Students = students;
             await campusBridgeDbContext.SaveChangesAsync();
             return exisitingClub;
@@ -60,6 +91,12 @@ namespace backend.Repository.Students
             var exisitingClub = await GetClubById(ClubId);
             if (exisitingClub == null) { return null; }
             if (exisitingClub.ClubHeadId != ClubHeadId) { return null; }
+            foreach (var member in exisitingClub.Students)
+            {
+                var existingClubUser = await userManager.FindByEmailAsync(member.StudentId);
+                if (existingClubUser == null) { return null; }
+                await userManager.RemoveFromRoleAsync(existingClubUser, "ClubMember");
+            }
             campusBridgeDbContext.Clubs.Remove(exisitingClub);
             await campusBridgeDbContext.SaveChangesAsync();
             return exisitingClub;

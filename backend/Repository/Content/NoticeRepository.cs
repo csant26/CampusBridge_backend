@@ -22,7 +22,7 @@ namespace backend.Repository.Content
             var roles = await userManager.GetRolesAsync(user);
             var role = roles.FirstOrDefault();
             if (role == null) { return null; }
-            else if (role == "CollegeAdmin" || role =="UniversityAdmin" ) { notice.Creator = role; }
+            else if (role == "College" || role =="University" ) { notice.Creator = role; }
             else { return null; }
             notice.DateUpdated = notice.DatePosted;
             await campusBridgeDbContext.Notices.AddAsync(notice);
@@ -44,6 +44,12 @@ namespace backend.Repository.Content
             return notice;
         }
 
+        public async Task<List<Notice>> GetNoticeByRole(string RoleName)
+        {
+            var notice = await campusBridgeDbContext.Notices.Where(x => x.Creator == RoleName).ToListAsync();
+            if (notice == null) { return null; }
+            return notice;
+        }
         public async Task<Notice> UpdateNotice(string NoticeId, string creatorId, Notice notice)
         {
             var existingNotice = await GetNoticeById(NoticeId);

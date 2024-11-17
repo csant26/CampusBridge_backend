@@ -45,6 +45,14 @@ namespace backend.Controllers
             if (notice == null) { return BadRequest("No notice found."); }
             return Ok(mapper.Map<NoticeDTO>(notice));
         }
+        [HttpGet("GetNoticeByRole/{RoleName}")]
+        [ValidateModel]
+        public async Task<IActionResult> GetNoticeByRole([FromRoute] string RoleName)
+        {
+            var notices = await noticeRepository.GetNoticeByRole(RoleName);
+            if (notices == null) { return BadRequest("No notice found."); }
+            return Ok(mapper.Map<List<NoticeDTO>>(notices));
+        }
         [HttpPut("UpdateNotice/{NoticeId}/{CreatorId}")]
         [ValidateModel]
         public async Task<IActionResult> UpdateNotice([FromRoute] string NoticeId,

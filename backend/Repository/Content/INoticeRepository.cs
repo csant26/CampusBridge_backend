@@ -7,6 +7,7 @@ namespace backend.Repository.Content
         Task<Notice> CreateNotice(string creatorId, Notice notice);
         Task<List<Notice>> GetNotice();
         Task<Notice> GetNoticeById(string id);
+        Task<List<Notice>> GetNoticeByRole(string RoleName);
         Task<Notice> UpdateNotice(string NoticeId, string creatorId, Notice notice);
         Task<Notice> DeleteNotice(string creatorId, string NoticeId);
     }

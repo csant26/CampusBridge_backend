@@ -14,6 +14,7 @@ namespace backend.Repository.Content
         Task<Answer> AddAnswer(Answer answer);
         Task<List<Answer>> GetAnswer();
         Task<Answer> GetAnswerById(string AnswerId);
+        Task<List<Answer>> GetAnswerByRoleId(string RoleId);
         Task<Answer> UpdateAnswer(string AnswerId, Answer answer);
         Task<Answer> DeleteAnswer(string AnswerId, string CreatorId);
     }

@@ -2,6 +2,7 @@
 using backend.Models.Domain.Content.Syllabi;
 using backend.Models.Domain.Students;
 using backend.Models.DTO.Student;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace backend.Repository.Students
@@ -9,10 +10,13 @@ namespace backend.Repository.Students
     public class StudentRepository : IStudentRepository
     {
         private readonly CampusBridgeDbContext campusBridgeDbContext;
+        private readonly UserManager<IdentityUser> userManager;
 
-        public StudentRepository(CampusBridgeDbContext campusBridgeDbContext)
+        public StudentRepository(CampusBridgeDbContext campusBridgeDbContext,
+            UserManager<IdentityUser> userManager)
         {
             this.campusBridgeDbContext = campusBridgeDbContext;
+            this.userManager = userManager;
         }
         public async Task<Student> CreateStudent(Student student, AddStudentDTO addStudentDTO)
         {
@@ -65,6 +69,29 @@ namespace backend.Repository.Students
                 student.Clubs = clubs;
             }
 
+            //Register in the authenticated users.
+            if (userManager.Users.All(u => u.Email != student.Email))
+            {
+                var studentUser = new IdentityUser
+                {
+                    UserName = student.Email,
+                    Email = student.Password,
+                    EmailConfirmed = true
+                };
+
+                await userManager.CreateAsync(studentUser, student.Password);
+                await userManager.AddToRoleAsync(studentUser, "Student");
+
+                if (student.isClubHead == true)
+                {
+                    await userManager.AddToRoleAsync(studentUser, "ClubHead");
+                }
+                if(student.isAuthor== true)
+                {
+                    await userManager.AddToRoleAsync(studentUser, "Author");
+                }
+            }
+
             await campusBridgeDbContext.Students.AddAsync(student);
             await campusBridgeDbContext.SaveChangesAsync();
             return student;
@@ -95,6 +122,30 @@ namespace backend.Repository.Students
 
             if (existingStudent!=null)
             {
+
+                var existingUser = await userManager.FindByEmailAsync(existingStudent.Email);
+                if (existingUser == null) { return null; }
+                await userManager.DeleteAsync(existingUser);
+
+                var studentUser = new IdentityUser
+                {
+                    UserName = updatedStudent.Email,
+                    Email = updatedStudent.Password,
+                    EmailConfirmed = true
+                };
+
+                await userManager.CreateAsync(studentUser, updatedStudent.Password);
+                await userManager.AddToRoleAsync(studentUser, "Student");
+
+                if (updatedStudent.isClubHead == true)
+                {
+                    await userManager.AddToRoleAsync(studentUser, "ClubHead");
+                }
+                if (updatedStudent.isAuthor == true)
+                {
+                    await userManager.AddToRoleAsync(studentUser, "Author");
+                }
+
                 existingStudent.Name = updatedStudent.Name;
                 existingStudent.Email = updatedStudent.Email;
                 existingStudent.Phone = updatedStudent.Phone;
@@ -128,6 +179,7 @@ namespace backend.Repository.Students
                         }
                     }
                     updatedStudent.Courses.AddRange(electivesToAdd);
+
                 }
 
                 var financial = await campusBridgeDbContext.Financials.FindAsync(updateStudentDTO.FinancialId);
@@ -155,6 +207,11 @@ namespace backend.Repository.Students
         {
             var existingStudent = await GetStudentById(id);
             if (existingStudent == null) { return null; }
+
+            var existingUser = await userManager.FindByEmailAsync(id);
+            if (existingUser == null) { return null; }
+            await userManager.DeleteAsync(existingUser);
+
             campusBridgeDbContext.Students.Remove(existingStudent);
             await campusBridgeDbContext.SaveChangesAsync();
             return existingStudent;

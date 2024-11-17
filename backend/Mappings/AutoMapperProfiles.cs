@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using backend.Models.Domain.Content.Articles;
 using backend.Models.Domain.Content.Assignments;
+using backend.Models.Domain.Content.Events;
 using backend.Models.Domain.Content.Help;
 using backend.Models.Domain.Content.Notices;
 using backend.Models.Domain.Content.Syllabi;
@@ -8,6 +9,7 @@ using backend.Models.Domain.Students;
 using backend.Models.Domain.Teachers;
 using backend.Models.DTO.Content.Article;
 using backend.Models.DTO.Content.Assignment;
+using backend.Models.DTO.Content.Events;
 using backend.Models.DTO.Content.Help;
 using backend.Models.DTO.Content.Notice;
 using backend.Models.DTO.Content.Syllabus;
@@ -100,6 +102,10 @@ namespace backend.Mappings
             CreateMap<AddQuestionDTO, Question>().ReverseMap();
             CreateMap<UpdateQuestionDTO, Question>().ReverseMap();
 
+            //Event
+            CreateMap<AddEventDTO, Event>().ReverseMap();
+            CreateMap<UpdateEventDTO, Event>().ReverseMap();
+            CreateMap<Event, AddEventDTO>().ReverseMap();
 
             //Teacher
             CreateMap<Teacher, TeacherDTO>().ReverseMap();

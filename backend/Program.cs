@@ -80,6 +80,7 @@ builder.Services.AddScoped<FileHandling>();
 builder.Services.AddScoped<INoticeRepository, NoticeRepository>();
 builder.Services.AddScoped<IHelpRepository, HelpRepository>();
 builder.Services.AddScoped<IClubRepository, ClubRepository>();
+builder.Services.AddScoped<IEventRepository, EventRepository>();
 
 //Setting up mapping between Domain and DTOs.
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));

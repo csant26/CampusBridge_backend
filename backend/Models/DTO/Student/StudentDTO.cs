@@ -2,17 +2,25 @@
 using backend.Models.DTO.Content.Assignment;
 using backend.Models.DTO.Content.Help;
 using backend.Models.DTO.Content.Syllabus;
+using System.ComponentModel.DataAnnotations;
 
 namespace backend.Models.DTO.Student
 {
     public class StudentDTO
     {
+        [Required]
         public string StudentId { get; set; }
+        [Required]
         public string Name { get; set; }
+        [Required]
+        [EmailAddress]
         public string Email { get; set; }
+        [Required]
         public string Phone { get; set; }
+        [Required]
         public string Location { get; set; }
         public bool? isClubHead { get; set; } = false;
+        public bool? isAuthor { get; set; } = false;
         //Navigation Properties
         public AcademicDTO AcademicDTO { get; set; }
         public FinancialDTO FinancialDTO { get; set; }
