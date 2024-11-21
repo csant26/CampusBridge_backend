@@ -28,7 +28,9 @@ namespace backend.Mappings
         {
             //Student
             CreateMap<AddStudentDTO, Student>().ReverseMap();
-            CreateMap<UpdateStudentDTO, Student>().ReverseMap();
+            CreateMap<UpdateStudentDTO, Student>()
+                .ForMember(dest => dest.CollegeId, opt => opt.MapFrom(src => src.CreatorId))
+                .ReverseMap();
             CreateMap<Student, StudentDTO>()
                 .ForMember(dest => dest.AcademicDTO, opt => opt.MapFrom(src => src.Academic))
                 .ForMember(dest => dest.FinancialDTO, opt => opt.MapFrom(src => src.Financial))

@@ -53,14 +53,18 @@ namespace backend.Repository.Colleges
 
         public async Task<List<College>> GetCollege()
         {
-            var colleges = await campusBridgeDbContext.Colleges.ToListAsync();
+            var colleges = await campusBridgeDbContext.Colleges
+                .Include(x=>x.Students).Include(u=>u.University).Include(t=>t.Teachers)
+                .ToListAsync();
             if (colleges == null) { return null; }
             return colleges;
         }
 
         public async Task<College> GetCollegeById(string CollegeId)
         {
-            var college = await campusBridgeDbContext.Colleges.FindAsync(CollegeId);
+            var college = await campusBridgeDbContext.Colleges
+                .Include(x => x.Students).Include(u => u.University).Include(t => t.Teachers)
+                .FirstOrDefaultAsync(f => f.CollegeId == CollegeId);
             if (college == null) { return null; }
             return college;
         }

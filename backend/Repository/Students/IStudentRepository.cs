@@ -9,6 +9,6 @@ namespace backend.Repository.Students
         Task<List<Student>> GetStudent();
         Task<Student> GetStudentById(string id);
         Task<Student> UpdateStudent(string id, Student updatedStudent,UpdateStudentDTO updateStudentDTO);
-        Task<Student> DeleteStudent(string id);
+        Task<Student> DeleteStudent(string StudentId, string CollegeId);
     }
 }
