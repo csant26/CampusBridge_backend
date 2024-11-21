@@ -26,11 +26,11 @@ namespace backend.Models.Domain.Students
         public Academic Academic { get; set; } //one-to-one
         public Financial Financial { get; set; } //one-to-one
         public List<Club>? Clubs { get; set; } = null; //one-to-many
-        public List<Submission>? Submissions { get; set; } //one-to-many
+        public List<Submission>? Submissions { get; set; } = null; //one-to-many
         [JsonIgnore]
-        public List<Course>? Courses { get; set; } //one-to-many
+        public List<Course> Courses { get; set; } //one-to-many
         [JsonIgnore]
-        public List<Question>? Questions { get; set; } //one-to-many
+        public List<Question>? Questions { get; set; } = null; //one-to-many
         public string CollegeId { get; set; } //foreign-key
         [JsonIgnore]
         public College College { get; set; } //one-to-one

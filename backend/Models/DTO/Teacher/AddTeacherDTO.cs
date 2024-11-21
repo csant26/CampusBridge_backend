@@ -9,6 +9,7 @@ namespace backend.Models.DTO.Teacher
         public string TeacherId { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
+        public string Password { get; set; }
         public string Phone { get; set; }
         public List<string> CourseIds { get; set; }
         public string CollegeId {  get; set; }

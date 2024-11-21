@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using backend.Models.Domain.Colleges;
 using backend.Models.Domain.Content.Articles;
 using backend.Models.Domain.Content.Assignments;
 using backend.Models.Domain.Content.Events;
@@ -7,6 +8,8 @@ using backend.Models.Domain.Content.Notices;
 using backend.Models.Domain.Content.Syllabi;
 using backend.Models.Domain.Students;
 using backend.Models.Domain.Teachers;
+using backend.Models.Domain.Universities;
+using backend.Models.DTO.College;
 using backend.Models.DTO.Content.Article;
 using backend.Models.DTO.Content.Assignment;
 using backend.Models.DTO.Content.Events;
@@ -15,6 +18,7 @@ using backend.Models.DTO.Content.Notice;
 using backend.Models.DTO.Content.Syllabus;
 using backend.Models.DTO.Student;
 using backend.Models.DTO.Teacher;
+using backend.Models.DTO.University;
 
 namespace backend.Mappings
 {
@@ -108,8 +112,28 @@ namespace backend.Mappings
             CreateMap<Event, AddEventDTO>().ReverseMap();
 
             //Teacher
-            CreateMap<Teacher, TeacherDTO>().ReverseMap();
+            CreateMap<Teacher, TeacherDTO>()
+                .ForMember(dest => dest.CourseDTO, opt => opt.MapFrom(src => src.Courses))
+                .ForMember(dest => dest.CollegeDTO, opt => opt.MapFrom(src => src.Colleges))
+                .ForMember(dest => dest.AssignmentDTO, opt => opt.MapFrom(src => src.Assignments))
+                .ReverseMap();
+            CreateMap<AddTeacherDTO, Teacher>().ReverseMap();
+            CreateMap<UpdateTeacherDTO, Teacher>().ReverseMap();
 
+            //University
+            CreateMap<University, UniversityDTO>()
+                .ForMember(dest=>dest.CollegeDTO, opt=>opt.MapFrom(src=>src.Colleges))
+                .ReverseMap();
+            CreateMap<AddUniversityDTO, University>().ReverseMap();
+            CreateMap<UpdateUniversityDTO, University>().ReverseMap();
+
+            //College
+            CreateMap<College, CollegeDTO>()
+                .ForMember(dest => dest.StudentDTO, opt => opt.MapFrom(src => src.Students))
+                .ForMember(dest => dest.TeacherDTO, opt => opt.MapFrom(src => src.Teachers))
+                .ReverseMap();
+            CreateMap<AddCollegeDTO, College>().ReverseMap();
+            CreateMap<UpdateCollegeDTO, College>().ReverseMap();
         }
     }
 }

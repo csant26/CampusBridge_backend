@@ -1,5 +1,6 @@
 ﻿using backend.Models.DTO.Student;
 using backend.Models.DTO.Teacher;
+using backend.Models.DTO.University;
 
 namespace backend.Models.DTO.College
 {
@@ -14,5 +15,6 @@ namespace backend.Models.DTO.College
         public string Description { get; set; }
         public List<StudentDTO> StudentDTO { get; set; }
         public List<TeacherDTO> TeacherDTO { get; set; }
+        public UniversityDTO UniversityDTO { get; set; }
     }
 }

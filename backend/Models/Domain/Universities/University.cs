@@ -9,6 +9,6 @@ namespace backend.Models.Domain.Universities
         public string Description { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public List<College> Colleges { get; set; } = new List<College>(); //one-to-many
+        public List<College> Colleges { get; set; } //one-to-many
     }
 }

@@ -20,7 +20,7 @@ namespace backend.Models.DTO.Student
         public bool? isAuthor { get; set; } = false;
         public List<string>? ElectiveIds { get; set; } = null;
         public string FinancialId { get; set; }
-        public List<string>? ClubIds { get; set; }
+        public List<string>? ClubIds { get; set; } = null ;
         public string CreatorId { get; set; } //Creator: College or Student
     }
 }

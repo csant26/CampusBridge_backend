@@ -1,5 +1,6 @@
 ﻿using backend.Models.Domain.Students;
 using backend.Models.Domain.Teachers;
+using backend.Models.Domain.Universities;
 using System.Text.Json.Serialization;
 
 namespace backend.Models.Domain.Colleges
@@ -16,5 +17,8 @@ namespace backend.Models.Domain.Colleges
         public List<Student> Students { get; set; } //one-to-many
         [JsonIgnore]
         public List<Teacher> Teachers {  get; set; } //one-to-many
+        public string UniversityId { get; set; } //foreign key
+        [JsonIgnore]
+        public University University { get; set; } //one-to-one
     }
 }

@@ -16,5 +16,6 @@ namespace backend.Models.DTO.University
         public string Email { get; set; }
         [Required]
         public string Password { get; set; }
+        public string DeveloperId { get; set; } //Supplied for validation
     }
 }
