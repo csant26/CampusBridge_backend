@@ -2,9 +2,11 @@ using backend;
 using backend.Data;
 using backend.Files;
 using backend.Mappings;
+using backend.Repository.Colleges;
 using backend.Repository.Content;
 using backend.Repository.Students;
 using backend.Repository.Token;
+using backend.Repository.Universities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -81,6 +83,8 @@ builder.Services.AddScoped<INoticeRepository, NoticeRepository>();
 builder.Services.AddScoped<IHelpRepository, HelpRepository>();
 builder.Services.AddScoped<IClubRepository, ClubRepository>();
 builder.Services.AddScoped<IEventRepository, EventRepository>();
+builder.Services.AddScoped<IUniversityRepository, UniversityRepository>();
+builder.Services.AddScoped<ICollegeRepository, CollegeRepository>();
 
 //Setting up mapping between Domain and DTOs.
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));

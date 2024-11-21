@@ -30,9 +30,7 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
-    <Folder Include="Repository\College\" />
     <Folder Include="Repository\Teacher\" />
-    <Folder Include="Repository\University\" />
   </ItemGroup>
 
 </Project>

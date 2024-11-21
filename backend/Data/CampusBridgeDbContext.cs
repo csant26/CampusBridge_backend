@@ -8,6 +8,7 @@ using backend.Models.Domain.Content.Notices;
 using backend.Models.Domain.Content.Syllabi;
 using backend.Models.Domain.Students;
 using backend.Models.Domain.Teachers;
+using backend.Models.Domain.Universities;
 using Microsoft.EntityFrameworkCore;
 
 namespace backend.Data
@@ -81,6 +82,8 @@ namespace backend.Data
                 .WithMany(i => i.Submissions)
                 .HasForeignKey(key => key.StudentId);
 
+
+            //File-related relationships
             modelBuilder.Entity<FileDomain>()
                 .HasKey(key => key.FileId);
 
@@ -94,6 +97,12 @@ namespace backend.Data
             modelBuilder.Entity<College>()
                 .HasMany(te => te.Teachers)
                 .WithMany(co => co.Colleges);
+
+            //Univeristy-related relationships
+            modelBuilder.Entity<University>()
+                .HasMany(co=>co.Colleges)
+                .WithOne(uni=>uni.University)
+                .HasForeignKey(key=>key.UniversityId);
 
         }
 
@@ -131,6 +140,12 @@ namespace backend.Data
 
         //Teacher-related Tables
         public DbSet<Teacher> Teachers { get; set; }
+
+        //College-related Tables
+        public DbSet<College> Colleges { get; set; }
+        
+        //University-related Tables
+        public DbSet<University> Universities {  get; set; }
 
 
     }

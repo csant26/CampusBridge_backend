@@ -6,7 +6,7 @@ namespace backend.Models.DTO.College
 {
     public class CollegeDTO
     {
-        public int CollegeId { get; set; }
+        public string CollegeId { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }

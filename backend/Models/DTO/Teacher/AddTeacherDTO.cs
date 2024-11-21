@@ -12,6 +12,6 @@ namespace backend.Models.DTO.Teacher
         public string Password { get; set; }
         public string Phone { get; set; }
         public List<string> CourseIds { get; set; }
-        public string CollegeId {  get; set; }
-    }
+        public string CollegeId {  get; set; } //Supplied for validation
+    } 
 }

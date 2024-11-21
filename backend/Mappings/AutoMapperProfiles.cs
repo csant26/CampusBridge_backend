@@ -124,7 +124,9 @@ namespace backend.Mappings
             CreateMap<University, UniversityDTO>()
                 .ForMember(dest=>dest.CollegeDTO, opt=>opt.MapFrom(src=>src.Colleges))
                 .ReverseMap();
-            CreateMap<AddUniversityDTO, University>().ReverseMap();
+            CreateMap<AddUniversityDTO, University>()
+                .ForMember(dest=>dest.CreatorId,opt=>opt.MapFrom(src=>src.DeveloperId))
+                .ReverseMap();
             CreateMap<UpdateUniversityDTO, University>().ReverseMap();
 
             //College
@@ -133,7 +135,9 @@ namespace backend.Mappings
                 .ForMember(dest => dest.TeacherDTO, opt => opt.MapFrom(src => src.Teachers))
                 .ReverseMap();
             CreateMap<AddCollegeDTO, College>().ReverseMap();
-            CreateMap<UpdateCollegeDTO, College>().ReverseMap();
+            CreateMap<UpdateCollegeDTO, College>()
+                .ForMember(dest=>dest.UniversityId,opt=>opt.MapFrom(src=>src.CreatorId))
+                .ReverseMap();
         }
     }
 }

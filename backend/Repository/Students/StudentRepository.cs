@@ -75,7 +75,7 @@ namespace backend.Repository.Students
                 var studentUser = new IdentityUser
                 {
                     UserName = student.Email,
-                    Email = student.Password,
+                    Email = student.Email,
                     EmailConfirmed = true
                 };
 
@@ -91,6 +91,7 @@ namespace backend.Repository.Students
                     await userManager.AddToRoleAsync(studentUser, "Author");
                 }
             }
+            else { return null; }
 
             await campusBridgeDbContext.Students.AddAsync(student);
             await campusBridgeDbContext.SaveChangesAsync();
@@ -130,7 +131,7 @@ namespace backend.Repository.Students
                 var studentUser = new IdentityUser
                 {
                     UserName = updatedStudent.Email,
-                    Email = updatedStudent.Password,
+                    Email = updatedStudent.Email,
                     EmailConfirmed = true
                 };
 
