@@ -62,11 +62,12 @@ namespace backend.Controllers
 
             return Ok(mapper.Map<StudentDTO>(updatedStudent));
         }
-        [HttpDelete("DeleteStudent/{id}")]
+        [HttpDelete("DeleteStudent/{StudentId}/{CollegeId}")]
         [ValidateModel]
-        public async Task<IActionResult> DeleteStudent([FromRoute] string id)
+        public async Task<IActionResult> DeleteStudent([FromRoute] string StudentId,
+            [FromRoute]string CollegeId)
         {
-            return Ok(mapper.Map<StudentDTO>(await studentRepository.DeleteStudent(id)));
+            return Ok(mapper.Map<StudentDTO>(await studentRepository.DeleteStudent(StudentId,CollegeId)));
         }
     }
 }
