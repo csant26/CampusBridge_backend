@@ -5,6 +5,7 @@ using backend.Models.Domain.Content.Assignments;
 using backend.Models.Domain.Content.Events;
 using backend.Models.Domain.Content.Help;
 using backend.Models.Domain.Content.Notices;
+using backend.Models.Domain.Content.Results;
 using backend.Models.Domain.Content.Syllabi;
 using backend.Models.Domain.Students;
 using backend.Models.Domain.Teachers;
@@ -15,6 +16,7 @@ using backend.Models.DTO.Content.Assignment;
 using backend.Models.DTO.Content.Events;
 using backend.Models.DTO.Content.Help;
 using backend.Models.DTO.Content.Notice;
+using backend.Models.DTO.Content.Result;
 using backend.Models.DTO.Content.Syllabus;
 using backend.Models.DTO.Student;
 using backend.Models.DTO.Teacher;
@@ -140,6 +142,11 @@ namespace backend.Mappings
             CreateMap<UpdateCollegeDTO, College>()
                 .ForMember(dest=>dest.UniversityId,opt=>opt.MapFrom(src=>src.CreatorId))
                 .ReverseMap();
+
+            //Result
+            CreateMap<Result, ResultDTO>().ReverseMap();
+            CreateMap<AddResultDTO, Result>().ReverseMap();
+            CreateMap<UpdateResultDTO, Result>().ReverseMap();
         }
     }
 }

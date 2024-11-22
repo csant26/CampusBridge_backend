@@ -5,6 +5,7 @@ using backend.Models.Domain.Content.Events;
 using backend.Models.Domain.Content.Files;
 using backend.Models.Domain.Content.Help;
 using backend.Models.Domain.Content.Notices;
+using backend.Models.Domain.Content.Results;
 using backend.Models.Domain.Content.Syllabi;
 using backend.Models.Domain.Students;
 using backend.Models.Domain.Teachers;
@@ -146,6 +147,9 @@ namespace backend.Data
         
         //University-related Tables
         public DbSet<University> Universities {  get; set; }
+
+        //Result-related Tables
+        public DbSet<Result> Results { get; set; }
 
 
     }
