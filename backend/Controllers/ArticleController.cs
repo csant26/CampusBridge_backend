@@ -5,6 +5,8 @@ using backend.Models.DTO.Content.Article;
 using backend.Repository.Content;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace backend.Controllers
 {

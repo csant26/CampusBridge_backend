@@ -1,5 +1,10 @@
 ﻿using backend.Data;
 using backend.Models.Domain.Content.Files;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using System.Threading.Tasks;
+
 namespace backend.Repository.Content
 {
     public class FileRepository : IFileRepository

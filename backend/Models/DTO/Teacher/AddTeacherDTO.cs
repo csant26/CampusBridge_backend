@@ -1,6 +1,7 @@
 ﻿using backend.Models.DTO.College;
 using backend.Models.DTO.Content.Assignment;
 using backend.Models.DTO.Content.Syllabus;
+using System.Collections.Generic;
 
 namespace backend.Models.DTO.Teacher
 {

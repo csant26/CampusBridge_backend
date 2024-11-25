@@ -1,4 +1,5 @@
 ﻿using backend.Models.Domain.Content.Syllabi;
+using System.Collections.Generic;
 
 namespace backend.Models.DTO.Content.Syllabus
 {

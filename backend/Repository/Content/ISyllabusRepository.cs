@@ -1,5 +1,7 @@
 ﻿using backend.Models.Domain.Content.Syllabi;
 using backend.Models.DTO.Content.Syllabus;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace backend.Repository.Content
 {

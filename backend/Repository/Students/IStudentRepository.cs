@@ -1,5 +1,7 @@
 ﻿using backend.Models.Domain.Students;
 using backend.Models.DTO.Student;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace backend.Repository.Students
 {

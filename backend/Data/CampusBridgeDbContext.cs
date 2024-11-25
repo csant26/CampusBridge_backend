@@ -2,6 +2,7 @@
 using backend.Models.Domain.Content.Articles;
 using backend.Models.Domain.Content.Assignments;
 using backend.Models.Domain.Content.Events;
+using backend.Models.Domain.Content.FAQs;
 using backend.Models.Domain.Content.Files;
 using backend.Models.Domain.Content.Help;
 using backend.Models.Domain.Content.Notices;
@@ -151,6 +152,8 @@ namespace backend.Data
         //Result-related Tables
         public DbSet<Result> Results { get; set; }
 
+        //FAQ-related Tables
+        public DbSet<FAQ> FAQs {  get; set; }
 
     }
 }

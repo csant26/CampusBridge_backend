@@ -1,4 +1,5 @@
 ﻿using backend.Models.DTO.College;
+using System.Collections.Generic;
 
 namespace backend.Models.DTO.University
 {

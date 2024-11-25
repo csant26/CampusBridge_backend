@@ -1,5 +1,7 @@
 ﻿using backend.Models.Domain.Teachers;
 using backend.Models.DTO.Teacher;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace backend.Repository.Teachers
 {

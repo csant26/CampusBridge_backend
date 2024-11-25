@@ -5,6 +5,8 @@ using backend.Models.DTO.Content.Notice;
 using backend.Repository.Content;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace backend.Controllers
 {

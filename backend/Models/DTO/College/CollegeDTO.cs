@@ -1,6 +1,7 @@
 ﻿using backend.Models.DTO.Student;
 using backend.Models.DTO.Teacher;
 using backend.Models.DTO.University;
+using System.Collections.Generic;
 
 namespace backend.Models.DTO.College
 {

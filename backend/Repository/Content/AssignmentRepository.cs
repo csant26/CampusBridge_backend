@@ -4,6 +4,8 @@ using backend.Models.Domain.Content.Assignments;
 using backend.Models.DTO.Content.Assignment;
 using backend.Models.DTO.Content.File;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace backend.Repository.Content
 {

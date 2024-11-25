@@ -1,4 +1,6 @@
 ﻿using backend.Models.Domain.Colleges;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace backend.Repository.Colleges
 {

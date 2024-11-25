@@ -1,4 +1,6 @@
-﻿namespace backend.Models.DTO.Content.Syllabus
+﻿using System.Collections.Generic;
+
+namespace backend.Models.DTO.Content.Syllabus
 {
     public class AddCourseDTO
     {

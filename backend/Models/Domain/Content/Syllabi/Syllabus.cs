@@ -1,4 +1,5 @@
 ﻿using backend.Models.Domain.Students;
+using System.Collections.Generic;
 
 namespace backend.Models.Domain.Content.Syllabi
 {

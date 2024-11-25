@@ -2,6 +2,8 @@
 using backend.Models.Domain.Content.Articles;
 using backend.Models.DTO.Content.Article;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace backend.Repository.Content
 {

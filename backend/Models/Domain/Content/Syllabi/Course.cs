@@ -1,6 +1,7 @@
 ﻿using backend.Models.Domain.Content.Assignments;
 using backend.Models.Domain.Students;
 using backend.Models.Domain.Teachers;
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace backend.Models.Domain.Content.Syllabi

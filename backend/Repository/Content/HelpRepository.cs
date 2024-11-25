@@ -3,6 +3,8 @@ using backend.Models.Domain.Content.Help;
 using backend.Models.Domain.Students;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace backend.Repository.Content
 {

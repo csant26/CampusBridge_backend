@@ -3,6 +3,7 @@ using backend.Models.Domain.Content.Syllabi;
 using backend.Models.DTO.College;
 using backend.Models.DTO.Content.Assignment;
 using backend.Models.DTO.Content.Syllabus;
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace backend.Models.DTO.Teacher

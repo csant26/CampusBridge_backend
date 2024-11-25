@@ -281,6 +281,27 @@ namespace backend.Migrations.CampusBridgeDb
                     b.ToTable("Events");
                 });
 
+            modelBuilder.Entity("backend.Models.Domain.Content.FAQs.FAQ", b =>
+                {
+                    b.Property<int>("FAQId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FAQId"));
+
+                    b.Property<string>("Answer")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Question")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("FAQId");
+
+                    b.ToTable("FAQs");
+                });
+
             modelBuilder.Entity("backend.Models.Domain.Content.Files.FileDomain", b =>
                 {
                     b.Property<string>("FileId")

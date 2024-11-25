@@ -3,6 +3,7 @@ using backend.Models.Domain.Colleges;
 using backend.Models.Domain.Content.Articles;
 using backend.Models.Domain.Content.Assignments;
 using backend.Models.Domain.Content.Events;
+using backend.Models.Domain.Content.FAQs;
 using backend.Models.Domain.Content.Help;
 using backend.Models.Domain.Content.Notices;
 using backend.Models.Domain.Content.Results;
@@ -14,6 +15,7 @@ using backend.Models.DTO.College;
 using backend.Models.DTO.Content.Article;
 using backend.Models.DTO.Content.Assignment;
 using backend.Models.DTO.Content.Events;
+using backend.Models.DTO.Content.FAQ;
 using backend.Models.DTO.Content.Help;
 using backend.Models.DTO.Content.Notice;
 using backend.Models.DTO.Content.Result;
@@ -147,6 +149,10 @@ namespace backend.Mappings
             CreateMap<Result, ResultDTO>().ReverseMap();
             CreateMap<AddResultDTO, Result>().ReverseMap();
             CreateMap<UpdateResultDTO, Result>().ReverseMap();
+
+            //FAQ
+            CreateMap<AddFAQDTO, FAQ>().ReverseMap();
+            CreateMap<FAQ, FAQDTO>().ReverseMap();
         }
     }
 }

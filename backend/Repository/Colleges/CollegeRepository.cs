@@ -2,6 +2,8 @@
 using backend.Models.Domain.Colleges;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace backend.Repository.Colleges
 {

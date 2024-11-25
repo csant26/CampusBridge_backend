@@ -1,4 +1,5 @@
 ﻿using backend.Models.Domain.Content;
+using System;
 
 namespace backend.Models.DTO.Content.Article
 {

@@ -2,6 +2,7 @@
 using backend.Models.Domain.Teachers;
 using backend.Models.DTO.Content.Syllabus;
 using backend.Models.DTO.Teacher;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace backend.Models.DTO.Content.Assignment

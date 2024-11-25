@@ -1,4 +1,6 @@
-﻿namespace backend.Models.DTO.Content.Article
+﻿using System;
+
+namespace backend.Models.DTO.Content.Article
 {
     public class UpdateArticleDTO
     {

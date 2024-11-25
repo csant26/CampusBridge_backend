@@ -1,4 +1,6 @@
-﻿namespace backend.Models.Domain.Content.Articles
+﻿using System.Collections.Generic;
+
+namespace backend.Models.Domain.Content.Articles
 {
     public class Author
     {

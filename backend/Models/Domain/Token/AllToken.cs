@@ -1,4 +1,6 @@
-﻿namespace backend.Models.Domain.Token
+﻿using System;
+
+namespace backend.Models.Domain.Token
 {
     public class AllToken
     {

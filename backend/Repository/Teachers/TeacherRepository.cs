@@ -4,6 +4,9 @@ using backend.Models.Domain.Teachers;
 using backend.Models.DTO.Teacher;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace backend.Repository.Teachers
 {

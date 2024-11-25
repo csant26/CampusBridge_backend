@@ -5,6 +5,7 @@ using backend.Models.DTO.Content.Assignment;
 using backend.Models.DTO.Content.Help;
 using backend.Models.DTO.Content.Result;
 using backend.Models.DTO.Content.Syllabus;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace backend.Models.DTO.Student

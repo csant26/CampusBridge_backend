@@ -1,4 +1,6 @@
-﻿namespace backend.Models.DTO.Teacher
+﻿using System.Collections.Generic;
+
+namespace backend.Models.DTO.Teacher
 {
     public class UpdateTeacherDTO
     {

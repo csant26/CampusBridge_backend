@@ -2,6 +2,8 @@
 using backend.Models.Domain.Teachers;
 using backend.Models.DTO.Content.Syllabus;
 using backend.Models.DTO.Teacher;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 

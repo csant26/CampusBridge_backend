@@ -1,4 +1,7 @@
-﻿namespace backend.Models.Domain.Content.Notices
+﻿using System;
+using System.Collections.Generic;
+
+namespace backend.Models.Domain.Content.Notices
 {
     public class Notice
     {

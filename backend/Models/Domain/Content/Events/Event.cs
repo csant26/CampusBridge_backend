@@ -1,4 +1,7 @@
-﻿namespace backend.Models.Domain.Content.Events
+﻿using System;
+using System.Collections.Generic;
+
+namespace backend.Models.Domain.Content.Events
 {
     public class Event
     {

@@ -2,6 +2,7 @@
 using backend.Models.DTO.Content.Assignment;
 using backend.Models.DTO.Student;
 using backend.Models.DTO.Teacher;
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace backend.Models.DTO.Content.Syllabus

@@ -2,6 +2,9 @@
 using backend.Models.DTO.Content.File;
 using backend.Repository.Content;
 using Microsoft.AspNetCore.Mvc;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace backend.Files
 {

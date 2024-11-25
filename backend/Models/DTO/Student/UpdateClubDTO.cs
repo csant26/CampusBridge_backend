@@ -1,4 +1,6 @@
-﻿namespace backend.Models.DTO.Student
+﻿using System.Collections.Generic;
+
+namespace backend.Models.DTO.Student
 {
     public class UpdateClubDTO
     {

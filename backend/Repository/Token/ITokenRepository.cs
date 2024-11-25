@@ -1,6 +1,7 @@
 ﻿using backend.Models.Domain.Token;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace backend.Repository.Token
 {

@@ -1,4 +1,7 @@
-﻿namespace backend.Models.DTO.Content.Notice
+﻿using System;
+using System.Collections.Generic;
+
+namespace backend.Models.DTO.Content.Notice
 {
     public class NoticeDTO
     {

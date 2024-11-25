@@ -1,6 +1,8 @@
 ﻿using backend.Data;
 using backend.Models.Domain.Content.Results;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace backend.Repository.Content
 {

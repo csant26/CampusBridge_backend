@@ -1,4 +1,7 @@
-﻿namespace backend.Models.DTO.Content.Events
+﻿using System;
+using System.Collections.Generic;
+
+namespace backend.Models.DTO.Content.Events
 {
     public class AddEventDTO
     {

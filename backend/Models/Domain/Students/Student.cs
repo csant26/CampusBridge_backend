@@ -3,6 +3,7 @@ using backend.Models.Domain.Content.Assignments;
 using backend.Models.Domain.Content.Help;
 using backend.Models.Domain.Content.Results;
 using backend.Models.Domain.Content.Syllabi;
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace backend.Models.Domain.Students

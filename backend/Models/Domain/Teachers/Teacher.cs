@@ -1,6 +1,7 @@
 ﻿using backend.Models.Domain.Colleges;
 using backend.Models.Domain.Content.Assignments;
 using backend.Models.Domain.Content.Syllabi;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
