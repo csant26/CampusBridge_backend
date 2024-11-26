@@ -1,5 +1,6 @@
 ﻿
 using backend.Data;
+using backend.Models.Domain.Content.FAQs;
 using backend.Models.DTO.Content.FAQ;
 using FuzzySharp;
 using Microsoft.EntityFrameworkCore;
@@ -18,14 +19,23 @@ namespace backend.Repository.Content
         }
         public async Task<FAQResponseDTO> GetAnswer(FAQRequestDTO fAQRequestDTO)
         {
-            var faqs = await campusBridgeDbContext.FAQs.ToListAsync();
-
+            if(fAQRequestDTO.Question==null && fAQRequestDTO.Category == null) { return null; }
+            var faqs = new List<FAQ>();
+            if (fAQRequestDTO.Question != null) {
+                faqs = await campusBridgeDbContext.FAQs.ToListAsync();
+            }
+            if (fAQRequestDTO.Category != null)
+            {
+                faqs = await campusBridgeDbContext.FAQs
+                    .Where(x=>x.Category==fAQRequestDTO.Category)
+                    .ToListAsync();
+            }
             var bestMatch = faqs
             .Select(faq => new
             {
                 faq.Question,
                 faq.Answer,
-                Score = Fuzz.Ratio(faq.Question, fAQRequestDTO.question) // Fuzzy matching score
+                Score = Fuzz.Ratio(faq.Question, fAQRequestDTO.Question) // Fuzzy matching score
             })
             .OrderByDescending(x => x.Score)
             .FirstOrDefault();

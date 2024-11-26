@@ -7,6 +7,7 @@ namespace backend.Models.DTO.Content.FAQ
 {
     public class FAQRequestDTO
     {
-        public string question { get; set; }
+        public string? Question { get; set; }
+        public string? Category { get; set; }
     }
 }
