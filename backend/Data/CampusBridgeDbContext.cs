@@ -7,6 +7,7 @@ using backend.Models.Domain.Content.Files;
 using backend.Models.Domain.Content.Help;
 using backend.Models.Domain.Content.Notices;
 using backend.Models.Domain.Content.Results;
+using backend.Models.Domain.Content.Schedules;
 using backend.Models.Domain.Content.Syllabi;
 using backend.Models.Domain.Students;
 using backend.Models.Domain.Teachers;
@@ -154,6 +155,9 @@ namespace backend.Data
 
         //FAQ-related Tables
         public DbSet<FAQ> FAQs {  get; set; }
+        
+        //Schedule-related Tables
+        public DbSet<Schedule> Schedules {  get; set; }
 
     }
 }
