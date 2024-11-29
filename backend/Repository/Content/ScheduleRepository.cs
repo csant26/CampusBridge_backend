@@ -133,7 +133,7 @@ namespace backend.Repository.Content
             {
                 schedule = new Schedule
                 {
-                    Id = count+1,
+                    //Id = count+1,
                     Title = $"{course.CourseTitle} Examination {optimalSchedule[0].Year}",
                     DirectedTo = new List<string> { "Student", "Teacher", "College" },
                     Date = optimalSchedule[count],
@@ -148,7 +148,7 @@ namespace backend.Repository.Content
             {
                 schedule = new Schedule
                 {
-                    Id = count + 1,
+                    //Id = count + 1,
                     Title = $"{course.CourseTitle} Examination {optimalSchedule[0].Year}",
                     DirectedTo = new List<string> { "Student", "Teacher", "College" },
                     Date = optimalSchedule[finalCount],

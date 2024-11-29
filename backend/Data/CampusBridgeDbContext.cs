@@ -43,11 +43,11 @@ namespace backend.Data
                 .HasMany(m => m.Courses)
                 .WithMany(s => s.Students);
 
-            //Article model relationships.
-            modelBuilder.Entity<Article>()
-                .HasOne(au => au.Author)
-                .WithMany(ar => ar.Articles)
-                .HasForeignKey(x => x.AuthorId);
+            ////Article model relationships.
+            //modelBuilder.Entity<Article>()
+            //    .HasOne(au => au.Author)
+            //    .WithMany(ar => ar.Articles)
+            //    .HasForeignKey(x => x.AuthorId);
 
             //Syllabus model relationships
             modelBuilder.Entity<Syllabus>()

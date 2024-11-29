@@ -2,7 +2,7 @@
 {
     public class AddExamSchedule
     {
-        public int Id { get; set; }
+        //public int Id { get; set; }
         public string Semester { get; set; }
         //Hard constraints
         public DateTime StartDate { get; set; }

@@ -56,7 +56,6 @@ namespace backend.Mappings
             CreateMap<UpdateArticleDTO, Article>().ReverseMap();
             CreateMap<AuthorDTO, Author>().ReverseMap();
             CreateMap<Article, ArticleDTO>()
-                .ForMember(dest => dest.AuthorDTO, opt => opt.MapFrom(src => src.Author))
                 .ReverseMap();
 
             //Syllabus
