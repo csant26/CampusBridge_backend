@@ -8,8 +8,7 @@ namespace backend.Models.Domain.Content.Articles
         public string Headline { get; set; }
         public string Tagline { get; set; }
         public string Description { get; set; }
-        public string AuthorId { get; set; } //foreign key
-        public Author Author { get; set; } // one-to-one
+        public string AuthorId { get; set; } 
         public DateTime DatePosted { get; set; }
         public DateTime DateUpdated { get; set; }   
 

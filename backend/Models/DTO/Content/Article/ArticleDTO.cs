@@ -9,7 +9,7 @@ namespace backend.Models.DTO.Content.Article
         public string Headline { get; set; }
         public string Tagline { get; set; }
         public string Description { get; set; }
-        public AuthorDTO AuthorDTO { get; set; }
+        public string AuthorId { get; set; }
         public DateTime DatePosted { get; set; }
         public DateTime DateUpdated {  get; set; }
     }

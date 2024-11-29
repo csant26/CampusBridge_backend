@@ -33,6 +33,20 @@ namespace backend.Repository.Teachers
                 .ToListAsync();
             teacher.Courses = courses;
 
+            if (userManager.Users.All(u => u.Email != teacher.Email))
+            {
+                var newTeacherUser = new IdentityUser
+                {
+                    Email = teacher.Email,
+                    UserName = teacher.Email,
+                    EmailConfirmed = true
+                };
+                await userManager.CreateAsync(newTeacherUser, teacher.Password);
+                await userManager.AddToRoleAsync(newTeacherUser, "Teacher");
+                await userManager.AddToRoleAsync(newTeacherUser, "Editor");
+            }
+
+
             await campusBridgeDbContext.Teachers.AddAsync(teacher);
             await campusBridgeDbContext.SaveChangesAsync();
             return teacher;
