@@ -20,6 +20,6 @@ namespace backend.Models.Domain.Teachers
         public List<Assignment>? Assignments { get; set; } = null; //one-to-many
         //subject, positions, working hours
         [JsonIgnore]
-        public List<College> Colleges { get; set; } //one-to-many
+        public List<College> Colleges { get; set; } = new List<College>(); //one-to-many
     }
 }

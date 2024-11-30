@@ -41,9 +41,12 @@ namespace backend.Repository.Teachers
                     UserName = teacher.Email,
                     EmailConfirmed = true
                 };
-                await userManager.CreateAsync(newTeacherUser, teacher.Password);
-                await userManager.AddToRoleAsync(newTeacherUser, "Teacher");
-                await userManager.AddToRoleAsync(newTeacherUser, "Editor");
+                var result = await userManager.CreateAsync(newTeacherUser, teacher.Password);
+                if (result.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(newTeacherUser, "Teacher");
+                    await userManager.AddToRoleAsync(newTeacherUser, "Author");
+                }
             }
 
 

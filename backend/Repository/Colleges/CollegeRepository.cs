@@ -42,9 +42,12 @@ namespace backend.Repository.Colleges
                     EmailConfirmed = true
                 };
 
-                await userManager.CreateAsync(collegeUser, collegeToAdd.Password);
-                await userManager.AddToRoleAsync(collegeUser, "College");
-                await userManager.AddToRoleAsync(collegeUser, "Author");
+                var result = await userManager.CreateAsync(collegeUser, collegeToAdd.Password);
+                if (result.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(collegeUser, "College");
+                    await userManager.AddToRoleAsync(collegeUser, "Author");
+                }
             }
             else { return null; }
 

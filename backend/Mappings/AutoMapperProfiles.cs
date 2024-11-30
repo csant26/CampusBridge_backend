@@ -122,9 +122,9 @@ namespace backend.Mappings
 
             //Teacher
             CreateMap<Teacher, TeacherDTO>()
-                .ForMember(dest => dest.CourseDTO, opt => opt.MapFrom(src => src.Courses))
-                .ForMember(dest => dest.CollegeDTO, opt => opt.MapFrom(src => src.Colleges))
-                .ForMember(dest => dest.AssignmentDTO, opt => opt.MapFrom(src => src.Assignments))
+               // .ForMember(dest => dest.CourseDTO, opt => opt.MapFrom(src => src.Courses))
+               // .ForMember(dest => dest.CollegeDTO, opt => opt.MapFrom(src => src.Colleges))
+               //.ForMember(dest => dest.AssignmentDTO, opt => opt.MapFrom(src => src.Assignments))
                 .ReverseMap();
             CreateMap<AddTeacherDTO, Teacher>().ReverseMap();
             CreateMap<UpdateTeacherDTO, Teacher>().ReverseMap();

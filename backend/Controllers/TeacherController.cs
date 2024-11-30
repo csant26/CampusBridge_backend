@@ -35,7 +35,7 @@ namespace backend.Controllers
             var teacher = await teacherRepository
                 .CreateTeacher(mapper.Map<Teacher>(addTeacherDTO),addTeacherDTO);
             if (teacher == null) { return BadRequest("Teacher couldn't be created."); }
-            return Ok(mapper.Map<CollegeDTO>(teacher));
+            return Ok(mapper.Map<TeacherDTO>(teacher));
         }
         [HttpGet("GetTeacher")]
         [ValidateModel]

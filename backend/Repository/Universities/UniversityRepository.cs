@@ -35,9 +35,12 @@ namespace backend.Repository.Universities
                     EmailConfirmed = true
                 };
 
-                await userManager.CreateAsync(universityUser, universityToAdd.Password);
-                await userManager.AddToRoleAsync(universityUser, "University");
-                await userManager.AddToRoleAsync(universityUser, "Author");
+                var result = await userManager.CreateAsync(universityUser, universityToAdd.Password);
+                if (result.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(universityUser, "University");
+                    await userManager.AddToRoleAsync(universityUser, "Author");
+                }
             }
             else { return null; }
 
