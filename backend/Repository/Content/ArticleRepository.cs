@@ -23,7 +23,7 @@ namespace backend.Repository.Content
 
             var authorUser = await userManager.FindByEmailAsync(creatorId);
             if (authorUser == null) { return null; }
-            article.AuthorId = authorUser.Email;
+            article.CreatorId = authorUser.Email;
             article.DateUpdated = article.DatePosted;
             await campusBridgeDbContext.Articles.AddAsync(article);
             await campusBridgeDbContext.SaveChangesAsync();
@@ -50,7 +50,7 @@ namespace backend.Repository.Content
             var existingArticle = await GetArticleById(articleId);
             if (existingArticle != null)
             {
-                if(existingArticle.AuthorId == creatorId)
+                if(existingArticle.CreatorId == creatorId)
                 {
                     existingArticle.Headline = updatedArticle.Headline;
                     existingArticle.Tagline = updatedArticle.Tagline;
@@ -67,7 +67,7 @@ namespace backend.Repository.Content
             var existingArticle = await GetArticleById(articleId);
             if(existingArticle != null)
             {
-                if(existingArticle.AuthorId == creatorId)
+                if(existingArticle.CreatorId == creatorId)
                 {
                     campusBridgeDbContext.Remove(existingArticle);
                     await campusBridgeDbContext.SaveChangesAsync();

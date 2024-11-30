@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using backend.Data;
 
@@ -11,9 +12,11 @@ using backend.Data;
 namespace backend.Migrations.CampusBridgeDb
 {
     [DbContext(typeof(CampusBridgeDbContext))]
-    partial class CampusBridgeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241130100603_article update")]
+    partial class articleupdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -128,11 +131,8 @@ namespace backend.Migrations.CampusBridgeDb
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("AuthorId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("CreatorId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("DatePosted")
                         .HasColumnType("datetime2");
@@ -838,7 +838,9 @@ namespace backend.Migrations.CampusBridgeDb
                 {
                     b.HasOne("backend.Models.Domain.Content.Articles.Author", null)
                         .WithMany("Articles")
-                        .HasForeignKey("AuthorId");
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("backend.Models.Domain.Content.Assignments.Assignment", b =>
