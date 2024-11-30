@@ -1,8 +1,10 @@
 ﻿using backend.Models.Domain.Colleges;
 using backend.Models.Domain.Content.Assignments;
+using backend.Models.Domain.Content.Attendances;
 using backend.Models.Domain.Content.Help;
 using backend.Models.Domain.Content.Results;
 using backend.Models.Domain.Content.Syllabi;
+using backend.Models.DTO.Student;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
@@ -37,5 +39,7 @@ namespace backend.Models.Domain.Students
         [JsonIgnore]
         public College College { get; set; } //one-to-one
         public List<Result> Results { get; set; }  //one-to-many
+        public int AttendanceId { get; set; } //foreign key
+        public List<StudentAttendance> StudentAttendances { get; set; } //one-to-many
     }
 }

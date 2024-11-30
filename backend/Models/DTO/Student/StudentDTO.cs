@@ -33,6 +33,7 @@ namespace backend.Models.DTO.Student
         public List<SubmissionDTO> SubmissionDTO { get; set; }
         public List<QuestionDTO> QuestionDTO { get; set; }
         public CollegeDTO CollegeDTO {  get; set; }
-        public List<ResultDTO> ResultDTO {  get; set; } 
+        public List<ResultDTO> ResultDTO {  get; set; }
+        public List<StudentAttendance> StudentAttendances { get; set; }
     }
 }

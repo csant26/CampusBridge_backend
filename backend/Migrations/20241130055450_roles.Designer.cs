@@ -12,8 +12,8 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(CampusBridgeAuthDbContext))]
-    [Migration("20241122114043_roles and indivdual ids")]
-    partial class rolesandindivdualids
+    [Migration("20241130055450_roles")]
+    partial class roles
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -2,6 +2,7 @@
 using backend.Models.Domain.Colleges;
 using backend.Models.Domain.Content.Articles;
 using backend.Models.Domain.Content.Assignments;
+using backend.Models.Domain.Content.Attendances;
 using backend.Models.Domain.Content.Events;
 using backend.Models.Domain.Content.FAQs;
 using backend.Models.Domain.Content.Help;
@@ -15,6 +16,7 @@ using backend.Models.Domain.Universities;
 using backend.Models.DTO.College;
 using backend.Models.DTO.Content.Article;
 using backend.Models.DTO.Content.Assignment;
+using backend.Models.DTO.Content.Attendances;
 using backend.Models.DTO.Content.Events;
 using backend.Models.DTO.Content.FAQ;
 using backend.Models.DTO.Content.Help;
@@ -160,6 +162,9 @@ namespace backend.Mappings
             CreateMap<UpdateScheduleDTO, Schedule>().ReverseMap();
             CreateMap<Schedule, ScheduleDTO>().ReverseMap();
             CreateMap<AddExamSchedule, ExamSchedule>().ReverseMap();
+
+            //Attendance
+            CreateMap<Attendance, AttendanceDTO>().ReverseMap();
         }
     }
 }

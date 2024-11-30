@@ -1,6 +1,7 @@
 ﻿using backend.Models.Domain.Colleges;
 using backend.Models.Domain.Content.Articles;
 using backend.Models.Domain.Content.Assignments;
+using backend.Models.Domain.Content.Attendances;
 using backend.Models.Domain.Content.Events;
 using backend.Models.Domain.Content.FAQs;
 using backend.Models.Domain.Content.Files;
@@ -158,6 +159,9 @@ namespace backend.Data
         
         //Schedule-related Tables
         public DbSet<Schedule> Schedules {  get; set; }
+
+        //Attendance-related Tables
+        public DbSet<Attendance> Attendances { get; set; }
 
     }
 }
