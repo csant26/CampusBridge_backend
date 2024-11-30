@@ -35,7 +35,6 @@ namespace backend.Controllers
         }
         [HttpGet("GetArticle")]
         [ValidateModel]
-        [Authorize(Roles = "UniversityAdmin")]
         public async Task<IActionResult> GetArticle()
         {
             var articles = await articleRepository.GetArticle();

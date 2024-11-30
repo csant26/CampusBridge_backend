@@ -88,6 +88,7 @@ builder.Services.AddScoped<ITeacherRepository, TeacherRepository>();
 builder.Services.AddScoped<IUniversityRepository, UniversityRepository>();
 builder.Services.AddScoped<ICollegeRepository, CollegeRepository>();
 builder.Services.AddScoped<IFAQRepository, FAQRepository>();
+builder.Services.AddScoped<IResultRepository, ResultRepository>();
 builder.Services.AddScoped<IScheduleRepository, ScheduleRepository>();
 
 //Setting up mapping between Domain and DTOs.

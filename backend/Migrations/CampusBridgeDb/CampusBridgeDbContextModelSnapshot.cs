@@ -34,7 +34,7 @@ namespace backend.Migrations.CampusBridgeDb
 
                     b.HasIndex("StudentsStudentId");
 
-                    b.ToTable("ClubStudent");
+                    b.ToTable("ClubStudent", (string)null);
                 });
 
             modelBuilder.Entity("CollegeTeacher", b =>
@@ -49,7 +49,7 @@ namespace backend.Migrations.CampusBridgeDb
 
                     b.HasIndex("TeachersTeacherId");
 
-                    b.ToTable("CollegeTeacher");
+                    b.ToTable("CollegeTeacher", (string)null);
                 });
 
             modelBuilder.Entity("CourseStudent", b =>
@@ -64,7 +64,7 @@ namespace backend.Migrations.CampusBridgeDb
 
                     b.HasIndex("StudentsStudentId");
 
-                    b.ToTable("CourseStudent");
+                    b.ToTable("CourseStudent", (string)null);
                 });
 
             modelBuilder.Entity("CourseTeacher", b =>
@@ -79,7 +79,7 @@ namespace backend.Migrations.CampusBridgeDb
 
                     b.HasIndex("TeachersTeacherId");
 
-                    b.ToTable("CourseTeacher");
+                    b.ToTable("CourseTeacher", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.Domain.Colleges.College", b =>
@@ -119,7 +119,7 @@ namespace backend.Migrations.CampusBridgeDb
 
                     b.HasIndex("UniversityId");
 
-                    b.ToTable("Colleges");
+                    b.ToTable("Colleges", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.Domain.Content.Articles.Article", b =>
@@ -156,7 +156,7 @@ namespace backend.Migrations.CampusBridgeDb
 
                     b.HasIndex("AuthorId");
 
-                    b.ToTable("Articles");
+                    b.ToTable("Articles", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.Domain.Content.Articles.Author", b =>
@@ -178,7 +178,7 @@ namespace backend.Migrations.CampusBridgeDb
 
                     b.HasKey("AuthorId");
 
-                    b.ToTable("Authors");
+                    b.ToTable("Authors", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.Domain.Content.Assignments.Assignment", b =>
@@ -213,7 +213,7 @@ namespace backend.Migrations.CampusBridgeDb
 
                     b.HasIndex("TeacherId");
 
-                    b.ToTable("Assignments");
+                    b.ToTable("Assignments", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.Domain.Content.Assignments.Submission", b =>
@@ -242,7 +242,7 @@ namespace backend.Migrations.CampusBridgeDb
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("Submissions");
+                    b.ToTable("Submissions", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.Domain.Content.Attendances.Attendance", b =>
@@ -258,7 +258,7 @@ namespace backend.Migrations.CampusBridgeDb
 
                     b.HasKey("Id");
 
-                    b.ToTable("Attendances");
+                    b.ToTable("Attendances", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.Domain.Content.Events.Event", b =>
@@ -297,7 +297,7 @@ namespace backend.Migrations.CampusBridgeDb
 
                     b.HasKey("EventId");
 
-                    b.ToTable("Events");
+                    b.ToTable("Events", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.Domain.Content.FAQs.FAQ", b =>
@@ -322,7 +322,7 @@ namespace backend.Migrations.CampusBridgeDb
 
                     b.HasKey("FAQId");
 
-                    b.ToTable("FAQs");
+                    b.ToTable("FAQs", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.Domain.Content.Files.FileDomain", b =>
@@ -350,7 +350,7 @@ namespace backend.Migrations.CampusBridgeDb
 
                     b.HasKey("FileId");
 
-                    b.ToTable("Files");
+                    b.ToTable("Files", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.Domain.Content.Help.Answer", b =>
@@ -374,7 +374,7 @@ namespace backend.Migrations.CampusBridgeDb
 
                     b.HasIndex("QuestionId");
 
-                    b.ToTable("Answers");
+                    b.ToTable("Answers", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.Domain.Content.Help.Question", b =>
@@ -398,7 +398,7 @@ namespace backend.Migrations.CampusBridgeDb
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("Questions");
+                    b.ToTable("Questions", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.Domain.Content.Notices.Notice", b =>
@@ -434,7 +434,7 @@ namespace backend.Migrations.CampusBridgeDb
 
                     b.HasKey("NoticeId");
 
-                    b.ToTable("Notices");
+                    b.ToTable("Notices", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.Domain.Content.Results.Result", b =>
@@ -466,7 +466,7 @@ namespace backend.Migrations.CampusBridgeDb
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("Results");
+                    b.ToTable("Results", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.Domain.Content.Schedules.Schedule", b =>
@@ -494,7 +494,7 @@ namespace backend.Migrations.CampusBridgeDb
 
                     b.HasKey("Id");
 
-                    b.ToTable("Schedules");
+                    b.ToTable("Schedules", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.Domain.Content.Syllabi.Course", b =>
@@ -543,7 +543,7 @@ namespace backend.Migrations.CampusBridgeDb
 
                     b.HasIndex("SyllabusId");
 
-                    b.ToTable("Course");
+                    b.ToTable("Course", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.Domain.Content.Syllabi.Syllabus", b =>
@@ -561,7 +561,7 @@ namespace backend.Migrations.CampusBridgeDb
 
                     b.HasKey("SyllabusId");
 
-                    b.ToTable("Syllabus");
+                    b.ToTable("Syllabus", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.Domain.Content.Syllabi.Unit", b =>
@@ -588,7 +588,7 @@ namespace backend.Migrations.CampusBridgeDb
 
                     b.HasIndex("CourseId");
 
-                    b.ToTable("Unit");
+                    b.ToTable("Unit", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.Domain.Students.Academic", b =>
@@ -610,7 +610,7 @@ namespace backend.Migrations.CampusBridgeDb
 
                     b.HasKey("AcademicId");
 
-                    b.ToTable("Academics");
+                    b.ToTable("Academics", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.Domain.Students.Club", b =>
@@ -632,7 +632,7 @@ namespace backend.Migrations.CampusBridgeDb
 
                     b.HasKey("ClubId");
 
-                    b.ToTable("Clubs");
+                    b.ToTable("Clubs", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.Domain.Students.Financial", b =>
@@ -651,7 +651,7 @@ namespace backend.Migrations.CampusBridgeDb
 
                     b.HasKey("FinancialId");
 
-                    b.ToTable("Financials");
+                    b.ToTable("Financials", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.Domain.Students.Student", b =>
@@ -705,7 +705,7 @@ namespace backend.Migrations.CampusBridgeDb
 
                     b.HasIndex("FinancialId");
 
-                    b.ToTable("Students");
+                    b.ToTable("Students", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.Domain.Teachers.Teacher", b =>
@@ -731,7 +731,7 @@ namespace backend.Migrations.CampusBridgeDb
 
                     b.HasKey("TeacherId");
 
-                    b.ToTable("Teachers");
+                    b.ToTable("Teachers", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.Domain.Universities.University", b =>
@@ -761,7 +761,7 @@ namespace backend.Migrations.CampusBridgeDb
 
                     b.HasKey("UniversityId");
 
-                    b.ToTable("Universities");
+                    b.ToTable("Universities", (string)null);
                 });
 
             modelBuilder.Entity("ClubStudent", b =>
