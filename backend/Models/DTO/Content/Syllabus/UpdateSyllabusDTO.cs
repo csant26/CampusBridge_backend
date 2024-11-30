@@ -7,6 +7,6 @@ namespace backend.Models.DTO.Content.Syllabus
     {
         public List<string> CourseId { get; set; }
         public string Semester { get; set; }
-        public int AllowedElectiveNo { get; set; } = 1;
+        public string AllowedElectiveNo { get; set; }
     }
 }

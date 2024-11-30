@@ -43,7 +43,7 @@ namespace backend.Repository.Students
                     {
                         student.Courses = nonElectiveCourses;
                     }
-                    var allowedElectives = syllabus.AllowedElectiveNo;
+                    var allowedElectives = Convert.ToInt32(syllabus.AllowedElectiveNo);
                     var electiveCourses = syllabus.Courses.Where(x => x.isElective == true).ToList();
                     var selectedElectives = await campusBridgeDbContext.Course
                         .Where(x => addStudentDTO.ElectiveIds.Contains(x.CourseId))
@@ -172,7 +172,7 @@ namespace backend.Repository.Students
                     {
                         updatedStudent.Courses = nonElectiveCourses;
                     }
-                    var allowedElectives = syllabus.AllowedElectiveNo;
+                    var allowedElectives = Convert.ToInt32(syllabus.AllowedElectiveNo);
                     var electiveCourses = syllabus.Courses.Where(x => x.isElective == true).ToList();
                     var selectedElectives = await campusBridgeDbContext.Course
                         .Where(x => updateStudentDTO.ElectiveIds.Contains(x.CourseId))

@@ -8,6 +8,6 @@ namespace backend.Models.Domain.Content.Syllabi
         public string SyllabusId { get; set; }
         public List<Course> Courses { get; set; } //one-to-many
         public string Semester { get; set; }
-        public int AllowedElectiveNo { get; set; } = 1;
+        public string AllowedElectiveNo { get; set; }
     }
 }

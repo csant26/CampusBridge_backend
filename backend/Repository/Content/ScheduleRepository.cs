@@ -40,7 +40,7 @@ namespace backend.Repository.Content
 
             //Valid Dates
             var availableDates = new List<DateTime>();
-            var totalCourses = nonElectiveCourses.Count + syllabus.AllowedElectiveNo;
+            var totalCourses = nonElectiveCourses.Count + Convert.ToInt32(syllabus.AllowedElectiveNo);
             for (var date = examSchedule.StartDate; date <= examSchedule.EndDate;
                 date = date.AddDays(1))
             {
@@ -155,7 +155,7 @@ namespace backend.Repository.Content
                     Category = "Examination"
                 };
                 await CreateSchedule(schedule);
-                count++;
+                //count++;
             }
 
             return schedule;

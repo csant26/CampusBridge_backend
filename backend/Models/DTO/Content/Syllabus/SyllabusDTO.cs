@@ -8,5 +8,6 @@ namespace backend.Models.DTO.Content.Syllabus
         public string SyllabusId { get; set; }
         public List<CourseDTO> CourseDTO { get; set; }
         public string Semester { get; set; }
+        public string AllowedElectiveNo { get; set; }
     }
 }
