@@ -39,7 +39,7 @@ namespace backend.Models.Domain.Students
         [JsonIgnore]
         public College College { get; set; } //one-to-one
         public List<Result> Results { get; set; }  //one-to-many
-        public int AttendanceId { get; set; } //foreign key
-        public List<StudentAttendance> StudentAttendances { get; set; } //one-to-many
+        //public int AttendanceId { get; set; } //foreign key
+        //public List<StudentAttendance> StudentAttendances { get; set; } //one-to-many
     }
 }

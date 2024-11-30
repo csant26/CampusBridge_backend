@@ -90,8 +90,11 @@ namespace backend.Repository.Students
                     EmailConfirmed = true
                 };
 
-                await userManager.CreateAsync(studentUser, student.Password);
-                await userManager.AddToRoleAsync(studentUser, "Student");
+                var result = await userManager.CreateAsync(studentUser, student.Password);
+                if (result.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(studentUser, "Student");
+                }
 
                 if (student.isClubHead == true)
                 {
