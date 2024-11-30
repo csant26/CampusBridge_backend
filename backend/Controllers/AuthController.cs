@@ -41,7 +41,7 @@ namespace backend.Controllers
                         var response = new LoginResponseDTO
                         {
                             jwtToken = jwtToken,
-                            role = role,
+                            role = roles,
                             Id = loginRequest.username
                         };
                         return Ok(response);
