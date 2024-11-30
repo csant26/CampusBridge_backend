@@ -69,11 +69,11 @@ namespace backend.Repository.Content
                 var score = 0;
                 for (int i = 0; i < sc.Count - 1; i++)
                 {
-                    if (((sc[i + 1] - sc[i]).Days) - 1 == examSchedule.GapBetweenExams[i])
+                    if (((sc[i + 1] - sc[i]).Days) - 1 == Convert.ToInt32(examSchedule.GapBetweenExams[i]))
                     {
                         score += 100;
                     }
-                    else if(((sc[i + 1] - sc[i]).Days)-1 > examSchedule.GapBetweenExams[i])
+                    else if(((sc[i + 1] - sc[i]).Days)-1 > Convert.ToInt32(examSchedule.GapBetweenExams[i]))
                     {
                         score += 80;
                     }

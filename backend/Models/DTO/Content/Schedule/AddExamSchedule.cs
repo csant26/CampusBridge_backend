@@ -9,7 +9,7 @@
         public DateTime EndDate { get; set; }
         public List<DateTime> UnavailableDates { get; set; }
         //Soft constratints
-        public List<int> GapBetweenExams { get; set; }
+        public List<string>? GapBetweenExams { get; set; }
 
     }
 }
