@@ -1,8 +1,10 @@
 ﻿using backend.CustomActionFilter;
+using backend.Data;
 using backend.Models.DTO.Login;
 using backend.Repository.Token;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,12 +16,15 @@ namespace backend.Controllers
     {
         private readonly UserManager<IdentityUser> userManager;
         private readonly ITokenRepository tokenRepository;
+        private readonly CampusBridgeDbContext campusBridgeDbContext;
 
         public AuthController(UserManager<IdentityUser> userManager, 
-            ITokenRepository tokenRepository)
+            ITokenRepository tokenRepository,
+            CampusBridgeDbContext campusBridgeDbContext)
         {
             this.userManager = userManager;
             this.tokenRepository = tokenRepository;
+            this.campusBridgeDbContext = campusBridgeDbContext;
         }
         [HttpPost]
         [ValidateModel]
@@ -73,6 +78,31 @@ namespace backend.Controllers
                 jwtToken = destroyedToken
             };
             return Ok(response);
+        }
+        [HttpGet("GetNameFromId")]
+        [ValidateModel]
+        public async Task<IActionResult> GetNameFromId(string id)
+        {
+            var existingUser = await userManager.FindByEmailAsync(id);
+            if (existingUser == null) { return BadRequest("no user"); }
+            var role = await userManager.GetRolesAsync(existingUser);
+            if (role.Contains("Univeristy"))
+                return Ok("University");
+            if (role.Contains("College"))
+                return Ok("College");
+            if (role.Contains("Teacher"))
+            {
+                var teacher = await campusBridgeDbContext.Teachers.FirstOrDefaultAsync(x => x.TeacherId == id);
+                if (teacher == null) { return BadRequest(); }
+                return Ok(teacher.Name);
+            }
+            if (role.Contains("Student"))
+            {
+                var student = await campusBridgeDbContext.Students.FirstOrDefaultAsync(x => x.StudentId == id);
+                if (student == null) { return BadRequest(); }
+                return Ok(student.Name);
+            }
+            return BadRequest();
         }
     }
 }
