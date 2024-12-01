@@ -22,7 +22,7 @@ namespace backend.Controllers
             this.noticeRepository = noticeRepository;
             this.mapper = mapper;
         }
-        [HttpPost("CreateNotice/{CreatorId}")]
+        [HttpPost("CreateNotice")]
         [ValidateModel]
         public async Task<IActionResult> CreateNotice([FromBody] AddNoticeDTO addNoticeDTO)
         {
