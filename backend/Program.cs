@@ -2,6 +2,8 @@ using backend;
 using backend.Data;
 using backend.Files;
 using backend.Mappings;
+using backend.Models.Domain.Content.FAQs;
+using backend.Repository.Analysis;
 using backend.Repository.Colleges;
 using backend.Repository.Content;
 using backend.Repository.Students;
@@ -13,6 +15,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.ML;
 using Microsoft.OpenApi.Models;
 using System.Text;
 
@@ -71,6 +74,10 @@ builder.Services.AddDbContext<CampusBridgeDbContext>(options =>
 builder.Services.AddDbContext<CampusBridgeAuthDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("AuthConnection")));
 
+
+// Register MLContext as a Singleton service
+builder.Services.AddSingleton<MLContext>();
+    
 //Setting up repository pattern.
 builder.Services.AddScoped<ITokenRepository, TokenRepository>();
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
@@ -90,6 +97,10 @@ builder.Services.AddScoped<ICollegeRepository, CollegeRepository>();
 builder.Services.AddScoped<IFAQRepository, FAQRepository>();
 builder.Services.AddScoped<IResultRepository, ResultRepository>();
 builder.Services.AddScoped<IScheduleRepository, ScheduleRepository>();
+builder.Services.AddScoped<ITeacherScheduleRepository, TeacherScheduleRepository>();
+builder.Services.AddScoped<IAnalyticsRepository, AnalyticsRepository>();
+builder.Services.AddScoped<SeedData>();
+
 
 //Setting up mapping between Domain and DTOs.
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
@@ -128,14 +139,16 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 var app = builder.Build();
 
+
 //Seeding database with the developer account
 using (var scope = app.Services.CreateScope())
 {
-    var services = scope.ServiceProvider;
-    var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
-    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-    await SeedData.Initialize(userManager, roleManager);
+    var seedData = scope.ServiceProvider.GetRequiredService<SeedData>();
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    await seedData.Initialize(userManager, roleManager);
 }
+
 
 //Configure CORS.
 app.UseCors("AllowReactApp");

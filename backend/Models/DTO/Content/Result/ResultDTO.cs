@@ -1,4 +1,5 @@
 ﻿using backend.Models.DTO.Student;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace backend.Models.DTO.Content.Result
 {

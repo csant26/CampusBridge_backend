@@ -49,10 +49,10 @@ namespace backend.Controllers
         }
         [HttpPost("CreateTeacherSchedule")]
         [ValidateModel]
-        public async Task<IActionResult> CreateTeacherSchedule([FromBody] AddScheduleDTO addScheduleDTO)
+        public async Task<IActionResult> CreateTeacherSchedule([FromBody] AddTeacherScheduleDTO addTeacherScheduleDTO)
         {
             var schedule = await scheduleRepository
-                .CreateSchedule(mapper.Map<Schedule>(addScheduleDTO));
+                .CreateTeacherSchedule(mapper.Map<TeacherSchedule>(addTeacherScheduleDTO));
             if (schedule == null) { return BadRequest("Schedule can't be created."); }
             return Ok(mapper.Map<ScheduleDTO>(schedule));
         }

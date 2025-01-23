@@ -113,6 +113,7 @@ namespace backend.Repository.Content
         {
             var syllabus = await campusBridgeDbContext.Syllabus
                 .Include(x => x.Courses)
+                    .ThenInclude(course => course.Units)
                 .ToListAsync();
             if(syllabus == null) { return null; }
             else { return syllabus; }
@@ -122,6 +123,7 @@ namespace backend.Repository.Content
         {
             var syllabus = await campusBridgeDbContext.Syllabus
                 .Include(x => x.Courses)
+                    .ThenInclude(course => course.Units)
                 .FirstOrDefaultAsync(s => s.SyllabusId == SyllabusId);
             if (syllabus == null) { return null; }
             else { return syllabus; }

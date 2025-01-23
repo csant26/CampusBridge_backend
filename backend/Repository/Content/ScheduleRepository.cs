@@ -2,6 +2,8 @@
 using backend.Models.Domain.Content.Schedules;
 using backend.Models.Domain.Content.Syllabi;
 using backend.Models.Domain.Students;
+using backend.Repository.Teachers;
+using Google.OrTools.Sat;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
@@ -10,10 +12,12 @@ namespace backend.Repository.Content
     public class ScheduleRepository : IScheduleRepository
     {
         private readonly CampusBridgeDbContext campusBridgeDbContext;
+        private readonly ITeacherScheduleRepository teacherScheduleRepository;
 
-        public ScheduleRepository(CampusBridgeDbContext campusBridgeDbContext)
+        public ScheduleRepository(CampusBridgeDbContext campusBridgeDbContext, ITeacherScheduleRepository teacherScheduleRepository)
         {
             this.campusBridgeDbContext = campusBridgeDbContext;
+            this.teacherScheduleRepository = teacherScheduleRepository;
         }
 
         public async Task<Schedule> CreateSchedule(Schedule schedule)
@@ -61,25 +65,27 @@ namespace backend.Repository.Content
             allSchedules
             );
 
-            int[] heuristic = new int[allSchedules.Count];
-            var index = 0;
+            List<int> heuristic = new List<int>();
             //Applying heuristics to each
             foreach(var sc in allSchedules)
             {   
                 var score = 0;
                 for (int i = 0; i < sc.Count - 1; i++)
                 {
-                    if (((sc[i + 1] - sc[i]).Days) - 1 == Convert.ToInt32(examSchedule.GapBetweenExams[i]))
+                    if (!examSchedule.GapBetweenExams.Any(item=>string.IsNullOrWhiteSpace(item)))
                     {
-                        score += 100;
-                    }
-                    else if(((sc[i + 1] - sc[i]).Days)-1 > Convert.ToInt32(examSchedule.GapBetweenExams[i]))
-                    {
-                        score += 80;
-                    }
-                    if (((sc[i + 1] - sc[i]).Days) - 1 < 2)
-                    {
-                        score -= 100;
+                        if (((sc[i + 1] - sc[i]).Days) - 1 == Convert.ToInt32(examSchedule.GapBetweenExams[i]))
+                        {
+                            score += 100;
+                        }
+                        else if (((sc[i + 1] - sc[i]).Days) - 1 > Convert.ToInt32(examSchedule.GapBetweenExams[i]))
+                        {
+                            score += 80;
+                        }
+                        if (((sc[i + 1] - sc[i]).Days) - 1 < 2)
+                        {
+                            score -= 100;
+                        }
                     }
                 }
 
@@ -100,32 +106,20 @@ namespace backend.Repository.Content
                 {
                     score += 35;
                 }
-                heuristic[index] = score;
-                index++;
+                heuristic.Add(score);
             }
 
             //Ordering the schedule
-            var tempSchedule = new List<DateTime>();
-            int tempHeuristic;
-            for(int i = 0; i < allSchedules.Count; i++)
-            {
-                for(int j = i + 1; j < allSchedules.Count; j++)
-                {
-                    if (heuristic[i] < heuristic[j])
-                    {
-                        tempSchedule = allSchedules[i];
-                        allSchedules[i] = allSchedules[j];
-                        allSchedules[j] = tempSchedule;
+            var combined = allSchedules.Zip(heuristic, (sched, score) => new { sched, score })
+                .OrderByDescending(sc => sc.score)
+                .ToList();
 
-                        tempHeuristic = heuristic[i];
-                        heuristic[i] = heuristic[j];
-                        heuristic[j] = tempHeuristic;
-                    }
-                }
-            }
+
+            var optimalSchedule = combined.Select(sc => sc.sched).FirstOrDefault();
+            var optimalHeuristic = combined.Select(sco => sco.score).FirstOrDefault();
+
 
             var count = 0;
-            var optimalSchedule = allSchedules[0];
             var schedule = new Schedule();
 
             //Handling nonelective courses.
@@ -195,9 +189,9 @@ namespace backend.Repository.Content
             throw new NotImplementedException();
         }
 
-        public Task<Schedule> CreateTeacherSchedule(Schedule schedule)
+        public async Task<Schedule> CreateTeacherSchedule(TeacherSchedule schedule)
         {
-            throw new NotImplementedException();
+            return await teacherScheduleRepository.CreateTeacherSchedule(schedule);
         }
 
         public async Task<List<Schedule>> GetScheduleByRole(string Role)

@@ -36,6 +36,7 @@ namespace backend.Controllers
         {
             var results = await resultRepository.GetResult();
             if (results == null) { return BadRequest("No results were found."); }
+            var resDTO = mapper.Map<List<ResultDTO>>(results);
             return Ok(mapper.Map<List<ResultDTO>>(results));
         }
         [HttpGet("GetResultById/{ResultId}")]
@@ -55,7 +56,7 @@ namespace backend.Controllers
             if (result == null) { return BadRequest("Result couldn't be updated."); }
             return Ok(mapper.Map<ResultDTO>(result));
         }
-        [HttpPut("DeleteResult/{ResultId}")]
+        [HttpDelete("DeleteResult/{ResultId}")]
         [ValidateModel]
         public async Task<IActionResult> DeleteResult([FromRoute] string ResultId)
         {

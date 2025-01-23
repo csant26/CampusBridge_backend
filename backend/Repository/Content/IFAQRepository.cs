@@ -6,5 +6,6 @@ namespace backend.Repository.Content
     public interface IFAQRepository
     {
         Task<FAQResponseDTO> GetAnswer(FAQRequestDTO fAQRequestDTO );
+        Task<string> PredictAnswerAsync(string question);
     }
 }

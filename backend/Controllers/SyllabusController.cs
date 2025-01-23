@@ -75,6 +75,7 @@ namespace backend.Controllers
             else
             {
                 return Ok(mapper.Map<SyllabusDTO>(syllabus));
+                //return Ok(syllabus)
             }
         }
         [HttpGet("GetSyllabus")]

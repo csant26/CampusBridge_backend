@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using backend.CustomActionFilter;
-using backend.Migrations.CampusBridgeDb;
 using backend.Models.Domain.Content.Assignments;
 using backend.Models.DTO.Content.Assignment;
 using backend.Models.DTO.Content.File;
@@ -27,7 +26,6 @@ namespace backend.Controllers
         [ValidateModel]
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> CreateAssignment(
-            [FromRoute]string TeacherId,
             [FromForm] AddAssignmentDTO addAssignmentDTO,
             [FromForm] FileUploadRequestDTO fileUploadRequestDTO)
         {

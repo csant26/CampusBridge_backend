@@ -14,6 +14,7 @@ namespace backend.Models.DTO.Student
         public string Password { get; set; }
         [Required]
         public string Phone { get; set; }
+        public string Gender { get; set; }
         public string Location { get; set; }
         [Required]
         public string Semseter { get; set; }

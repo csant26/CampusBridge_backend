@@ -23,6 +23,8 @@ namespace backend.Models.DTO.Student
         public string Phone { get; set; }
         [Required]
         public string Location { get; set; }
+        [Required]
+        public string Gender { get; set; }
         public bool? isClubHead { get; set; } = false;
         public bool? isAuthor { get; set; } = false;
         //Navigation Properties

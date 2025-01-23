@@ -10,6 +10,7 @@ namespace backend.Models.DTO.Student
         public string Password { get; set; }
         public string Phone { get; set; }
         public string Location { get; set; }
+        public string Gender { get; set; }
         public bool? isClubHead { get; set; } = false;
         public bool? isAuthor { get; set; } = false;
         public string FinancialId {  get; set; }

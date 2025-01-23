@@ -1,8 +1,7 @@
-﻿namespace backend.Models.Domain.Content.Schedules
+﻿namespace backend.Models.DTO.Content.Schedule
 {
-    public class TeacherSchedule
+    public class AddTeacherScheduleDTO
     {
-        public int Id { get; set; }
         public string Semester { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
@@ -11,6 +10,5 @@
         public string[] Teachers { get; set; }
         public bool[,] TeacherAvailability { get; set; }
         public List<DateTime> Holidays { get; set; }
-
     }
 }

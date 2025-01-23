@@ -1,5 +1,4 @@
 ﻿using backend.Data;
-using backend.Migrations.CampusBridgeDb;
 using backend.Models.Domain.Content.Notices;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

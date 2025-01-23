@@ -18,6 +18,7 @@ namespace backend.Models.Domain.Students
         public string Password {  get; set; }
         public string Phone { get; set; }
         public string Location { get; set; }
+        public string Gender { get; set; }
         public bool? isClubHead { get; set; } = false;
         public bool? isAuthor { get; set; } = false;
 
@@ -38,6 +39,7 @@ namespace backend.Models.Domain.Students
         public string CollegeId { get; set; } //foreign-key
         [JsonIgnore]
         public College College { get; set; } //one-to-one
+        [JsonIgnore]
         public List<Result> Results { get; set; }  //one-to-many
         //public int AttendanceId { get; set; } //foreign key
         //public List<StudentAttendance> StudentAttendances { get; set; } //one-to-many

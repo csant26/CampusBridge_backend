@@ -48,11 +48,10 @@ namespace backend.Repository.Colleges
                     await userManager.AddToRoleAsync(collegeUser, "College");
                     await userManager.AddToRoleAsync(collegeUser, "Author");
                 }
+                await campusBridgeDbContext.Colleges.AddAsync(collegeToAdd);
+                await campusBridgeDbContext.SaveChangesAsync();
             }
             else { return null; }
-
-            await campusBridgeDbContext.Colleges.AddAsync(collegeToAdd);
-            await campusBridgeDbContext.SaveChangesAsync();
             return collegeToAdd;
         }
 

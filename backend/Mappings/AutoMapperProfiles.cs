@@ -149,7 +149,9 @@ namespace backend.Mappings
                 .ReverseMap();
 
             //Result
-            CreateMap<Result, ResultDTO>().ReverseMap();
+            CreateMap<Result, ResultDTO>()
+                .ForMember(dest => dest.StudentDTO, opt => opt.MapFrom(src => src.Student))
+                .ReverseMap();
             CreateMap<AddResultDTO, Result>().ReverseMap();
             CreateMap<UpdateResultDTO, Result>().ReverseMap();
 
@@ -165,6 +167,10 @@ namespace backend.Mappings
 
             //Attendance
             CreateMap<Attendance, AttendanceDTO>().ReverseMap();
+
+            CreateMap<AddTeacherScheduleDTO, TeacherSchedule>().ReverseMap();
+
+
         }
     }
 }

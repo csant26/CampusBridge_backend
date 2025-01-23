@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using backend.CustomActionFilter;
+using backend.Models.Domain.Content.Help;
 using backend.Models.DTO.Content.FAQ;
 using backend.Repository.Content;
 using Microsoft.AspNetCore.Http;
@@ -25,6 +26,12 @@ namespace backend.Controllers
         public async Task<IActionResult> GetAnswer([FromBody] FAQRequestDTO fAQRequestDTO)
         {
             return Ok(await fAQRepository.GetAnswer(fAQRequestDTO));
+        }
+        [HttpPost("GetAnswerFromML")]
+        [ValidateModel]
+        public async Task<IActionResult> GetAnswerFromML([FromBody] FAQRequestDTO fAQRequestDTO)
+        {
+            return Ok(await fAQRepository.PredictAnswerAsync(fAQRequestDTO.Question));
         }
     }
 }
