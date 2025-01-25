@@ -366,3 +366,5 @@ FodyWeavers.xsd
 secrets.json
 
 SeedData.cs
+
+Migrations/
