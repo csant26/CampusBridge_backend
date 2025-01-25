@@ -1,5 +1,6 @@
 ﻿using backend.CustomActionFilter;
 using backend.Data;
+using backend.Models.DTO.Auth;
 using backend.Models.DTO.Login;
 using backend.Repository.Token;
 using Microsoft.AspNetCore.Identity;
@@ -81,28 +82,36 @@ namespace backend.Controllers
         }
         [HttpGet("GetNameFromId")]
         [ValidateModel]
-        public async Task<IActionResult> GetNameFromId(string id)
+        public async Task<IActionResult> GetDataFromId(string id)
         {
+            AccumulatedData data = new AccumulatedData();
             var existingUser = await userManager.FindByEmailAsync(id);
             if (existingUser == null) { return BadRequest("no user"); }
             var role = await userManager.GetRolesAsync(existingUser);
             if (role.Contains("Univeristy"))
-                return Ok("University");
+                data.Role = "University";
             if (role.Contains("College"))
-                return Ok("College");
+            {
+                var college = await campusBridgeDbContext.Colleges.FirstOrDefaultAsync(x => x.Email == id);
+                if (college == null) { return BadRequest(); }
+                data.Name = college.Name;
+                data.Role = "College";
+            }
             if (role.Contains("Teacher"))
             {
-                var teacher = await campusBridgeDbContext.Teachers.FirstOrDefaultAsync(x => x.TeacherId == id);
+                var teacher = await campusBridgeDbContext.Teachers.FirstOrDefaultAsync(x => x.Email == id);
                 if (teacher == null) { return BadRequest(); }
-                return Ok(teacher.Name);
+                data.Name = teacher.Name;
+                data.Role = "Teacher";
             }
             if (role.Contains("Student"))
             {
-                var student = await campusBridgeDbContext.Students.FirstOrDefaultAsync(x => x.StudentId == id);
+                var student = await campusBridgeDbContext.Students.FirstOrDefaultAsync(x => x.Email == id);
                 if (student == null) { return BadRequest(); }
-                return Ok(student.Name);
+                data.Name=student.Name;
+                data.Role="Student";
             }
-            return BadRequest();
+            return Ok(data);
         }
     }
 }
