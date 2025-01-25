@@ -6,6 +6,7 @@ using backend.Repository.Students;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -28,8 +29,12 @@ namespace backend.Controllers
         [ValidateModel]
         public async Task<IActionResult> CreateStudent([FromBody] AddStudentDTO addStudentDTO)
         {
+
             //Map DTO to Domain. (only maps some of the properties)
             Student student = mapper.Map<Student>(addStudentDTO);
+
+            student.isClubHead = Convert.ToBoolean(addStudentDTO.isClubHead);
+            student.isClubHead = Convert.ToBoolean(addStudentDTO.isClubHead);
 
             //Map the remaining relational properties manually.
             //And, finally use the domain to access the database through repository pattern.
@@ -59,6 +64,9 @@ namespace backend.Controllers
             [FromBody] UpdateStudentDTO updateStudentDTO)
         {
             var updatedStudent = mapper.Map<Student>(updateStudentDTO);
+
+            updatedStudent.isClubHead = Convert.ToBoolean(updateStudentDTO.isClubHead);
+            updatedStudent.isClubHead = Convert.ToBoolean(updateStudentDTO.isClubHead);
 
             updatedStudent = await studentRepository.UpdateStudent(id, updatedStudent, updateStudentDTO);
 

@@ -75,7 +75,7 @@ namespace backend.Repository.Students
                 student.Clubs = clubs;
             }
 
-            var college = await campusBridgeDbContext.Colleges.FindAsync(addStudentDTO.CollegeId);
+            var college = await campusBridgeDbContext.Colleges.Where(x=>x.Email==addStudentDTO.CollegeId).FirstOrDefaultAsync();
             if (college != null) { student.College = college; }
 
 
@@ -105,8 +105,6 @@ namespace backend.Repository.Students
                     await userManager.AddToRoleAsync(studentUser, "Author");
                 }
             }
-            else { return null; }
-
             await campusBridgeDbContext.Students.AddAsync(student);
             await campusBridgeDbContext.SaveChangesAsync();
             return student;

@@ -18,8 +18,8 @@ namespace backend.Models.DTO.Student
         public string Location { get; set; }
         [Required]
         public string Semseter { get; set; }
-        public bool? isClubHead { get; set; } = false;
-        public bool? isAuthor { get; set; } = false;
+        public string isClubHead { get; set; }
+        public string isAuthor { get; set; }
         public List<string>? ElectiveIds { get; set; } = null;
         public string FinancialId { get; set; }
         public List<string>? ClubIds { get; set; } = null ;

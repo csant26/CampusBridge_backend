@@ -24,7 +24,7 @@ namespace backend.Repository.Teachers
 
         public async Task<Teacher> CreateTeacher(Teacher teacher, AddTeacherDTO addTeacherDTO)
         {
-            var existingCollege = await campusBridgeDbContext.Colleges.FindAsync(addTeacherDTO.CollegeId);
+            var existingCollege = await campusBridgeDbContext.Colleges.Where(x => x.Email == addTeacherDTO.CollegeId).FirstOrDefaultAsync();
             if (existingCollege == null) { return null; }
             teacher.Colleges.AddRange(new List<College> { existingCollege });
 
