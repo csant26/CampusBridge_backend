@@ -47,7 +47,7 @@ namespace backend.Controllers
             if (university == null) { return BadRequest("No university found."); }
             return Ok(mapper.Map<UniversityDTO>(university));
         }
-        [HttpPost("UpdateUniversity/{UniversityId}")]
+        [HttpPut("UpdateUniversity/{UniversityId}")]
         [ValidateModel]
         public async Task<IActionResult> UpdateUniversity([FromRoute]string UniversityId,
             [FromBody]UpdateUniversityDTO updateUniversityDTO)
@@ -57,7 +57,7 @@ namespace backend.Controllers
             if (university == null) { return BadRequest("University couldn't be updated."); }
             return Ok(mapper.Map<UniversityDTO>(university));
         }
-        [HttpPost("DeleteUniversity/{UniversityId}/{DeveloperId}")]
+        [HttpDelete("DeleteUniversity/{UniversityId}/{DeveloperId}")]
         [ValidateModel]
         public async Task<IActionResult> DeleteUniversity([FromRoute] string UniversityId,
             [FromRoute]string DeveloperId)

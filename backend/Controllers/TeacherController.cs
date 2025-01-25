@@ -53,7 +53,7 @@ namespace backend.Controllers
             if (teacher == null) { return BadRequest("No teacher found."); }
             return Ok(mapper.Map<TeacherDTO>(teacher));
         }
-        [HttpPost("UpdateTeacher/{TeacherId}")]
+        [HttpPut("UpdateTeacher/{TeacherId}")]
         [ValidateModel]
         public async Task<IActionResult> UpdateTeacher([FromRoute] string TeacherId,
             [FromBody] UpdateTeacherDTO updateTeacherDTO)
@@ -63,7 +63,7 @@ namespace backend.Controllers
             if (teacher == null) { return BadRequest("Teacher couldn't be updated."); }
             return Ok(mapper.Map<TeacherDTO>(teacher));
         }
-        [HttpPost("DeleteTeacher/{TeacherId}/{CollegeId}")]
+        [HttpDelete("DeleteTeacher/{TeacherId}/{CollegeId}")]
         [ValidateModel]
         public async Task<IActionResult> DeleteTeacher([FromRoute] string TeacherId,
             [FromRoute] string CollegeId)

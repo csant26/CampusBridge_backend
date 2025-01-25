@@ -40,13 +40,14 @@ namespace backend.Repository.Universities
                 {
                     await userManager.AddToRoleAsync(universityUser, "University");
                     await userManager.AddToRoleAsync(universityUser, "Author");
+
+                    await campusBridgeDbContext.Universities.AddAsync(universityToAdd);
+                    await campusBridgeDbContext.SaveChangesAsync();
+                    return universityToAdd;
                 }
             }
-            else { return null; }
+            return null;
 
-            await campusBridgeDbContext.Universities.AddAsync(universityToAdd);
-            await campusBridgeDbContext.SaveChangesAsync();
-            return universityToAdd;
         }
 
         public async Task<List<University>> GetUniversity()

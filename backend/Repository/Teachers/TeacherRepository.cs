@@ -46,13 +46,15 @@ namespace backend.Repository.Teachers
                 {
                     await userManager.AddToRoleAsync(newTeacherUser, "Teacher");
                     await userManager.AddToRoleAsync(newTeacherUser, "Author");
+
+                    await campusBridgeDbContext.Teachers.AddAsync(teacher);
+                    await campusBridgeDbContext.SaveChangesAsync();
+
+
+                    return teacher;
                 }
             }
-
-
-            await campusBridgeDbContext.Teachers.AddAsync(teacher);
-            await campusBridgeDbContext.SaveChangesAsync();
-            return teacher;
+            return null;
 
         }
         public async Task<List<Teacher>> GetTeacher()
@@ -114,12 +116,17 @@ namespace backend.Repository.Teachers
         {
             var existingTeacher = await GetTeacherById(TeacherId);
             if (existingTeacher == null) { return null; }
-            var existingCollegeUser = await userManager.FindByEmailAsync(CollegeId);
+
+            var existingCollege = await campusBridgeDbContext.Colleges.FirstOrDefaultAsync(x=>x.CollegeId == CollegeId);
+            if (existingCollege == null) { return null; }
+
+            var existingCollegeUser = await userManager.FindByEmailAsync(existingCollege.Email);
             if (existingCollegeUser == null) { return null; }
+
             var roles = await userManager.GetRolesAsync(existingCollegeUser);
             if (!roles.Contains("College")) { return null; }
 
-            var existingTeacherUser = await userManager.FindByEmailAsync(TeacherId);
+            var existingTeacherUser = await userManager.FindByEmailAsync(existingTeacher.Email);
             await userManager.DeleteAsync(existingTeacherUser);
 
             campusBridgeDbContext.Teachers.Remove(existingTeacher);

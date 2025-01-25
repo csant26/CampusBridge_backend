@@ -80,7 +80,7 @@ namespace backend.Controllers
             };
             return Ok(response);
         }
-        [HttpGet("GetNameFromId")]
+        [HttpGet("GetDataFromId")]
         [ValidateModel]
         public async Task<IActionResult> GetDataFromId(string id)
         {
