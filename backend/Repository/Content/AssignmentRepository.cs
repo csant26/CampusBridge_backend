@@ -121,7 +121,7 @@ namespace backend.Repository.Content
             var assignment = await campusBridgeDbContext.Assignments
                 .FindAsync(submission.AssignmentId);
             var student = await campusBridgeDbContext.Students
-                .FindAsync(submission.StudentId);
+                .FirstOrDefaultAsync(x=>x.Email==submission.StudentId);
 
             if (assignment != null) { submission.Assignment=assignment; }
             if (student != null) { submission.Student=student; }

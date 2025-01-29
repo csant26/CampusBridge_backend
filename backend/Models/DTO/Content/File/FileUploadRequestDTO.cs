@@ -11,6 +11,6 @@ namespace backend.Models.DTO.Content.File
         public IFormFile FileToUpload { get; set; }
         [Required]
         public string FileName { get; set; }
-        public string? FileDescription { get; set; }
+        //public string? FileDescription { get; set; }
     }
 }

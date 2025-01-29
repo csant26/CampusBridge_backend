@@ -48,7 +48,7 @@ namespace backend.Controllers
             return Ok(mapper.Map<ScheduleDTO>(schedule));
         }
         [HttpPost("CreateTeacherSchedule")]
-        [ValidateModel]
+        [ValidateModel] 
         public async Task<IActionResult> CreateTeacherSchedule([FromBody] AddTeacherScheduleDTO addTeacherScheduleDTO)
         {
             var schedule = await scheduleRepository

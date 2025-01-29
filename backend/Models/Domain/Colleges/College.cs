@@ -15,6 +15,7 @@ namespace backend.Models.Domain.Colleges
         public string Location { get; set; }
         public string Phone { get; set; }
         public string Description {  get; set; }
+        [JsonIgnore]
         public List<Student> Students { get; set; } //one-to-many
         [JsonIgnore]
         public List<Teacher> Teachers {  get; set; } //one-to-many

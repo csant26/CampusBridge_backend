@@ -123,6 +123,7 @@ namespace backend.Repository.Students
                 .Include(f=>f.Financial)
                 .Include(c=>c.Clubs)
                 .Include(x => x.College)
+                .Include(x => x.Courses)
                 .ToListAsync();
             if(students != null) { return students; }
             else { return null; }

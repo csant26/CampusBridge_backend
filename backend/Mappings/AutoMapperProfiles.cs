@@ -43,6 +43,8 @@ namespace backend.Mappings
                 .ForMember(dest => dest.AcademicDTO, opt => opt.MapFrom(src => src.Academic))
                 .ForMember(dest => dest.FinancialDTO, opt => opt.MapFrom(src => src.Financial))
                 .ForMember(dest => dest.ClubsDTO, opt => opt.MapFrom(src => src.Clubs))
+                .ForMember(dest => dest.CourseDTO, opt => opt.MapFrom(src => src.Courses))
+                .ForMember(dest => dest.CollegeDTO, opt => opt.MapFrom(src => src.College))
                 .ReverseMap();
             CreateMap<Club, ClubDTO>()
                 .ForMember(dest=>dest.StudentDTO,opt=>opt.MapFrom(src=>src.Students))

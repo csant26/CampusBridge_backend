@@ -7,6 +7,7 @@ using backend.Models.DTO.Content.Result;
 using backend.Models.DTO.Content.Syllabus;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace backend.Models.DTO.Student
 {
@@ -31,11 +32,17 @@ namespace backend.Models.DTO.Student
         public AcademicDTO AcademicDTO { get; set; }
         public FinancialDTO FinancialDTO { get; set; }
         public List<CourseDTO> CourseDTO {  get; set; }
+        [JsonIgnore]
         public List<ClubDTO> ClubsDTO { get; set; }
+        [JsonIgnore]
         public List<SubmissionDTO> SubmissionDTO { get; set; }
+        [JsonIgnore]
         public List<QuestionDTO> QuestionDTO { get; set; }
+        //[JsonIgnore]  
         public CollegeDTO CollegeDTO {  get; set; }
+        [JsonIgnore]
         public List<ResultDTO> ResultDTO {  get; set; }
+        [JsonIgnore]
         public List<StudentAttendance> StudentAttendances { get; set; }
     }
 }

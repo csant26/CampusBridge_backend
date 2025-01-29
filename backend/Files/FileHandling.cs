@@ -25,7 +25,7 @@ namespace backend.Files
                     FileId = fileUploadRequestDTO.FileId,
                     FileToUpload = fileUploadRequestDTO.FileToUpload,
                     FileName = fileUploadRequestDTO.FileName,
-                    FileDescription = fileUploadRequestDTO.FileDescription,
+                    //FileDescription = fileUploadRequestDTO.FileDescription,
                     FileExtension = Path.GetExtension(fileUploadRequestDTO.FileToUpload.FileName),
                     FileSizeInBytes = fileUploadRequestDTO.FileToUpload.Length,
                 };
