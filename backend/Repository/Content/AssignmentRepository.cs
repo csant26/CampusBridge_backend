@@ -151,7 +151,15 @@ namespace backend.Repository.Content
             if (submission == null) { return null; }
             return submission;
         }
-
+        public async Task<List<Submission>> GetSubmissionByAssignmentId(string AssignmentId)
+        {
+            var submission = await campusBridgeDbContext.Submissions
+                .Include(a => a.Assignment).Include(s => s.Student)
+                .Where(x => x.AssignmentId == AssignmentId)
+                .ToListAsync() ;
+            if (submission == null) { return null; }
+            return submission;
+        }
         public async Task<Submission> UpdateSubmission(string SubmissionId,
             Submission submission,
             FileUploadRequestDTO fileUploadRequestDTO)

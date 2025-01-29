@@ -251,12 +251,14 @@ namespace backend.Repository.Students
             var roles = await userManager.GetRolesAsync(existingCollegeUser);
             if (!roles.Contains("College")) { return null; }
 
+
+            campusBridgeDbContext.Students.Remove(existingStudent);
+            await campusBridgeDbContext.SaveChangesAsync();
+
             var existingUser = await userManager.FindByEmailAsync(existingStudent.Email);
             if (existingUser == null) { return null; }
             await userManager.DeleteAsync(existingUser);
 
-            campusBridgeDbContext.Students.Remove(existingStudent);
-            await campusBridgeDbContext.SaveChangesAsync();
             return existingStudent;
         }
     }

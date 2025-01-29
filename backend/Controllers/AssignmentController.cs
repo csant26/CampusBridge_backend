@@ -102,6 +102,14 @@ namespace backend.Controllers
             if (submission == null) { return BadRequest("No submissions found."); }
             return Ok(mapper.Map<SubmissionDTO>(submission));
         }
+        [HttpGet("GetSubmissionByAssignmentId/{AssignmentId}")]
+        [ValidateModel]
+        public async Task<IActionResult> GetSubmissionByAssignmentId([FromRoute] string AssignmentId)
+        {
+            var submission = await assignmentRepository.GetSubmissionByAssignmentId(AssignmentId);
+            if (submission == null) { return BadRequest("No submissions found."); }
+            return Ok(mapper.Map<List<SubmissionDTO>>(submission));
+        }
         [HttpPut("UpdateSubmission/{SubmissionId}")]
         [ValidateModel]
         [Consumes("multipart/form-data")]

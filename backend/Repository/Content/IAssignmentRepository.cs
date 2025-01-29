@@ -21,6 +21,7 @@ namespace backend.Repository.Content
             FileUploadRequestDTO fileUploadRequestDTO);
         Task<List<Submission>> GetSubmission();
         Task<Submission> GetSubmissionById(string SubmissionId);
+        Task<List<Submission>> GetSubmissionByAssignmentId(string AssignmentId);
         Task<Submission> UpdateSubmission(string SubmissionId, 
             Submission submission,
             FileUploadRequestDTO fileUploadRequestDTO);
