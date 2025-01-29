@@ -33,6 +33,15 @@ namespace backend.Repository.Content
                 .Include(u => u.Units)
                 .Include(s => s.Syllabus)
                 .ToListAsync();
+            foreach(var course in courses)
+            {
+                var courseId = course.CourseId;
+                var existingUnits = await campusBridgeDbContext.Unit
+                    .AsNoTracking()
+                    .Where(x => x.CourseId == courseId)
+                    .ToListAsync();
+                course.Units = existingUnits;
+            }
             if (courses == null) { return null; }
             else { return courses; }
         }
@@ -43,6 +52,12 @@ namespace backend.Repository.Content
                 .Include(u=>u.Units)
                 .Include(s=>s.Syllabus)
                 .FirstOrDefaultAsync(x=>x.CourseId==CourseId);
+            var courseId = course.CourseId;
+            var existingUnits = await campusBridgeDbContext.Unit
+                .AsNoTracking()
+                .Where(x => x.CourseId == courseId)
+                .ToListAsync();
+            course.Units = existingUnits;
             if (course == null) { return null; }
             else { return course; }
         }
@@ -113,9 +128,22 @@ namespace backend.Repository.Content
         {
             var syllabus = await campusBridgeDbContext.Syllabus
                 .Include(x => x.Courses)
-                    .ThenInclude(course => course.Units)
+                .ThenInclude(course => course.Units)
                 .ToListAsync();
-            if(syllabus == null) { return null; }
+            foreach(var syllab in syllabus)
+            {
+                var courses = await campusBridgeDbContext.Course.Where(x => x.SyllabusId == syllab.SyllabusId).ToListAsync();
+                foreach (var course in courses)
+                {
+                    var courseId = course.CourseId;
+                    var existingUnits = await campusBridgeDbContext.Unit
+                        .AsNoTracking()
+                        .Where(x => x.CourseId == courseId)
+                        .ToListAsync();
+                    course.Units = existingUnits;
+                }
+            }
+            if (syllabus == null) { return null; }
             else { return syllabus; }
         }
 
@@ -125,6 +153,17 @@ namespace backend.Repository.Content
                 .Include(x => x.Courses)
                     .ThenInclude(course => course.Units)
                 .FirstOrDefaultAsync(s => s.SyllabusId == SyllabusId);
+            if (syllabus == null) { return null; }
+            var courses = await campusBridgeDbContext.Course.Where(x => x.SyllabusId == syllabus.SyllabusId).ToListAsync();
+            foreach (var course in courses)
+            {
+                var courseId = course.CourseId;
+                var existingUnits = await campusBridgeDbContext.Unit
+                    .AsNoTracking()
+                    .Where(x => x.CourseId == courseId)
+                    .ToListAsync();
+                course.Units = existingUnits;
+            }
             if (syllabus == null) { return null; }
             else { return syllabus; }
         }

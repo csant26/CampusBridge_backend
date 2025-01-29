@@ -26,7 +26,7 @@ namespace backend.Repository.Content
             var course = await campusBridgeDbContext.Course.FindAsync(assignment.CourseId);
             var teacher = await campusBridgeDbContext.Teachers
                 .Include(x => x.Courses)
-                .FirstOrDefaultAsync(x => x.TeacherId == assignment.TeacherId);
+                .FirstOrDefaultAsync(x => x.Email == assignment.TeacherId);
             if (teacher.Courses.Contains(course))
             {
                 if (course != null)

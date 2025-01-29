@@ -23,12 +23,12 @@ namespace backend.Repository.Content
         {
             foreach(var atnd in addAttendanceDTO.StudentPresence)
             {
-                var existingStudentUser = await userManager.FindByEmailAsync(atnd.Key);
-                if (existingStudentUser == null) { return null; }
-                var roles = await userManager.GetRolesAsync(existingStudentUser);
-                if (!roles.Contains("Student")) { return null; }
+                //var existingStudentUser = await userManager.FindByEmailAsync(atnd.Key);
+                //if (existingStudentUser == null) { return null; }
+                //var roles = await userManager.GetRolesAsync(existingStudentUser);
+                //if (!roles.Contains("Student")) { return null; }
 
-                var existingStudent = await campusBridgeDbContext.Students.FindAsync(atnd.Key);
+                var existingStudent = await campusBridgeDbContext.Students.FirstOrDefaultAsync(x=>x.StudentId==atnd.Key);
                 if (existingStudent == null) { return null; }
 
                 attendance.StudentPresence.Add(existingStudent,atnd.Value);

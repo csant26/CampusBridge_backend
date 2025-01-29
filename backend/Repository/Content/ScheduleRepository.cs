@@ -72,7 +72,9 @@ namespace backend.Repository.Content
                 var score = 0;
                 for (int i = 0; i < sc.Count - 1; i++)
                 {
-                    if (!examSchedule.GapBetweenExams.Any(item=>string.IsNullOrWhiteSpace(item)))
+                    if (i < examSchedule.GapBetweenExams.Count &&
+                        !string.IsNullOrWhiteSpace(examSchedule.GapBetweenExams[i]) &&
+                        int.TryParse(examSchedule.GapBetweenExams[i], out int gap))
                     {
                         if (((sc[i + 1] - sc[i]).Days) - 1 == Convert.ToInt32(examSchedule.GapBetweenExams[i]))
                         {

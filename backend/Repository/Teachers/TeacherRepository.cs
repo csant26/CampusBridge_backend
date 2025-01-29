@@ -117,7 +117,7 @@ namespace backend.Repository.Teachers
             var existingTeacher = await GetTeacherById(TeacherId);
             if (existingTeacher == null) { return null; }
 
-            var existingCollege = await campusBridgeDbContext.Colleges.FirstOrDefaultAsync(x=>x.CollegeId == CollegeId);
+            var existingCollege = await campusBridgeDbContext.Colleges.FirstOrDefaultAsync(x=>x.Email == CollegeId);
             if (existingCollege == null) { return null; }
 
             var existingCollegeUser = await userManager.FindByEmailAsync(existingCollege.Email);
