@@ -7,5 +7,6 @@ namespace backend.Models.DTO.Content.Attendances
         public int Id { get; set; }
         public DateTime AttendanceDate { get; set; }
         public Dictionary<string, bool> StudentPresence { get; set; }
+
     }
 }

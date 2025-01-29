@@ -12,9 +12,9 @@ namespace backend.Controllers
     public class AttendanceController : ControllerBase
     {
         private readonly IMapper mapper;
-        private readonly AttendanceRepository attendanceRepository;
+        private readonly IAttendanceRepository attendanceRepository;
 
-        public AttendanceController(IMapper mapper, AttendanceRepository attendanceRepository)
+        public AttendanceController(IMapper mapper, IAttendanceRepository attendanceRepository)
         {
             this.mapper = mapper;
             this.attendanceRepository = attendanceRepository;
@@ -25,14 +25,22 @@ namespace backend.Controllers
             var attendance = await attendanceRepository.CreateAttendance(mapper.Map<Attendance>(addAttendanceDTO),
                 addAttendanceDTO);
             if (attendance == null) { return BadRequest("Couldn't create attendance."); }
-            return Ok(mapper.Map<AttendanceDTO>(attendance));
+            return Ok(attendance);
         }
         [HttpGet("GetAttendance")]
         public async Task<IActionResult> GetAttendance()
         {
             var attendance = await attendanceRepository.GetAttendance();
             if (attendance == null) { return BadRequest("No attendance found."); }
-            return Ok(mapper.Map<List<AttendanceDTO>>(attendance));
+            return Ok(attendance);
+        }
+
+        [HttpGet("GetStudentAttendance/{StudentId}")]
+        public async Task<IActionResult> GetAttendance([FromRoute]string StudentId)
+        {
+            var attendance = await attendanceRepository.GetStudentAttendance(StudentId);
+            if (attendance == null) { return BadRequest("No attendance found."); }
+            return Ok(attendance);
         }
     }
 }

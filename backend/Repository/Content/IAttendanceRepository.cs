@@ -7,5 +7,6 @@ namespace backend.Repository.Content
     {
         Task<Attendance> CreateAttendance(Attendance attendance, AddAttendanceDTO addAttendanceDTO);
         Task<List<Attendance>> GetAttendance();
+        Task<List<StudentAttendanceData>> GetStudentAttendance(string StudentId);
     }
 }

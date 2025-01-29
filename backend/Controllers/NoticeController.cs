@@ -58,7 +58,18 @@ namespace backend.Controllers
         [ValidateModel]
         public async Task<IActionResult> GetNoticeByAudience([FromRoute] string Audience)
         {
-            var notices = await noticeRepository.GetNoticeByAudience(Audience);
+            var aud = Audience.Split(',');
+            var audi = "";
+            if (aud.Contains("University"))
+            {
+                audi = "University";
+            }
+            else if(aud.Contains("Student")){ audi = "Student"; }
+            else if (aud.Contains("College")) { audi = "College"; }
+            else if (aud.Contains("Teacher")) { audi = "Teacher"; }
+
+
+            var notices = await noticeRepository.GetNoticeByAudience(audi);
             if (notices == null) { return BadRequest("No notice found."); }
             return Ok(mapper.Map<List<NoticeDTO>>(notices));
         }

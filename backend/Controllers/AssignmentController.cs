@@ -51,6 +51,14 @@ namespace backend.Controllers
             if (assignment == null) { return BadRequest("No assignment found."); }
             return Ok(mapper.Map<AssignmentDTO>(assignment));
         }
+        [HttpGet("GetAssignmentByTeacherId/{TeacherId}")]
+        [ValidateModel]
+        public async Task<IActionResult> GetAssignmentByTeacherId([FromRoute] string TeacherId)
+        {
+            var assignment = await assignmentRepository.GetAssignmentByTeacherId(TeacherId);
+            if (assignment == null) { return BadRequest("No assignment found."); }
+            return Ok(mapper.Map<List<AssignmentDTO>>(assignment));
+        }
         [HttpPut("UpdateAssignment/{AssignmentId}/{TeacherId}")]
         [ValidateModel]
         [Consumes("multipart/form-data")]
@@ -109,6 +117,22 @@ namespace backend.Controllers
             var submission = await assignmentRepository.GetSubmissionByAssignmentId(AssignmentId);
             if (submission == null) { return BadRequest("No submissions found."); }
             return Ok(mapper.Map<List<SubmissionDTO>>(submission));
+        }
+        [HttpGet("GetSubmissionByStudentId/{AssignmentId}/{StudentId}")]
+        [ValidateModel]
+        public async Task<IActionResult> GetSubmissionByStudentId([FromRoute] string AssignmentId, [FromRoute] string StudentId)
+        {
+            var submission = await assignmentRepository.GetSubmissionByStudentId(AssignmentId,StudentId);
+            if (submission == null) { return BadRequest("No submissions found."); }
+            return Ok(mapper.Map<SubmissionDTO>(submission));
+        }
+        [HttpGet("GetStudentSubmissions/{StudentId}")]
+        [ValidateModel]
+        public async Task<IActionResult> GetStudentSubmissions([FromRoute] string StudentId)
+        {
+            var submission = await assignmentRepository.GetStudentSubmissions(StudentId);
+            if (submission == null) { return BadRequest("No submissions found."); }
+            return Ok((submission));
         }
         [HttpPut("UpdateSubmission/{SubmissionId}")]
         [ValidateModel]

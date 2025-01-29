@@ -12,6 +12,7 @@ namespace backend.Repository.Content
             FileUploadRequestDTO fileUploadRequestDTO);
         Task<List<Assignment>> GetAssignment();
         Task<Assignment> GetAssignmentById(string AssignmentId);
+        Task<List<Assignment>> GetAssignmentByTeacherId(string TeacherId);
         Task<Assignment> UpdateAssignment(string AssignmentId,
             Assignment assignment,
             FileUploadRequestDTO fileUploadRequestDTO);
@@ -22,6 +23,8 @@ namespace backend.Repository.Content
         Task<List<Submission>> GetSubmission();
         Task<Submission> GetSubmissionById(string SubmissionId);
         Task<List<Submission>> GetSubmissionByAssignmentId(string AssignmentId);
+        Task<Submission> GetSubmissionByStudentId(string AssignmentId, string StudentId);
+        Task<List<StudentSubmission>> GetStudentSubmissions(string StudentId);
         Task<Submission> UpdateSubmission(string SubmissionId, 
             Submission submission,
             FileUploadRequestDTO fileUploadRequestDTO);

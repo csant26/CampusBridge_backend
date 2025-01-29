@@ -63,6 +63,20 @@ namespace backend.Repository.Content
             if(assignment == null) { return null; }
             return assignment;
         }
+        public async Task<List<Assignment>> GetAssignmentByTeacherId(string TeacherId)
+        {
+
+            var teacher = await campusBridgeDbContext.Teachers
+                .FirstOrDefaultAsync(x => (x.TeacherId == TeacherId) || (x.Email == TeacherId));
+
+
+            var assignment = await campusBridgeDbContext.Assignments
+                .Include(x => x.Course).Include(t => t.Teacher).Include(s => s.Submissions)
+                .Where(x => x.TeacherId == teacher.TeacherId)
+                .ToListAsync();
+            if (assignment == null) { return null; }
+            return assignment;
+        }
 
         public async Task<Assignment> UpdateAssignment(string AssignmentId,
             Assignment assignment,
@@ -108,7 +122,8 @@ namespace backend.Repository.Content
             var existingAssignment = await GetAssignmentById(AssignmentId);
             if (existingAssignment == null) { return null; }
 
-            if (existingAssignment.TeacherId != TeacherId) { return null;}
+            var teacher = await campusBridgeDbContext.Teachers.Where(x => (x.TeacherId == TeacherId) || (x.Email == TeacherId)).FirstOrDefaultAsync();
+            if (existingAssignment.TeacherId != teacher.TeacherId) { return null;}
 
             campusBridgeDbContext.Assignments.Remove(existingAssignment);
             await campusBridgeDbContext.SaveChangesAsync();
@@ -160,6 +175,37 @@ namespace backend.Repository.Content
             if (submission == null) { return null; }
             return submission;
         }
+        public async Task<Submission> GetSubmissionByStudentId(string AssignmentId, string StudentId)
+        {
+            var submission = await campusBridgeDbContext.Submissions
+                    .Include(a => a.Assignment)
+                    .Include(s => s.Student)
+                    .FirstOrDefaultAsync(x => x.AssignmentId == AssignmentId && x.StudentId == StudentId );
+            if (submission == null) { return null; }
+            return submission;
+        }
+        public async Task<List<StudentSubmission>> GetStudentSubmissions(string StudentId)
+        {
+            var student = await campusBridgeDbContext.Students.FirstOrDefaultAsync(x => (x.StudentId == StudentId) || (x.Email==StudentId));
+            List<StudentSubmission> studentSubmissions = new List<StudentSubmission>();
+            var submission = await campusBridgeDbContext.Submissions
+                    .Include(a => a.Assignment)
+                    .Include(s => s.Student)
+                    .Where(x => x.StudentId == student.StudentId).ToListAsync();
+            if (submission == null) { return null; }
+            foreach(var subs in submission)
+            {
+                StudentSubmission studentSubmission = new StudentSubmission();
+                studentSubmission.Question = subs.Assignment.Question;
+                studentSubmission.Answer = subs.Answer;
+                studentSubmission.SubmissionId = subs.SubmissionId;
+                studentSubmission.CourseName = subs.Assignment.CourseId;
+                studentSubmission.AssignmentFilePath = subs.Assignment.FilePath;
+                studentSubmission.SubmissionFilePath = subs.FilePath;
+                studentSubmissions.Add(studentSubmission);
+            }
+            return studentSubmissions;
+        }
         public async Task<Submission> UpdateSubmission(string SubmissionId,
             Submission submission,
             FileUploadRequestDTO fileUploadRequestDTO)
@@ -182,15 +228,16 @@ namespace backend.Repository.Content
 
         public async Task<Submission> DeleteSubmission(string SubmissionId, string StudentId)
         {
+            var student = await campusBridgeDbContext.Students.FirstOrDefaultAsync(x => (x.StudentId == StudentId) || (x.Email == StudentId));
+
             var existingSubmission = await GetSubmissionById(SubmissionId);
             if (existingSubmission == null) { return null; }
 
-            if (existingSubmission.StudentId != StudentId) { return null; }
+            if (existingSubmission.StudentId != student.StudentId) { return null; }
 
             campusBridgeDbContext.Submissions.Remove(existingSubmission);
             await campusBridgeDbContext.SaveChangesAsync();
             return existingSubmission;
-            return null;
         }
     }
 }

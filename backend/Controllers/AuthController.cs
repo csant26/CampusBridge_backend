@@ -88,28 +88,51 @@ namespace backend.Controllers
             var existingUser = await userManager.FindByEmailAsync(id);
             if (existingUser == null) { return BadRequest("no user"); }
             var role = await userManager.GetRolesAsync(existingUser);
-            if (role.Contains("Univeristy"))
+            if (role.Contains("University"))
+            {
                 data.Role = "University";
+                data.Name = "University";
+            }
             if (role.Contains("College"))
             {
                 var college = await campusBridgeDbContext.Colleges.FirstOrDefaultAsync(x => x.Email == id);
-                if (college == null) { return BadRequest(); }
-                data.Name = college.Name;
-                data.Role = "College";
+                if (college == null) {
+                    data.Name = "College";
+                    data.Role = "College";
+                }
+                else
+                {
+
+                    data.Name = college.Name;
+                    data.Role = "College";
+                }
             }
             if (role.Contains("Teacher"))
             {
                 var teacher = await campusBridgeDbContext.Teachers.FirstOrDefaultAsync(x => x.Email == id);
-                if (teacher == null) { return BadRequest(); }
-                data.Name = teacher.Name;
-                data.Role = "Teacher";
+                if (teacher == null) {
+                    data.Name = "Teacher";
+                    data.Role = "Teacher";
+                }
+                else
+                {
+
+                    data.Name = teacher.Name;
+                    data.Role = "Teacher";
+                }
             }
             if (role.Contains("Student"))
             {
                 var student = await campusBridgeDbContext.Students.FirstOrDefaultAsync(x => x.Email == id);
-                if (student == null) { return BadRequest(); }
-                data.Name=student.Name;
-                data.Role="Student";
+                if (student == null) {
+                    data.Name = "Student";
+                    data.Role = "Student";
+                }
+                else
+                {
+                    data.Name = student.Name;
+                    data.Role = "Student";
+                }
             }
             return Ok(data);
         }

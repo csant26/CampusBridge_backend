@@ -168,7 +168,13 @@ namespace backend.Mappings
             CreateMap<AddExamSchedule, ExamSchedule>().ReverseMap();
 
             //Attendance
-            CreateMap<Attendance, AttendanceDTO>().ReverseMap();
+            CreateMap<Attendance, AttendanceDTO>()
+            .ForMember(dest => dest.StudentPresence, opt => opt.MapFrom(src=>src.StudentPresence))
+            .ForMember(dest => dest.StudentPresenceJson, opt => opt.MapFrom(src=>src.StudentPresenceJson))
+            .ReverseMap();
+            CreateMap<AddAttendanceDTO, Attendance>()
+            .ForMember(dest => dest.StudentPresence, opt => opt.Ignore())
+            .ReverseMap();
 
             CreateMap<AddTeacherScheduleDTO, TeacherSchedule>().ReverseMap();
 
