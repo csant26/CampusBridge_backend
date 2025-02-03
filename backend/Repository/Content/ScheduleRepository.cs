@@ -198,9 +198,14 @@ namespace backend.Repository.Content
 
         public async Task<List<Schedule>> GetScheduleByRole(string Role)
         {
+            var singleRole = Role.Split(',');
+            var role = "";
+            if (singleRole.Contains("Student")) { role = "Student"; }
+            if (singleRole.Contains("Teacher")) { role = "Teacher"; }
+
             var schedules = await campusBridgeDbContext
                 .Schedules
-                .Where(x => x.DirectedTo.Contains(Role))
+                .Where(x => x.DirectedTo.Contains(role))
                 .ToListAsync();
             return schedules;
         }

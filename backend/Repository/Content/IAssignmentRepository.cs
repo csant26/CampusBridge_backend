@@ -17,7 +17,8 @@ namespace backend.Repository.Content
             Assignment assignment,
             FileUploadRequestDTO fileUploadRequestDTO);
         Task<Assignment> DeleteAssignment(string AssignmentId, string TeacherId);
-
+        Task<List<StudentSubmission>> GradeAssignment(string submissionId, string Score);
+   
         Task<Submission> SubmitAssignment(Submission submission,
             FileUploadRequestDTO fileUploadRequestDTO);
         Task<List<Submission>> GetSubmission();

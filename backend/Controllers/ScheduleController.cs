@@ -15,11 +15,14 @@ namespace backend.Controllers
     {
         private readonly IScheduleRepository scheduleRepository;
         private readonly IMapper mapper;
+        private readonly ITeacherScheduleRepository teacherScheduleRepository;
 
-        public ScheduleController(IScheduleRepository scheduleRepository, IMapper mapper)
+        public ScheduleController(IScheduleRepository scheduleRepository, IMapper mapper,
+            ITeacherScheduleRepository teacherScheduleRepository)
         {
             this.scheduleRepository = scheduleRepository;
             this.mapper = mapper;
+            this.teacherScheduleRepository = teacherScheduleRepository;
         }
         [HttpPost("CreateSchedule")]
         [ValidateModel]
@@ -47,15 +50,15 @@ namespace backend.Controllers
             if (schedule == null) { return BadRequest("Schedule can't be created."); }
             return Ok(mapper.Map<ScheduleDTO>(schedule));
         }
-        [HttpPost("CreateTeacherSchedule")]
-        [ValidateModel] 
-        public async Task<IActionResult> CreateTeacherSchedule([FromBody] AddTeacherScheduleDTO addTeacherScheduleDTO)
-        {
-            var schedule = await scheduleRepository
-                .CreateTeacherSchedule(mapper.Map<TeacherSchedule>(addTeacherScheduleDTO));
-            if (schedule == null) { return BadRequest("Schedule can't be created."); }
-            return Ok(mapper.Map<ScheduleDTO>(schedule));
-        }
+        //[HttpPost("CreateTeacherSchedule")]
+        //[ValidateModel] 
+        //public async Task<IActionResult> CreateTeacherSchedule([FromBody] AddTeacherScheduleDTO addTeacherScheduleDTO)
+        //{
+        //    var schedule = await scheduleRepository
+        //        .CreateTeacherSchedule(mapper.Map<TeacherSchedule>(addTeacherScheduleDTO));
+        //    if (schedule == null) { return BadRequest("Schedule can't be created."); }
+        //    return Ok(mapper.Map<ScheduleDTO>(schedule));
+        //}
         [HttpPost("CreateStudentSchedule")]
         [ValidateModel]
         public async Task<IActionResult> CreateStudentSchedule([FromBody] AddScheduleDTO addScheduleDTO)
@@ -65,5 +68,13 @@ namespace backend.Controllers
             if (schedule == null) { return BadRequest("Schedule can't be created."); }
             return Ok(mapper.Map<ScheduleDTO>(schedule));
         }
+        [HttpPost("CreateTeacherScheduleFromGraph")]
+        public async Task<IActionResult> CreateTeacherScheduleFromGraph(List<ClassSession> sessions)
+        {
+            var schedule = await teacherScheduleRepository.CreateTeacherScheduleFromGraph(sessions);
+            if (schedule == null) { return BadRequest("Schedule can't be created."); }
+            return Ok(schedule) ;
+        }
+
     }
 }

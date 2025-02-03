@@ -134,6 +134,14 @@ namespace backend.Controllers
             if (submission == null) { return BadRequest("No submissions found."); }
             return Ok((submission));
         }
+        [HttpGet("GradeAssignment/{SubmissionId}/{Score}")]
+        [ValidateModel]
+        public async Task<IActionResult> GradeAssignment([FromRoute] string SubmissionId, [FromRoute]string Score)
+        {
+            var submission = await assignmentRepository.GradeAssignment(SubmissionId, Score);
+            if (submission == null) { return BadRequest("No submissions found."); }
+            return Ok((submission));
+        }
         [HttpPut("UpdateSubmission/{SubmissionId}")]
         [ValidateModel]
         [Consumes("multipart/form-data")]

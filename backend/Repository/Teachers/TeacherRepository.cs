@@ -72,7 +72,21 @@ namespace backend.Repository.Teachers
             if (teacher == null) { return null; }
             return teacher;
         }
-
+        public async Task<List<Teacher>> GetTeacherBySemester(string Semester)
+        {
+            List<Teacher> teachers = new List<Teacher>();
+            var syllabus = await campusBridgeDbContext.Syllabus.FirstOrDefaultAsync(x => x.Semester == Semester);
+            var courses = await campusBridgeDbContext.Course.Where(x => x.SyllabusId == syllabus.SyllabusId).ToListAsync();
+            foreach(var course in courses)
+            {
+                Teacher teacher = new Teacher();
+                teacher = await campusBridgeDbContext.Teachers
+                .Include(c => c.Colleges).Include(co => co.Courses)
+                .FirstOrDefaultAsync(x => x.Courses.Contains(course));
+                if (teacher != null) { teachers.Add(teacher); }
+            }
+            return teachers;
+        }
         public async Task<Teacher> UpdateTeacher(string TeacherId, Teacher teacher, UpdateTeacherDTO updateTeacherDTO)
         {
             var existingTeacher = await GetTeacherById(TeacherId);

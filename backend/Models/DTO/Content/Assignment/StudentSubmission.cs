@@ -8,5 +8,6 @@
         public string CourseName { get; set; }
         public string AssignmentFilePath { get; set; }
         public string SubmissionFilePath { get; set; }
+        public string? Score { get; set; }
     }
 }

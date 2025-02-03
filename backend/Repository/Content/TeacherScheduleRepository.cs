@@ -1,6 +1,8 @@
 ﻿using backend.Data;
 using backend.Models.Domain.Content.Schedules;
+using backend.Models.DTO.Content.Schedule;
 using Google.OrTools.Sat;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace backend.Repository.Content
@@ -211,5 +213,287 @@ namespace backend.Repository.Content
             return (startTime, endTime);
         }
 
+        public async Task<List<TeacherScheduleResponse>> CreateTeacherScheduleFromGraph(List<ClassSession> sessions)
+        {
+            // Sample sessions to be scheduled.
+            //List<ClassSession> sessions = new List<ClassSession>
+            //{
+            //    new ClassSession { Id = 1, TeacherId = "101", CourseName = "Math" },
+            //    new ClassSession { Id = 2, TeacherId = "101", CourseName = "Algebra" },
+            //    new ClassSession { Id = 3, TeacherId = "102", CourseName = "History" },
+            //    new ClassSession { Id = 4, TeacherId = "103", CourseName = "Biology" },
+            //    new ClassSession { Id = 5, TeacherId = "102", CourseName = "Geography" }
+            //};
+            Dictionary<int, string> slotToTime = new Dictionary<int, string>()
+            {
+                { 0, "6:30-7:30AM" },
+                { 1, "7:30-8:30AM" },
+                { 2, "8:30-9:30AM" },
+                { 3, "10:00-10:30AM" },
+                { 4, "10:30-11:30AM" }
+            };
+            List<TeacherScheduleResponse> responseColl = new List<TeacherScheduleResponse>();
+
+
+            int totalSlots = 5; // For example, 5 available time slots in a day.
+
+            Scheduler scheduler = new Scheduler();
+            
+            // 1. Build the conflict graph based on teacher overlaps.
+            scheduler.BuildGraph(sessions);
+
+            // 2. Order sessions so that those with the most conflicts are scheduled first.
+            List<ClassSession> orderedSessions = scheduler.OrderByConstraints(sessions);
+
+            // 3. Use backtracking (with the least constraining slot heuristic) to assign slots.
+            bool success = scheduler.AssignSlots(orderedSessions, totalSlots);
+            if (success)
+            {
+                Console.WriteLine("Initial Schedule:");
+                foreach (var session in orderedSessions)
+                {
+                    Console.WriteLine($"Session {session.Id} ({session.CourseName}, Teacher {session.TeacherId}) assigned slot {session.AssignedTimeSlot}");
+                }
+
+                // 4. Optimize the schedule to minimize gaps in teacher schedules using simulated annealing.
+                List<ClassSession> optimizedSchedule = scheduler.OptimizeSchedule(orderedSessions, 1000);
+
+
+                foreach (var session in optimizedSchedule)
+                {
+                    //Console.WriteLine($"Session {session.Id} ({session.CourseName}, Teacher {session.TeacherId}) assigned slot {session.AssignedTimeSlot}");
+                    var response = new TeacherScheduleResponse()
+                    {
+                        CourseName = session.CourseName,
+                        TeacherName = (await campusBridgeDbContext.Teachers.FirstOrDefaultAsync(x => x.TeacherId == session.TeacherId)).Name,
+                        Slot = (slotToTime.FirstOrDefault(x=>x.Key==session.AssignedTimeSlot)).Value
+                    };
+                    responseColl.Add(response);
+                    var schedule = new Schedule()
+                    {
+                        Title = $"{session.CourseName} Class {(slotToTime.FirstOrDefault(x => x.Key == session.AssignedTimeSlot)).Value}",
+                        DirectedTo = new List<string> { "Teacher" },
+                        Date = DateTime.Now,
+                        Category = "Teacher Schedule"
+                    };
+                    await campusBridgeDbContext.Schedules.AddAsync(schedule);
+                    await campusBridgeDbContext.SaveChangesAsync();
+                }
+       
+            }
+            else
+            {
+                return null;
+            }
+            return responseColl;
+        }
+    }
+    public class Scheduler
+    {
+        // This graph holds conflicts between sessions.
+        // Key: session Id, Value: list of session Ids that conflict with the key.
+        private Dictionary<int, List<int>> graph = new Dictionary<int, List<int>>();
+
+        /// <summary>
+        /// Build a conflict graph based on the sessions.
+        /// Two sessions conflict if they share the same teacher.
+        /// </summary>
+        public void BuildGraph(List<ClassSession> sessions)
+        {
+            // Initialize each session as a node in the graph.
+            foreach (var session in sessions)
+            {
+                graph[session.Id] = new List<int>();
+            }
+
+            // For each pair of sessions, add an edge if they conflict.
+            foreach (var s1 in sessions)
+            {
+                foreach (var s2 in sessions)
+                {
+                    if (s1.Id != s2.Id && HaveConflict(s1, s2))
+                    {
+                        if (!graph[s1.Id].Contains(s2.Id))
+                            graph[s1.Id].Add(s2.Id);
+                        if (!graph[s2.Id].Contains(s1.Id))
+                            graph[s2.Id].Add(s1.Id);
+                    }
+                }
+            }
+        }
+
+        // Two sessions conflict if they are taught by the same teacher.
+        private bool HaveConflict(ClassSession s1, ClassSession s2)
+        {
+            return s1.TeacherId == s2.TeacherId;
+        }
+
+        /// <summary>
+        /// Heuristic 1: Order sessions by their degree of constraint.
+        /// Sessions with more conflicts (more neighbors in the graph)
+        /// are scheduled first.
+        /// </summary>
+        public List<ClassSession> OrderByConstraints(List<ClassSession> sessions)
+        {
+            return sessions.OrderByDescending(s => graph[s.Id].Count).ToList();
+        }
+
+        /// <summary>
+        /// Heuristic 2: For a given session, return a list of available slots
+        /// ordered by the least number of conflicts they would create.
+        /// </summary>
+        public List<int> GetLeastConstrainingSlots(ClassSession session, int totalSlots, int[] assignedSlots, List<ClassSession> sessions)
+        {
+            Dictionary<int, int> slotConflicts = new Dictionary<int, int>();
+            for (int slot = 0; slot < totalSlots; slot++)
+            {
+                int conflictCount = 0;
+                // Count how many neighbors are already assigned this slot.
+                foreach (var neighborId in graph[session.Id])
+                {
+                    int neighborIndex = sessions.FindIndex(s => s.Id == neighborId);
+                    if (assignedSlots[neighborIndex] == slot)
+                        conflictCount++;
+                }
+                slotConflicts[slot] = conflictCount;
+            }
+            // Order slots so that the one with the fewest conflicts comes first.
+            return slotConflicts.OrderBy(kv => kv.Value).Select(kv => kv.Key).ToList();
+        }
+
+        // Checks whether assigning a given slot to the session at the given index is valid.
+        public bool IsValid(int index, int slot, int[] assignedSlots, List<ClassSession> sessions)
+        {
+            foreach (var neighborId in graph[sessions[index].Id])
+            {
+                int neighborIndex = sessions.FindIndex(s => s.Id == neighborId);
+                if (assignedSlots[neighborIndex] == slot)
+                    return false;
+            }
+            return true;
+        }
+
+        // Backtracking routine to assign time slots to sessions using the least
+        // constraining value heuristic.
+        public bool Assign(int index, List<ClassSession> sessions, int[] assignedSlots, int totalSlots)
+        {
+            if (index == sessions.Count)
+                return true;  // All sessions have been assigned.
+
+            // Get the best order of slots for the current session.
+            var bestSlots = GetLeastConstrainingSlots(sessions[index], totalSlots, assignedSlots, sessions);
+            foreach (var slot in bestSlots)
+            {
+                if (IsValid(index, slot, assignedSlots, sessions))
+                {
+                    assignedSlots[index] = slot;
+                    sessions[index].AssignedTimeSlot = slot;
+                    if (Assign(index + 1, sessions, assignedSlots, totalSlots))
+                        return true;
+                    // Backtrack if needed.
+                    assignedSlots[index] = -1;
+                    sessions[index].AssignedTimeSlot = -1;
+                }
+            }
+            return false;
+        }
+
+        // Wrapper that initializes the assignment array and kicks off the backtracking.
+        public bool AssignSlots(List<ClassSession> sessions, int totalSlots)
+        {
+            int[] assignedSlots = new int[sessions.Count];
+            for (int i = 0; i < assignedSlots.Length; i++)
+                assignedSlots[i] = -1;
+            return Assign(0, sessions, assignedSlots, totalSlots);
+        }
+
+        /// <summary>
+        /// A penalty function that evaluates the schedule based on teacher gaps.
+        /// The goal is to have as few gaps between a teacher's sessions as possible.
+        /// </summary>
+        public int CalculateSchedulePenalty(List<ClassSession> sessions)
+        {
+            int penalty = 0;
+            // Group sessions by teacher.
+            var teacherSchedules = sessions.GroupBy(s => s.TeacherId)
+                .ToDictionary(g => g.Key, g => g.Select(s => s.AssignedTimeSlot).OrderBy(x => x).ToList());
+            // For each teacher, add a penalty for each gap between sessions.
+            foreach (var schedule in teacherSchedules.Values)
+            {
+                for (int i = 1; i < schedule.Count; i++)
+                {
+                    int gap = schedule[i] - schedule[i - 1] - 1;
+                    if (gap > 0)
+                        penalty += gap;
+                }
+            }
+            return penalty;
+        }
+
+        /// <summary>
+        /// Uses a simple simulated annealing approach to optimize the schedule.
+        /// This routine randomly swaps time slots between sessions and retains changes
+        /// if they reduce the penalty (i.e. reduce teacher gaps) while keeping the schedule valid.
+        /// </summary>
+        public List<ClassSession> OptimizeSchedule(List<ClassSession> sessions, int iterations)
+        {
+            List<ClassSession> bestSchedule = CloneSessions(sessions);
+            int bestPenalty = CalculateSchedulePenalty(bestSchedule);
+            Random rand = new Random();
+
+            for (int i = 0; i < iterations; i++)
+            {
+                List<ClassSession> newSchedule = CloneSessions(bestSchedule);
+                // Randomly select two sessions to swap their time slots.
+                int index1 = rand.Next(newSchedule.Count);
+                int index2 = rand.Next(newSchedule.Count);
+                if (index1 == index2)
+                    continue;
+
+                // Swap the assigned time slots.
+                int temp = newSchedule[index1].AssignedTimeSlot;
+                newSchedule[index1].AssignedTimeSlot = newSchedule[index2].AssignedTimeSlot;
+                newSchedule[index2].AssignedTimeSlot = temp;
+
+                // Check whether the new schedule remains conflict free.
+                if (!IsScheduleValid(newSchedule))
+                    continue;
+
+                int newPenalty = CalculateSchedulePenalty(newSchedule);
+                if (newPenalty < bestPenalty)
+                {
+                    bestSchedule = newSchedule;
+                    bestPenalty = newPenalty;
+                }
+            }
+            return bestSchedule;
+        }
+
+        // Helper method to clone the sessions list.
+        private List<ClassSession> CloneSessions(List<ClassSession> sessions)
+        {
+            return sessions.Select(s => new ClassSession
+            {
+                Id = s.Id,
+                TeacherId = s.TeacherId,
+                CourseName = s.CourseName,
+                AssignedTimeSlot = s.AssignedTimeSlot
+            }).ToList();
+        }
+
+        // Checks that the schedule is still conflict free.
+        private bool IsScheduleValid(List<ClassSession> sessions)
+        {
+            foreach (var session in sessions)
+            {
+                foreach (var neighborId in graph[session.Id])
+                {
+                    var neighbor = sessions.First(s => s.Id == neighborId);
+                    if (session.AssignedTimeSlot == neighbor.AssignedTimeSlot)
+                        return false;
+                }
+            }
+            return true;
+        }
     }
 }

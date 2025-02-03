@@ -53,6 +53,14 @@ namespace backend.Controllers
             if (teacher == null) { return BadRequest("No teacher found."); }
             return Ok(mapper.Map<TeacherDTO>(teacher));
         }
+        [HttpGet("GetTeacherBySemeseter/{Semester}")]
+        [ValidateModel]
+        public async Task<IActionResult> GetTeacherBySemester([FromRoute] string Semester)
+        {
+            var teacher = await teacherRepository.GetTeacherBySemester(Semester);
+            if (teacher == null) { return BadRequest("No teacher found."); }
+            return Ok(teacher);
+        }
         [HttpPut("UpdateTeacher/{TeacherId}")]
         [ValidateModel]
         public async Task<IActionResult> UpdateTeacher([FromRoute] string TeacherId,

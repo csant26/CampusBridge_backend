@@ -19,6 +19,7 @@ using Microsoft.ML;
 using Microsoft.OpenApi.Models;
 using System.Text;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -29,7 +30,7 @@ builder.Services.AddEndpointsApiExplorer();
 //Modifying Swagger to include JWT tokens.
 builder.Services.AddSwaggerGen(options =>
 {
-    options.SwaggerDoc("v1", new OpenApiInfo { Title = "NZWalksAPI", Version = "v1" });
+    options.SwaggerDoc("v1", new OpenApiInfo { Title = "CampusBridgeAPI", Version = "v1" });
     options.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new OpenApiSecurityScheme
     {
         Name = "Authorization",

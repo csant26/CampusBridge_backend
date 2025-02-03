@@ -1,6 +1,7 @@
 ﻿using backend.Data;
 using backend.Files;
 using backend.Models.Domain.Content.Assignments;
+using backend.Models.Domain.Students;
 using backend.Models.DTO.Content.Assignment;
 using backend.Models.DTO.Content.File;
 using Microsoft.EntityFrameworkCore;
@@ -196,6 +197,31 @@ namespace backend.Repository.Content
             foreach(var subs in submission)
             {
                 StudentSubmission studentSubmission = new StudentSubmission();
+                studentSubmission.Question = subs.Assignment.Question;
+                studentSubmission.Answer = subs.Answer;
+                studentSubmission.Score = subs.Score;
+                studentSubmission.SubmissionId = subs.SubmissionId;
+                studentSubmission.CourseName = subs.Assignment.CourseId;
+                studentSubmission.AssignmentFilePath = subs.Assignment.FilePath;
+                studentSubmission.SubmissionFilePath = subs.FilePath;
+                studentSubmissions.Add(studentSubmission);
+            }
+            return studentSubmissions;
+        }
+        public async Task<List<StudentSubmission>> GradeAssignment(string submissionId,string Score)
+        {
+            List<StudentSubmission> studentSubmissions = new List<StudentSubmission>();
+            var submission = await campusBridgeDbContext.Submissions.FirstOrDefaultAsync(x=>x.SubmissionId== submissionId);
+            submission.Score = Score;
+            await campusBridgeDbContext.SaveChangesAsync();
+            var submissions = await campusBridgeDbContext.Submissions
+                    .Include(a => a.Assignment)
+                    .Include(s => s.Student)
+                    .ToListAsync();
+            foreach (var subs in submissions)
+            {
+                StudentSubmission studentSubmission = new StudentSubmission();
+                studentSubmission.Score = subs.Score;
                 studentSubmission.Question = subs.Assignment.Question;
                 studentSubmission.Answer = subs.Answer;
                 studentSubmission.SubmissionId = subs.SubmissionId;

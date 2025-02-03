@@ -1,14 +1,17 @@
 ﻿namespace backend.Models.DTO.Content.Schedule
 {
-    public class AddTeacherScheduleDTO
+    public class ClassSession
     {
-        public string Semester { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
-        public string SlotsPerDay { get; set; }
-        public int BreakMinutes { get; set; }
-        public string[] Teachers { get; set; }
-        public bool[,] TeacherAvailability { get; set; }
-        public List<DateTime> Holidays { get; set; }
+        public int Id { get; set; }
+        public string CourseName { get; set; }
+        public string TeacherId { get; set; }
+        public int AssignedTimeSlot { get; set; }
+    }
+
+    public class TeacherScheduleResponse
+    {
+        public string CourseName { get; set; }
+        public string TeacherName { get; set; }
+        public string Slot { get; set; }
     }
 }
