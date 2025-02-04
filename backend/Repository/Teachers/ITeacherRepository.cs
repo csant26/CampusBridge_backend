@@ -1,4 +1,5 @@
 ﻿using backend.Models.Domain.Teachers;
+using backend.Models.DTO.Content.Schedule;
 using backend.Models.DTO.Teacher;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ namespace backend.Repository.Teachers
         Task<List<Teacher>> GetTeacherBySemester(string Semester);
         Task<Teacher> UpdateTeacher(string TeacherId, Teacher teacher, UpdateTeacherDTO updateTeacherDTO);
         Task<Teacher> DeleteTeacher(string TeacherId, string CollegeId);
+        Task<List<CourseTeacherResult>> GetCourseTeacherDataAsync();
 
     }
 }

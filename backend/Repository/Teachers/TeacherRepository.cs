@@ -1,9 +1,11 @@
 ﻿using backend.Data;
 using backend.Models.Domain.Colleges;
 using backend.Models.Domain.Teachers;
+using backend.Models.DTO.Content.Schedule;
 using backend.Models.DTO.Teacher;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.ML;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -147,6 +149,17 @@ namespace backend.Repository.Teachers
             await campusBridgeDbContext.SaveChangesAsync();
 
             return existingTeacher;
+        }
+        public async Task<List<CourseTeacherResult>> GetCourseTeacherDataAsync()
+        {
+            string query = @"
+            SELECT C.CourseTitle, T.TeacherId 
+            FROM dbo.CourseTeacher(NOLOCK) CT
+            LEFT JOIN dbo.Course(NOLOCK) C ON CT.CoursesCourseId = C.CourseId
+            LEFT JOIN dbo.Teachers(NOLOCK) T ON CT.TeachersTeacherId = T.TeacherId";
+
+            // Execute the raw SQL and map it to CourseTeacherResult
+            return await campusBridgeDbContext.Set<CourseTeacherResult>().FromSqlRaw(query).ToListAsync();
         }
     }
 }

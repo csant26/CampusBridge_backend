@@ -14,4 +14,5 @@
         public string TeacherName { get; set; }
         public string Slot { get; set; }
     }
+
 }

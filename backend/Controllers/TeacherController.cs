@@ -80,5 +80,13 @@ namespace backend.Controllers
             if (teacher == null) { return BadRequest("Teacher couldn't be deleted."); }
             return Ok(mapper.Map<TeacherDTO>(teacher));
         }
+        [HttpGet("GetCourseTeacher")]
+        [ValidateModel]
+        public async Task<IActionResult> GetCourseTeacher()
+        {
+            var teachers = await teacherRepository.GetCourseTeacherDataAsync();
+            if (teachers == null) { return BadRequest("No teachers found."); }
+            return Ok(teachers);
+        }
     }
 }
