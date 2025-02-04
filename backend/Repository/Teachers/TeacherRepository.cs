@@ -153,7 +153,7 @@ namespace backend.Repository.Teachers
         public async Task<List<CourseTeacherResult>> GetCourseTeacherDataAsync()
         {
             string query = @"
-            SELECT C.CourseTitle, T.TeacherId 
+            SELECT C.CourseTitle, T.TeacherId,T.Name 
             FROM dbo.CourseTeacher(NOLOCK) CT
             LEFT JOIN dbo.Course(NOLOCK) C ON CT.CoursesCourseId = C.CourseId
             LEFT JOIN dbo.Teachers(NOLOCK) T ON CT.TeachersTeacherId = T.TeacherId";

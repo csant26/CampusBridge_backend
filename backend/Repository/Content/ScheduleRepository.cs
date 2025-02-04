@@ -191,10 +191,10 @@ namespace backend.Repository.Content
             throw new NotImplementedException();
         }
 
-        public async Task<Schedule> CreateTeacherSchedule(TeacherSchedule schedule)
-        {
-            return await teacherScheduleRepository.CreateTeacherSchedule(schedule);
-        }
+        //public async Task<Schedule> CreateTeacherSchedule(TeacherSchedule schedule)
+        //{
+        //    return await teacherScheduleRepository.CreateTeacherSchedule(schedule);
+        //}
 
         public async Task<List<Schedule>> GetScheduleByRole(string Role)
         {

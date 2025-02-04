@@ -5,7 +5,7 @@ namespace backend.Repository.Content
 {
     public interface ITeacherScheduleRepository
     {
-        Task<Schedule> CreateTeacherSchedule(TeacherSchedule teacherScheduleData);
+        //Task<Schedule> CreateTeacherSchedule(TeacherSchedule teacherScheduleData);
         Task<List<TeacherScheduleResponse>> CreateTeacherScheduleFromGraph(List<ClassSession> sessions);
     }
 }

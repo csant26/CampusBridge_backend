@@ -8,7 +8,7 @@ namespace backend.Repository.Content
         Task<List<Schedule>> GetScheduleByRole(string Role);
         Task<List<Schedule>> GetScheduleByCategory(string Category);
         Task<Schedule> CreateExamSchedule(ExamSchedule examSchedule);
-        Task<Schedule> CreateTeacherSchedule(TeacherSchedule schedule);
+        //Task<Schedule> CreateTeacherSchedule(TeacherSchedule schedule);
         Task<Schedule> CreateStudentSchedule(Schedule schedule);
 
     }
