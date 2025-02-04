@@ -1,9 +1,11 @@
 ﻿using backend.Data;
 using backend.Models.Domain.Colleges;
 using backend.Models.Domain.Teachers;
+using backend.Models.DTO.Content.Schedule;
 using backend.Models.DTO.Teacher;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.ML;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -46,13 +48,15 @@ namespace backend.Repository.Teachers
                 {
                     await userManager.AddToRoleAsync(newTeacherUser, "Teacher");
                     await userManager.AddToRoleAsync(newTeacherUser, "Author");
+
+                    await campusBridgeDbContext.Teachers.AddAsync(teacher);
+                    await campusBridgeDbContext.SaveChangesAsync();
+
+
+                    return teacher;
                 }
             }
-
-
-            await campusBridgeDbContext.Teachers.AddAsync(teacher);
-            await campusBridgeDbContext.SaveChangesAsync();
-            return teacher;
+            return null;
 
         }
         public async Task<List<Teacher>> GetTeacher()
@@ -70,7 +74,21 @@ namespace backend.Repository.Teachers
             if (teacher == null) { return null; }
             return teacher;
         }
-
+        public async Task<List<Teacher>> GetTeacherBySemester(string Semester)
+        {
+            List<Teacher> teachers = new List<Teacher>();
+            var syllabus = await campusBridgeDbContext.Syllabus.FirstOrDefaultAsync(x => x.Semester == Semester);
+            var courses = await campusBridgeDbContext.Course.Where(x => x.SyllabusId == syllabus.SyllabusId).ToListAsync();
+            foreach(var course in courses)
+            {
+                Teacher teacher = new Teacher();
+                teacher = await campusBridgeDbContext.Teachers
+                .Include(c => c.Colleges).Include(co => co.Courses)
+                .FirstOrDefaultAsync(x => x.Courses.Contains(course));
+                if (teacher != null) { teachers.Add(teacher); }
+            }
+            return teachers;
+        }
         public async Task<Teacher> UpdateTeacher(string TeacherId, Teacher teacher, UpdateTeacherDTO updateTeacherDTO)
         {
             var existingTeacher = await GetTeacherById(TeacherId);
@@ -114,18 +132,34 @@ namespace backend.Repository.Teachers
         {
             var existingTeacher = await GetTeacherById(TeacherId);
             if (existingTeacher == null) { return null; }
-            var existingCollegeUser = await userManager.FindByEmailAsync(CollegeId);
+
+            var existingCollege = await campusBridgeDbContext.Colleges.FirstOrDefaultAsync(x=>x.Email == CollegeId);
+            if (existingCollege == null) { return null; }
+
+            var existingCollegeUser = await userManager.FindByEmailAsync(existingCollege.Email);
             if (existingCollegeUser == null) { return null; }
+
             var roles = await userManager.GetRolesAsync(existingCollegeUser);
             if (!roles.Contains("College")) { return null; }
 
-            var existingTeacherUser = await userManager.FindByEmailAsync(TeacherId);
+            var existingTeacherUser = await userManager.FindByEmailAsync(existingTeacher.Email);
             await userManager.DeleteAsync(existingTeacherUser);
 
             campusBridgeDbContext.Teachers.Remove(existingTeacher);
             await campusBridgeDbContext.SaveChangesAsync();
 
             return existingTeacher;
+        }
+        public async Task<List<CourseTeacherResult>> GetCourseTeacherDataAsync()
+        {
+            string query = @"
+            SELECT C.CourseTitle, T.TeacherId 
+            FROM dbo.CourseTeacher(NOLOCK) CT
+            LEFT JOIN dbo.Course(NOLOCK) C ON CT.CoursesCourseId = C.CourseId
+            LEFT JOIN dbo.Teachers(NOLOCK) T ON CT.TeachersTeacherId = T.TeacherId";
+
+            // Execute the raw SQL and map it to CourseTeacherResult
+            return await campusBridgeDbContext.Set<CourseTeacherResult>().FromSqlRaw(query).ToListAsync();
         }
     }
 }

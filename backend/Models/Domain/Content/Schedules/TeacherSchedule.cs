@@ -1,7 +1,7 @@
 ﻿namespace backend.Models.Domain.Content.Schedules
 {
     public class TeacherSchedule
-    {
+    { 
         public int Id { get; set; }
         public string Semester { get; set; }
         public DateTime StartDate { get; set; }

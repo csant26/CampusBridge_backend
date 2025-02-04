@@ -43,6 +43,8 @@ namespace backend.Mappings
                 .ForMember(dest => dest.AcademicDTO, opt => opt.MapFrom(src => src.Academic))
                 .ForMember(dest => dest.FinancialDTO, opt => opt.MapFrom(src => src.Financial))
                 .ForMember(dest => dest.ClubsDTO, opt => opt.MapFrom(src => src.Clubs))
+                .ForMember(dest => dest.CourseDTO, opt => opt.MapFrom(src => src.Courses))
+                .ForMember(dest => dest.CollegeDTO, opt => opt.MapFrom(src => src.College))
                 .ReverseMap();
             CreateMap<Club, ClubDTO>()
                 .ForMember(dest=>dest.StudentDTO,opt=>opt.MapFrom(src=>src.Students))
@@ -84,6 +86,7 @@ namespace backend.Mappings
             CreateMap<Submission, SubmissionDTO>()
                 .ForMember(dest => dest.StudentDTO, opt => opt.MapFrom(src => src.Student))
                 .ForMember(dest => dest.AssignmentDTO, opt => opt.MapFrom(src => src.Assignment))
+                .ForMember(dest => dest.Score, opt => opt.MapFrom(src => src.Score))
                 .ReverseMap();
             CreateMap<AddSubmissionDTO, Submission>()
                 .ReverseMap();
@@ -166,9 +169,15 @@ namespace backend.Mappings
             CreateMap<AddExamSchedule, ExamSchedule>().ReverseMap();
 
             //Attendance
-            CreateMap<Attendance, AttendanceDTO>().ReverseMap();
+            CreateMap<Attendance, AttendanceDTO>()
+            .ForMember(dest => dest.StudentPresence, opt => opt.MapFrom(src=>src.StudentPresence))
+            .ForMember(dest => dest.StudentPresenceJson, opt => opt.MapFrom(src=>src.StudentPresenceJson))
+            .ReverseMap();
+            CreateMap<AddAttendanceDTO, Attendance>()
+            .ForMember(dest => dest.StudentPresence, opt => opt.Ignore())
+            .ReverseMap();
 
-            CreateMap<AddTeacherScheduleDTO, TeacherSchedule>().ReverseMap();
+            //CreateMap<AddTeacherScheduleDTO, TeacherSchedule>().ReverseMap();
 
 
         }

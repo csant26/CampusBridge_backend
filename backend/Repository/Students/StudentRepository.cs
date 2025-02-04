@@ -28,7 +28,7 @@ namespace backend.Repository.Students
             var clubs = await campusBridgeDbContext.Clubs
                 .Where(c => addStudentDTO.ClubIds.Contains(c.ClubId)).ToListAsync();
 
-            if(academic != null)
+            if (academic != null)
             {
                 student.Academic = academic;
                 var sem = academic.Semester;
@@ -36,7 +36,7 @@ namespace backend.Repository.Students
                     .Where(x => x.Semester == academic.Semester)
                     .Include(x => x.Courses)
                     .FirstOrDefaultAsync();
-                if(syllabus != null)
+                if (syllabus != null)
                 {
                     var nonElectiveCourses = syllabus.Courses.Where(x => x.isElective == false).ToList();
                     if (nonElectiveCourses != null)
@@ -66,16 +66,16 @@ namespace backend.Repository.Students
                     student.Courses.AddRange(electivesToAdd);
                 }
             }
-            if(financial != null)
+            if (financial != null)
             {
                 student.Financial = financial;
             }
-            if(clubs != null)
+            if (clubs != null)
             {
                 student.Clubs = clubs;
             }
 
-            var college = await campusBridgeDbContext.Colleges.Where(x=>x.Email==addStudentDTO.CollegeId).FirstOrDefaultAsync();
+            var college = await campusBridgeDbContext.Colleges.Where(x => x.Email == addStudentDTO.CollegeId).FirstOrDefaultAsync();
             if (college != null) { student.College = college; }
 
 
@@ -100,32 +100,39 @@ namespace backend.Repository.Students
                 {
                     await userManager.AddToRoleAsync(studentUser, "ClubHead");
                 }
-                if(student.isAuthor== true)
+                if (student.isAuthor == true)
                 {
                     await userManager.AddToRoleAsync(studentUser, "Author");
                 }
+
+                await campusBridgeDbContext.Students.AddAsync(student);
+                await campusBridgeDbContext.SaveChangesAsync();
+
+                return student;
             }
-            await campusBridgeDbContext.Students.AddAsync(student);
-            await campusBridgeDbContext.SaveChangesAsync();
-            return student;
+            else
+            {
+                return null;
+            }
         }
 
         public async Task<List<Student>> GetStudent()
         {
             var students = await campusBridgeDbContext.Students
-                .Include(a=>a.Academic)
-                .Include(f=>f.Financial)
-                .Include(c=>c.Clubs)
+                .Include(a => a.Academic)
+                .Include(f => f.Financial)
+                .Include(c => c.Clubs)
                 .Include(x => x.College)
+                .Include(x => x.Courses)
                 .ToListAsync();
-            if(students != null) { return students; }
+            if (students != null) { return students; }
             else { return null; }
         }
         public async Task<Student> GetStudentById(string id)
         {
             var existingStudent = await campusBridgeDbContext.Students
                 .Include(a => a.Academic).Include(f => f.Financial).Include(c => c.Clubs).Include(x => x.College)
-                .FirstOrDefaultAsync(x => x.StudentId == id);
+                .FirstOrDefaultAsync(x => (x.StudentId == id) || (x.Email == id));
             if (existingStudent != null) { return existingStudent; }
             else { return null; }
         }
@@ -244,12 +251,13 @@ namespace backend.Repository.Students
             var roles = await userManager.GetRolesAsync(existingCollegeUser);
             if (!roles.Contains("College")) { return null; }
 
-            var existingUser = await userManager.FindByEmailAsync(StudentId);
+            campusBridgeDbContext.Students.Remove(existingStudent);
+            await campusBridgeDbContext.SaveChangesAsync();
+
+            var existingUser = await userManager.FindByEmailAsync(existingStudent.Email);
             if (existingUser == null) { return null; }
             await userManager.DeleteAsync(existingUser);
 
-            campusBridgeDbContext.Students.Remove(existingStudent);
-            await campusBridgeDbContext.SaveChangesAsync();
             return existingStudent;
         }
     }

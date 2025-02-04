@@ -53,7 +53,15 @@ namespace backend.Controllers
             if (teacher == null) { return BadRequest("No teacher found."); }
             return Ok(mapper.Map<TeacherDTO>(teacher));
         }
-        [HttpPost("UpdateTeacher/{TeacherId}")]
+        [HttpGet("GetTeacherBySemeseter/{Semester}")]
+        [ValidateModel]
+        public async Task<IActionResult> GetTeacherBySemester([FromRoute] string Semester)
+        {
+            var teacher = await teacherRepository.GetTeacherBySemester(Semester);
+            if (teacher == null) { return BadRequest("No teacher found."); }
+            return Ok(teacher);
+        }
+        [HttpPut("UpdateTeacher/{TeacherId}")]
         [ValidateModel]
         public async Task<IActionResult> UpdateTeacher([FromRoute] string TeacherId,
             [FromBody] UpdateTeacherDTO updateTeacherDTO)
@@ -63,7 +71,7 @@ namespace backend.Controllers
             if (teacher == null) { return BadRequest("Teacher couldn't be updated."); }
             return Ok(mapper.Map<TeacherDTO>(teacher));
         }
-        [HttpPost("DeleteTeacher/{TeacherId}/{CollegeId}")]
+        [HttpDelete("DeleteTeacher/{TeacherId}/{CollegeId}")]
         [ValidateModel]
         public async Task<IActionResult> DeleteTeacher([FromRoute] string TeacherId,
             [FromRoute] string CollegeId)
@@ -71,6 +79,14 @@ namespace backend.Controllers
             var teacher = await teacherRepository.DeleteTeacher(TeacherId,CollegeId);
             if (teacher == null) { return BadRequest("Teacher couldn't be deleted."); }
             return Ok(mapper.Map<TeacherDTO>(teacher));
+        }
+        [HttpGet("GetCourseTeacher")]
+        [ValidateModel]
+        public async Task<IActionResult> GetCourseTeacher()
+        {
+            var teachers = await teacherRepository.GetCourseTeacherDataAsync();
+            if (teachers == null) { return BadRequest("No teachers found."); }
+            return Ok(teachers);
         }
     }
 }

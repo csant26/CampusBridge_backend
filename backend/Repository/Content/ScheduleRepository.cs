@@ -72,7 +72,9 @@ namespace backend.Repository.Content
                 var score = 0;
                 for (int i = 0; i < sc.Count - 1; i++)
                 {
-                    if (!examSchedule.GapBetweenExams.Any(item=>string.IsNullOrWhiteSpace(item)))
+                    if (i < examSchedule.GapBetweenExams.Count &&
+                        !string.IsNullOrWhiteSpace(examSchedule.GapBetweenExams[i]) &&
+                        int.TryParse(examSchedule.GapBetweenExams[i], out int gap))
                     {
                         if (((sc[i + 1] - sc[i]).Days) - 1 == Convert.ToInt32(examSchedule.GapBetweenExams[i]))
                         {
@@ -196,9 +198,14 @@ namespace backend.Repository.Content
 
         public async Task<List<Schedule>> GetScheduleByRole(string Role)
         {
+            var singleRole = Role.Split(',');
+            var role = "";
+            if (singleRole.Contains("Student")) { role = "Student"; }
+            if (singleRole.Contains("Teacher")) { role = "Teacher"; }
+
             var schedules = await campusBridgeDbContext
                 .Schedules
-                .Where(x => x.DirectedTo.Contains(Role))
+                .Where(x => x.DirectedTo.Contains(role))
                 .ToListAsync();
             return schedules;
         }

@@ -49,6 +49,7 @@ namespace backend.Controllers
         {
             var students = await studentRepository.GetStudent();
             //return Ok(students);
+            var studnentsDTO = mapper.Map<List<StudentDTO>>(students);
             return Ok(mapper.Map<List<StudentDTO>>(students));
         }
         [HttpGet("GetStudentById/{id}")]

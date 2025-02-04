@@ -50,7 +50,7 @@ namespace backend.Controllers
             if (college == null) { return BadRequest("No college found."); }
             return Ok(mapper.Map<CollegeDTO>(college));
         }
-        [HttpPost("UpdateCollege/{CollegeId}")]
+        [HttpPut("UpdateCollege/{CollegeId}")]
         [ValidateModel]
         public async Task<IActionResult> UpdateCollege([FromRoute] string CollegeId,
             [FromBody] UpdateCollegeDTO updateCollegeDTO)

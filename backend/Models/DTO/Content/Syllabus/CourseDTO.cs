@@ -21,6 +21,7 @@ namespace backend.Models.DTO.Content.Syllabus
         public List<string> Books { get; set; }
         public List<UnitDTO> UnitsDTO { get; set; }
         public List<TeacherDTO> TeacherDTO { get; set; }
+        [JsonIgnore]
         public List<StudentDTO>? StudentDTO { get; set; } = null;
         public List<AssignmentDTO>? AssignmentDTO { get; set; }
     }

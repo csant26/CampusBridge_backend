@@ -33,12 +33,12 @@ public class FAQRepository : IFAQRepository
             faqs = await campusBridgeDbContext.FAQs.ToListAsync();
         }
 
-        if (fAQRequestDTO.Category != null)
-        {
-            faqs = await campusBridgeDbContext.FAQs
-                .Where(x => x.Category == fAQRequestDTO.Category)
-                .ToListAsync();
-        }
+        //if (fAQRequestDTO.Category != null)
+        //{
+        //    faqs = await campusBridgeDbContext.FAQs
+        //        .Where(x => x.Category == fAQRequestDTO.Category)
+        //        .ToListAsync();
+        //}
 
         var bestMatch = faqs
             .Select(faq => new

@@ -47,12 +47,12 @@ namespace backend.Repository.Colleges
                 {
                     await userManager.AddToRoleAsync(collegeUser, "College");
                     await userManager.AddToRoleAsync(collegeUser, "Author");
+                    await campusBridgeDbContext.Colleges.AddAsync(collegeToAdd);
+                    await campusBridgeDbContext.SaveChangesAsync();
+                    return collegeToAdd;
                 }
-                await campusBridgeDbContext.Colleges.AddAsync(collegeToAdd);
-                await campusBridgeDbContext.SaveChangesAsync();
             }
-            else { return null; }
-            return collegeToAdd;
+            return null;
         }
 
         public async Task<List<College>> GetCollege()
@@ -120,7 +120,7 @@ namespace backend.Repository.Colleges
             var roles = await userManager.GetRolesAsync(existingUniversityUser);
             if (!roles.Contains("University")) { return null; }
 
-            var existingCollegeUser = await userManager.FindByEmailAsync(CollegeId);
+            var existingCollegeUser = await userManager.FindByEmailAsync(existingCollege.Email);
             if (existingCollegeUser == null) { return null; }
             await userManager.DeleteAsync(existingCollegeUser);
 
