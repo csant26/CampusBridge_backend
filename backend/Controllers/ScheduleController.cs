@@ -4,8 +4,10 @@ using backend.Data;
 using backend.Models.Domain.Content.Schedules;
 using backend.Models.DTO.Content.Schedule;
 using backend.Repository.Content;
+using backend.Repository.Teachers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace backend.Controllers
 {
@@ -16,14 +18,17 @@ namespace backend.Controllers
         private readonly IScheduleRepository scheduleRepository;
         private readonly IMapper mapper;
         private readonly ITeacherScheduleRepository teacherScheduleRepository;
+        private readonly ITeacherRepository teacherRepository;
 
         public ScheduleController(IScheduleRepository scheduleRepository, IMapper mapper,
-            ITeacherScheduleRepository teacherScheduleRepository)
+            ITeacherScheduleRepository teacherScheduleRepository,
+            ITeacherRepository teacherRepository)
         {
             this.scheduleRepository = scheduleRepository;
             this.mapper = mapper;
             this.teacherScheduleRepository = teacherScheduleRepository;
-        }
+            this.teacherRepository = teacherRepository;
+            }
         [HttpPost("CreateSchedule")]
         [ValidateModel]
         public async Task<IActionResult> CreateScheulde([FromBody] AddScheduleDTO addScheduleDTO)
@@ -41,6 +46,14 @@ namespace backend.Controllers
             if (schedules == null) { return BadRequest("No schedules found."); }
             return Ok(mapper.Map<List<ScheduleDTO>>(schedules));
         }
+        [HttpGet("GetScheduleByTeacherId")]
+        [ValidateModel]
+        public async Task<IActionResult> GetScheduleByTeacherId(string Id)
+            {
+            var schedules = await scheduleRepository.GetScheduleByTeacherId(Id);
+            if (schedules == null) { return BadRequest("No schedules found."); }
+            return Ok(schedules);
+            }
         [HttpPost("CreateExamSchedule")]
         [ValidateModel]
         public async Task<IActionResult> CreateExamSchedule([FromBody] AddExamSchedule addExamSchedule)
@@ -69,8 +82,17 @@ namespace backend.Controllers
             return Ok(mapper.Map<ScheduleDTO>(schedule));
         }
         [HttpPost("CreateTeacherScheduleFromGraph")]
-        public async Task<IActionResult> CreateTeacherScheduleFromGraph(List<ClassSession> sessions)
+        public async Task<IActionResult> CreateTeacherScheduleFromGraph(/*List<AddTeacherScheduleRequest> teacherScheduleRequest*/)
         {
+            List<ClassSession> sessions = new List<ClassSession>();
+            var teachers = await teacherRepository.GetCourseTeacherDataAsync();
+            int index = 1;
+            foreach(var teacher in teachers)
+                {
+                    var session = new ClassSession() { Id=index,CourseName = teacher.CourseTitle, TeacherId = teacher.TeacherId };
+                    sessions.Add(session);
+                    index++;
+                }
             var schedule = await teacherScheduleRepository.CreateTeacherScheduleFromGraph(sessions);
             if (schedule == null) { return BadRequest("Schedule can't be created."); }
             return Ok(schedule) ;

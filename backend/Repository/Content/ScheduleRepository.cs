@@ -2,6 +2,7 @@
 using backend.Models.Domain.Content.Schedules;
 using backend.Models.Domain.Content.Syllabi;
 using backend.Models.Domain.Students;
+using backend.Models.DTO.Content.Schedule;
 using backend.Repository.Teachers;
 using Google.OrTools.Sat;
 using Microsoft.EntityFrameworkCore;
@@ -217,5 +218,10 @@ namespace backend.Repository.Content
                 .ToListAsync();
             return schedules;
         }
-    }
+
+        public async Task<List<TeacherSchedule>> GetScheduleByTeacherId(string Id)
+            {
+            return await campusBridgeDbContext.TeacherSchedules.Where(x => x.TeacherId == Id).ToListAsync();
+            }
+        }
 }

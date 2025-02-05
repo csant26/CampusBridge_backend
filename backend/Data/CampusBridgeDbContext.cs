@@ -13,6 +13,7 @@ using backend.Models.Domain.Content.Syllabi;
 using backend.Models.Domain.Students;
 using backend.Models.Domain.Teachers;
 using backend.Models.Domain.Universities;
+using backend.Models.DTO.Content.Schedule;
 using backend.Models.DTO.Teacher;
 using Microsoft.EntityFrameworkCore;
 
@@ -209,6 +210,8 @@ namespace backend.Data
 
         //Attendance-related Tables
         public DbSet<Attendance> Attendances { get; set; }
+
+        public DbSet<TeacherSchedule> TeacherSchedules { get; set; }
 
     }
 }

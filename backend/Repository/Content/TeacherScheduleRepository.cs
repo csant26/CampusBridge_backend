@@ -272,26 +272,34 @@ namespace backend.Repository.Content
 
 
                 foreach (var session in optimizedSchedule)
-                {
+                    {
                     //Console.WriteLine($"Session {session.Id} ({session.CourseName}, Teacher {session.TeacherId}) assigned slot {session.AssignedTimeSlot}");
                     var response = new TeacherScheduleResponse()
-                    {
+                        {
                         CourseName = session.CourseName,
                         TeacherName = (await campusBridgeDbContext.Teachers.FirstOrDefaultAsync(x => x.TeacherId == session.TeacherId)).Name,
-                        Slot = (slotToTime.FirstOrDefault(x=>x.Key==session.AssignedTimeSlot)).Value
-                    };
+                        Slot = (slotToTime.FirstOrDefault(x => x.Key == session.AssignedTimeSlot)).Value
+                        };
                     responseColl.Add(response);
                     var schedule = new Schedule()
-                    {
-                        Title = $"{session.CourseName} Class {(slotToTime.FirstOrDefault(x => x.Key == session.AssignedTimeSlot)).Value}",
+                        {
+                        Title = $"{session.CourseName} Class {(slotToTime.FirstOrDefault(x => x.Key == session.AssignedTimeSlot)).Value} ," +
+                        $" {(await campusBridgeDbContext.Teachers.FirstOrDefaultAsync(x => x.TeacherId == session.TeacherId)).Name}",
                         DirectedTo = new List<string> { "Teacher" },
                         Date = DateTime.Now,
                         Category = "Teacher Schedule"
-                    };
+                        };
                     await campusBridgeDbContext.Schedules.AddAsync(schedule);
                     await campusBridgeDbContext.SaveChangesAsync();
-                }
-       
+
+                    var teacherSchedule = new TeacherSchedule()
+                        {
+                        TeacherId = session.TeacherId,
+                        Title = $"{session.CourseName} Class {(slotToTime.FirstOrDefault(x => x.Key == session.AssignedTimeSlot)).Value}"
+                        };
+                    await campusBridgeDbContext.TeacherSchedules.AddAsync(teacherSchedule);
+                    await campusBridgeDbContext.SaveChangesAsync();
+                    }
             }
             else
             {
