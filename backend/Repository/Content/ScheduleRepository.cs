@@ -132,7 +132,7 @@ namespace backend.Repository.Content
                 {
                     //Id = count+1,
                     Title = $"{course.CourseTitle} Examination {optimalSchedule[0].Year}",
-                    DirectedTo = new List<string> { "Student", "Teacher", "College" },
+                    DirectedTo = new List<string> { "Student", "Teacher", "College","University" },
                     Date = optimalSchedule[count],
                     Category="Examination"
                 };
@@ -147,7 +147,7 @@ namespace backend.Repository.Content
                 {
                     //Id = count + 1,
                     Title = $"{course.CourseTitle} Examination {optimalSchedule[0].Year}",
-                    DirectedTo = new List<string> { "Student", "Teacher", "College" },
+                    DirectedTo = new List<string> { "Student", "Teacher", "College","University" },
                     Date = optimalSchedule[finalCount],
                     Category = "Examination"
                 };
@@ -203,6 +203,8 @@ namespace backend.Repository.Content
             var role = "";
             if (singleRole.Contains("Student")) { role = "Student"; }
             if (singleRole.Contains("Teacher")) { role = "Teacher"; }
+            if (singleRole.Contains("College")) { role = "College"; }
+            if (singleRole.Contains("University")) { role = "University"; }
 
             var schedules = await campusBridgeDbContext
                 .Schedules
@@ -221,7 +223,8 @@ namespace backend.Repository.Content
 
         public async Task<List<TeacherSchedule>> GetScheduleByTeacherId(string Id)
             {
-            return await campusBridgeDbContext.TeacherSchedules.Where(x => x.TeacherId == Id).ToListAsync();
+            var teacher = await campusBridgeDbContext.Teachers.FirstOrDefaultAsync(x => (x.Email == Id) || (x.TeacherId == Id));
+            return await campusBridgeDbContext.TeacherSchedules.Where(x => x.TeacherId == teacher.TeacherId).ToListAsync();
             }
         }
 }

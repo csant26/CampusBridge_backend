@@ -82,7 +82,7 @@ namespace backend.Controllers
             return Ok(mapper.Map<ScheduleDTO>(schedule));
         }
         [HttpPost("CreateTeacherScheduleFromGraph")]
-        public async Task<IActionResult> CreateTeacherScheduleFromGraph(/*List<AddTeacherScheduleRequest> teacherScheduleRequest*/)
+        public async Task<IActionResult> CreateTeacherScheduleFromGraph(List<AddTeacherScheduleRequest> teacherScheduleRequest)
         {
             List<ClassSession> sessions = new List<ClassSession>();
             var teachers = await teacherRepository.GetCourseTeacherDataAsync();
@@ -93,7 +93,7 @@ namespace backend.Controllers
                     sessions.Add(session);
                     index++;
                 }
-            var schedule = await teacherScheduleRepository.CreateTeacherScheduleFromGraph(sessions);
+            var schedule = await teacherScheduleRepository.CreateTeacherScheduleFromGraph(sessions, teacherScheduleRequest);
             if (schedule == null) { return BadRequest("Schedule can't be created."); }
             return Ok(schedule) ;
         }

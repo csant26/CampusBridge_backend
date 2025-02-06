@@ -213,7 +213,8 @@ namespace backend.Repository.Content
         //    return (startTime, endTime);
         //}
 
-        public async Task<List<TeacherScheduleResponse>> CreateTeacherScheduleFromGraph(List<ClassSession> sessions)
+        public async Task<List<TeacherScheduleResponse>> CreateTeacherScheduleFromGraph(List<ClassSession> sessions,
+            List<AddTeacherScheduleRequest> teacherScheduleRequest)
         {
             // Sample sessions to be scheduled.
             //List<ClassSession> sessions = new List<ClassSession>
@@ -241,13 +242,24 @@ namespace backend.Repository.Content
 
 
             // Add unavailable slots
-            scheduler.SetUnavailableSlot("DWDMTeacherId", 0);  // Teacher 101 can't be assigned to slot 0
-            scheduler.SetUnavailableSlot("DWDMTeacherId", 1);  // Teacher 101 can't be assigned to slot 1
-            scheduler.SetUnavailableSlot("DWDMTeacherId", 2);  // Teacher 101 can't be assigned to slot 2
+            //scheduler.SetUnavailableSlot("DWDMTeacherId", 0);  // Teacher 101 can't be assigned to slot 0
+            //scheduler.SetUnavailableSlot("DWDMTeacherId", 1);  // Teacher 101 can't be assigned to slot 1
+            //scheduler.SetUnavailableSlot("DWDMTeacherId", 2);  // Teacher 101 can't be assigned to slot 2
 
             // Add teacher time conflicts
-            scheduler.SetTeacherTimeConflict("DWDMTeacherId", "SPMTeacherId");  // Teachers 101 and 102 can't teach at the same time
-
+            //scheduler.SetTeacherTimeConflict("DWDMTeacherId", "SPMTeacherId");  // Teachers 101 and 102 can't teach at the same time
+            
+            foreach(var request in teacherScheduleRequest)
+                {
+                foreach(var unavailableslot in request.UnavailableSlots)
+                    {
+                    scheduler.SetUnavailableSlot(request.TeacherId, unavailableslot);
+                    }
+                foreach(var conflict in request.ConflictWith)
+                    {
+                    scheduler.SetTeacherTimeConflict(request.TeacherId, conflict);
+                    }
+                }
 
 
 
@@ -285,7 +297,7 @@ namespace backend.Repository.Content
                         {
                         Title = $"{session.CourseName} Class {(slotToTime.FirstOrDefault(x => x.Key == session.AssignedTimeSlot)).Value} ," +
                         $" {(await campusBridgeDbContext.Teachers.FirstOrDefaultAsync(x => x.TeacherId == session.TeacherId)).Name}",
-                        DirectedTo = new List<string> { "Teacher" },
+                        DirectedTo = new List<string> { "Student","College" },
                         Date = DateTime.Now,
                         Category = "Teacher Schedule"
                         };
@@ -295,7 +307,8 @@ namespace backend.Repository.Content
                     var teacherSchedule = new TeacherSchedule()
                         {
                         TeacherId = session.TeacherId,
-                        Title = $"{session.CourseName} Class {(slotToTime.FirstOrDefault(x => x.Key == session.AssignedTimeSlot)).Value}"
+                        Title = $"{session.CourseName} Class {(slotToTime.FirstOrDefault(x => x.Key == session.AssignedTimeSlot)).Value}",
+                        Date = DateTime.Now,
                         };
                     await campusBridgeDbContext.TeacherSchedules.AddAsync(teacherSchedule);
                     await campusBridgeDbContext.SaveChangesAsync();

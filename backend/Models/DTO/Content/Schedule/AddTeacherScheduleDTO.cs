@@ -25,6 +25,7 @@
         public int TeacherScheduleId { get; set; }
         public string TeacherId { get; set; }
         public string Title { get; set; }
+        public DateTime Date { get; set; }
         }
 
     }
