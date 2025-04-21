@@ -219,7 +219,7 @@ namespace backend.Repository.Content
             // Sample sessions to be scheduled.
             //List<ClassSession> sessions = new List<ClassSession>
             //{
-            //    new ClassSession { Id = 1, TeacherId = "101", CourseName = "Math" },
+            //    new ClassSession { Id = 1, TeacherId = "101", CourseName = "Math" },             
             //    new ClassSession { Id = 2, TeacherId = "101", CourseName = "Algebra" },
             //    new ClassSession { Id = 3, TeacherId = "102", CourseName = "History" },
             //    new ClassSession { Id = 4, TeacherId = "103", CourseName = "Biology" },
@@ -230,7 +230,7 @@ namespace backend.Repository.Content
                 { 0, "6:30-7:30AM" },
                 { 1, "7:30-8:30AM" },
                 { 2, "8:30-9:30AM" },
-                { 3, "10:00-10:30AM" },
+                { 3, "10:00-10: " },
                 { 4, "10:30-11:30AM" }
             };
             List<TeacherScheduleResponse> responseColl = new List<TeacherScheduleResponse>();
@@ -264,7 +264,7 @@ namespace backend.Repository.Content
 
 
             // 1. Build the conflict graph based on teacher overlaps.
-            scheduler.BuildGraph(sessions);
+            scheduler.BuildGraph(sessions);                                                 
 
             // 2. Order sessions so that those with the most conflicts are scheduled first.
             List<ClassSession> orderedSessions = scheduler.OrderByConstraints(sessions);
@@ -323,15 +323,13 @@ namespace backend.Repository.Content
     }
     public class Scheduler
     {
-        // This graph holds conflicts between sessions.
-        // Key: session Id, Value: list of session Ids that conflict with the key.
         private Dictionary<int, List<int>> graph = new Dictionary<int, List<int>>();
 
         // Constraint 1: Unavailable slots for teachers
         private Dictionary<string, List<int>> unavailableTeacherSlots = new Dictionary<string, List<int>>();
 
         // Constraint 2: Teachers who can't teach at the same time
-        private List<(string Teacher1Id, string Teacher2Id)> teacherTimeConflicts = new List<(string, string)>(); // Method to set unavailable slots for a teacher
+        private List<(string Teacher1Id, string Teacher2Id)> teacherTimeConflicts = new List<(string, string)>();
         public void SetUnavailableSlot(string teacherId, int slot)
         {
             if (!unavailableTeacherSlots.ContainsKey(teacherId))
@@ -341,7 +339,6 @@ namespace backend.Repository.Content
                 unavailableTeacherSlots[teacherId].Add(slot);
         }
 
-        // Method to set conflict between two teachers' schedules
         public void SetTeacherTimeConflict(string teacher1Id, string teacher2Id)
         {
             if (!teacherTimeConflicts.Contains((teacher1Id, teacher2Id)) &&
@@ -352,14 +349,6 @@ namespace backend.Repository.Content
         }
 
 
-
-
-
-
-        /// <summary>
-        /// Build a conflict graph based on the sessions.
-        /// Two sessions conflict if they share the same teacher.
-        /// </summary>
         public void BuildGraph(List<ClassSession> sessions)
         {
             // Initialize each session as a node in the graph.
@@ -399,20 +388,11 @@ namespace backend.Repository.Content
             return false;
         }
 
-        /// <summary>
-        /// Heuristic 1: Order sessions by their degree of constraint.
-        /// Sessions with more conflicts (more neighbors in the graph)
-        /// are scheduled first.
-        /// </summary>
         public List<ClassSession> OrderByConstraints(List<ClassSession> sessions)
         {
             return sessions.OrderByDescending(s => graph[s.Id].Count).ToList();
         }
 
-        /// <summary>
-        /// Heuristic 2: For a given session, return a list of available slots
-        /// ordered by the least number of conflicts they would create.
-        /// </summary>
         public List<int> GetLeastConstrainingSlots(ClassSession session, int totalSlots, int[] assignedSlots, List<ClassSession> sessions)
         {
             Dictionary<int, int> slotConflicts = new Dictionary<int, int>();
@@ -484,7 +464,6 @@ namespace backend.Repository.Content
             return false;
         }
 
-        // Wrapper that initializes the assignment array and kicks off the backtracking.
         public bool AssignSlots(List<ClassSession> sessions, int totalSlots)
         {
             int[] assignedSlots = new int[sessions.Count];
@@ -493,10 +472,6 @@ namespace backend.Repository.Content
             return Assign(0, sessions, assignedSlots, totalSlots);
         }
 
-        /// <summary>
-        /// A penalty function that evaluates the schedule based on teacher gaps.
-        /// The goal is to have as few gaps between a teacher's sessions as possible.
-        /// </summary>
         public int CalculateSchedulePenalty(List<ClassSession> sessions)
         {
             int penalty = 0;
@@ -516,11 +491,6 @@ namespace backend.Repository.Content
             return penalty;
         }
 
-        /// <summary>
-        /// Uses a simple simulated annealing approach to optimize the schedule.
-        /// This routine randomly swaps time slots between sessions and retains changes
-        /// if they reduce the penalty (i.e. reduce teacher gaps) while keeping the schedule valid.
-        /// </summary>
         public List<ClassSession> OptimizeSchedule(List<ClassSession> sessions, int iterations)
         {
             List<ClassSession> bestSchedule = CloneSessions(sessions);
