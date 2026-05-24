@@ -12,6 +12,7 @@ using backend.Models.Domain.Content.Schedules;
 using backend.Models.Domain.Content.Syllabi;
 using backend.Models.Domain.Students;
 using backend.Models.Domain.Teachers;
+using backend.Models.Domain.Token;
 using backend.Models.Domain.Universities;
 using backend.Models.DTO.Teacher;
 using Microsoft.EntityFrameworkCore;
@@ -25,7 +26,49 @@ namespace backend.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            
+            
+            modelBuilder.Entity<Student>().ToTable("students");
+            modelBuilder.Entity<Academic>().ToTable("academics");
+            modelBuilder.Entity<Club>().ToTable("clubs");
+            modelBuilder.Entity<Financial>().ToTable("financials");
 
+            modelBuilder.Entity<Article>().ToTable("articles");
+            modelBuilder.Entity<Author>().ToTable("authors");
+
+            modelBuilder.Entity<Syllabus>().ToTable("syllabus");
+            modelBuilder.Entity<Course>().ToTable("course");
+            modelBuilder.Entity<Unit>().ToTable("unit");
+
+            modelBuilder.Entity<FileDomain>().ToTable("files");
+
+            modelBuilder.Entity<Assignment>().ToTable("assignments");
+            modelBuilder.Entity<Submission>().ToTable("submissions");
+
+            modelBuilder.Entity<Notice>().ToTable("notices");
+
+            modelBuilder.Entity<Question>().ToTable("questions");
+            modelBuilder.Entity<Answer>().ToTable("answers");
+
+            modelBuilder.Entity<Event>().ToTable("events");
+
+            modelBuilder.Entity<Teacher>().ToTable("teachers");
+
+            modelBuilder.Entity<College>().ToTable("colleges");
+
+            modelBuilder.Entity<University>().ToTable("universities");
+
+            modelBuilder.Entity<Result>().ToTable("results");
+
+            modelBuilder.Entity<FAQ>().ToTable("faqs");
+
+            modelBuilder.Entity<Schedule>().ToTable("schedules");
+
+            modelBuilder.Entity<Attendance>().ToTable("attendances");
+
+            modelBuilder.Entity<AllToken>().ToTable("all_tokens");
+            modelBuilder.Entity<RevokedToken>().ToTable("revoked_tokens");
+            
             //Student model relationships.
             modelBuilder.Entity<Student>()
                 .HasOne(a => a.Academic)

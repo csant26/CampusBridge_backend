@@ -273,7 +273,7 @@ namespace backend.Repository.Content
                     {
                         Title = $"{session.CourseName} Class {(slotToTime.FirstOrDefault(x => x.Key == session.AssignedTimeSlot)).Value}",
                         DirectedTo = new List<string> { "Teacher" },
-                        Date = DateTime.Now,
+                        Date = DateTime.UtcNow,
                         Category = "Teacher Schedule"
                     };
                     await campusBridgeDbContext.Schedules.AddAsync(schedule);

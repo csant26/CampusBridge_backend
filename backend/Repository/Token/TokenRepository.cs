@@ -39,7 +39,7 @@ namespace backend.Repository.Token
                 issuer: configuration["Jwt:Issuer"],
                 audience: configuration["Jwt:Audience"],
                 claims: claims,
-                expires: DateTime.Now.AddDays(7),
+                expires: DateTime.UtcNow.AddDays(7),
                 signingCredentials: credentials
                 );
 
@@ -52,7 +52,7 @@ namespace backend.Repository.Token
                 await campusBridgeAuthDbContext.AllTokens.AddAsync(new AllToken
                 {
                     Token = jwtTokenString,
-                    ExpiresAt = DateTime.Now.AddDays(7)
+                    ExpiresAt = DateTime.UtcNow.AddDays(7)
                 });
             }
             await campusBridgeAuthDbContext.SaveChangesAsync();
@@ -66,9 +66,9 @@ namespace backend.Repository.Token
                 .FirstOrDefaultAsync(t => t.Token == token);
             if (expiredToken != null)
             {
-                expiredToken.ExpiresAt = DateTime.Now;
-            }
-            await campusBridgeAuthDbContext.SaveChangesAsync();
+                expiredToken.ExpiresAt = DateTime.UtcNow;
+            } 
+            //await campusBridgeAuthDbContext.SaveChangesAsync();
 
             //Approach 2: Adding the revoked tokens to a separate RevokedTokens table.
             var revokedToken = await campusBridgeAuthDbContext.RevokedTokens
@@ -78,7 +78,7 @@ namespace backend.Repository.Token
                 await campusBridgeAuthDbContext.RevokedTokens.AddAsync(new RevokedToken
                 {
                     Token = token,
-                    RevokedAt = DateTime.Now
+                    RevokedAt = DateTime.UtcNow
                 });
             }
             await campusBridgeAuthDbContext.SaveChangesAsync();

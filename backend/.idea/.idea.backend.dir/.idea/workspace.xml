@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="a4e5a047-9a4a-42df-b158-928432e004c3" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend.sln" beforeDir="false" afterPath="$PROJECT_DIR$/../backend.sln" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/AnalyticsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/AnalyticsController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/ArticleController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/ArticleController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/AssignmentController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/AssignmentController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/AttendanceController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/AttendanceController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/AuthController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/AuthController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/ClubController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/ClubController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/CollegeController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/CollegeController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/EventController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/EventController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/FAQController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/FAQController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/FileController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/FileController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/HelpController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/HelpController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/NoticeController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/NoticeController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/ResultController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/ResultController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/ScheduleController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/ScheduleController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/StudentController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/StudentController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/SyllabusController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/SyllabusController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/TeacherController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/TeacherController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/UniversityController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/UniversityController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CustomActionFilter/ValidateModelAttribute.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CustomActionFilter/ValidateModelAttribute.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/CampusBridgeAuthDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/CampusBridgeAuthDbContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/CampusBridgeDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/CampusBridgeDbContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FileUploadOperationFilter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FileUploadOperationFilter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Files/FileHandling.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Files/FileHandling.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mappings/AutoMapperProfiles.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Mappings/AutoMapperProfiles.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Analytics/GenderInfoDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Analytics/GenderInfoDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Analytics/GraudateInfoDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Analytics/GraudateInfoDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Analytics/ResultInfoDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Analytics/ResultInfoDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Auth/AccumulatedData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Auth/AccumulatedData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/College/AddCollegeDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/College/AddCollegeDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/College/CollegeDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/College/CollegeDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/College/UpdateCollegeDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/College/UpdateCollegeDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Content/Article/AddArticleDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Content/Article/AddArticleDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Content/Article/ArticleDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Content/Article/ArticleDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Content/Article/AuthorDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Content/Article/AuthorDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Content/Article/UpdateArticleDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Content/Article/UpdateArticleDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Content/Assignment/AddAssignmentDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Content/Assignment/AddAssignmentDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Content/Assignment/AddSubmissionDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Content/Assignment/AddSubmissionDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Content/Assignment/AssignmentDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Content/Assignment/AssignmentDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Content/Assignment/StudentSubmission.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Content/Assignment/StudentSubmission.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Content/Assignment/SubmissionDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Content/Assignment/SubmissionDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Content/Assignment/UpdateAssignmentDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Content/Assignment/UpdateAssignmentDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Content/Assignment/UpdateSubmissionDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Content/Assignment/UpdateSubmissionDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Content/Attendances/AddAttendanceDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Content/Attendances/AddAttendanceDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Content/Attendances/AttendanceDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Content/Attendances/AttendanceDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Content/Attendances/StudentAttendanceData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Content/Attendances/StudentAttendanceData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Content/Events/AddEventDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Content/Events/AddEventDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Content/Events/EventDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Content/Events/EventDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Content/Events/UpdateEventDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Content/Events/UpdateEventDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Content/FAQ/AddFAQDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Content/FAQ/AddFAQDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Content/FAQ/FAQDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Content/FAQ/FAQDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Content/FAQ/FAQRequestDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Content/FAQ/FAQRequestDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Content/FAQ/FAQResponseDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Content/FAQ/FAQResponseDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Content/FAQ/UpdateFAQDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Content/FAQ/UpdateFAQDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Content/File/FileUploadRequestDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Content/File/FileUploadRequestDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Content/Help/AddAnswerDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Content/Help/AddAnswerDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Content/Help/AddQuestionDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Content/Help/AddQuestionDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Content/Help/AnswerDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Content/Help/AnswerDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Content/Help/QuestionDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Content/Help/QuestionDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Content/Help/UpdateAnswerDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Content/Help/UpdateAnswerDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Content/Help/UpdateQuestionDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Content/Help/UpdateQuestionDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Content/Notice/AddNoticeDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Content/Notice/AddNoticeDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Content/Notice/NoticeDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Content/Notice/NoticeDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Content/Notice/UpdateNoticeDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Content/Notice/UpdateNoticeDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Content/Result/AddResultDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Content/Result/AddResultDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Content/Result/ResultDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Content/Result/ResultDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Content/Result/UpdateResultDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Content/Result/UpdateResultDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Content/Schedule/AddExamSchedule.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Content/Schedule/AddExamSchedule.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Content/Schedule/AddScheduleDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Content/Schedule/AddScheduleDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Content/Schedule/AddTeacherScheduleDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Content/Schedule/AddTeacherScheduleDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Content/Schedule/ScheduleDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Content/Schedule/ScheduleDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Content/Schedule/UpdateScheduleDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Content/Schedule/UpdateScheduleDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Content/Syllabus/AddCourseDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Content/Syllabus/AddCourseDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Content/Syllabus/AddSyllabusDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Content/Syllabus/AddSyllabusDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Content/Syllabus/CourseDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Content/Syllabus/CourseDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Content/Syllabus/SyllabusDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Content/Syllabus/SyllabusDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Content/Syllabus/UnitDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Content/Syllabus/UnitDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Content/Syllabus/UpdateCourseDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Content/Syllabus/UpdateCourseDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Content/Syllabus/UpdateSyllabusDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Content/Syllabus/UpdateSyllabusDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Login/LoginRequestDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Login/LoginRequestDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Login/LoginResponseDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Login/LoginResponseDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Login/LogoutRequestDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Login/LogoutRequestDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Login/LogoutResponseDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Login/LogoutResponseDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Student/AcademicDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Student/AcademicDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Student/AddClubDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Student/AddClubDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Student/AddStudentDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Student/AddStudentDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Student/ClubDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Student/ClubDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Student/FinancialDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Student/FinancialDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Student/StudentAttendance.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Student/StudentAttendance.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Student/StudentDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Student/StudentDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Student/UpdateClubDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Student/UpdateClubDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Student/UpdateStudentDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Student/UpdateStudentDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Teacher/AddTeacherDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Teacher/AddTeacherDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Teacher/TeacherDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Teacher/TeacherDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/Teacher/UpdateTeacherDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/Teacher/UpdateTeacherDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/University/AddUniversityDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/University/AddUniversityDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/University/UniversityDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/University/UniversityDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/DTO/University/UpdateUniversityDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DTO/University/UpdateUniversityDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Domain/Colleges/College.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Domain/Colleges/College.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Domain/Content/Articles/Article.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Domain/Content/Articles/Article.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Domain/Content/Articles/Author.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Domain/Content/Articles/Author.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Domain/Content/Assignments/Assignment.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Domain/Content/Assignments/Assignment.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Domain/Content/Assignments/Submission.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Domain/Content/Assignments/Submission.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Domain/Content/Attendances/Attendance.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Domain/Content/Attendances/Attendance.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Domain/Content/Events/Event.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Domain/Content/Events/Event.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Domain/Content/FAQs/FAQ.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Domain/Content/FAQs/FAQ.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Domain/Content/FAQs/FAQData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Domain/Content/FAQs/FAQData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Domain/Content/FAQs/FAQPrediction.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Domain/Content/FAQs/FAQPrediction.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Domain/Content/Files/FileDomain.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Domain/Content/Files/FileDomain.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Domain/Content/Help/Answer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Domain/Content/Help/Answer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Domain/Content/Help/Question.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Domain/Content/Help/Question.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Domain/Content/Notices/Notice.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Domain/Content/Notices/Notice.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Domain/Content/Results/Result.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Domain/Content/Results/Result.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Domain/Content/Schedules/ExamSchedule.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Domain/Content/Schedules/ExamSchedule.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Domain/Content/Schedules/Schedule.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Domain/Content/Schedules/Schedule.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Domain/Content/Schedules/TeacherSchedule.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Domain/Content/Schedules/TeacherSchedule.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Domain/Content/Syllabi/Course.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Domain/Content/Syllabi/Course.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Domain/Content/Syllabi/Syllabus.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Domain/Content/Syllabi/Syllabus.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Domain/Content/Syllabi/Unit.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Domain/Content/Syllabi/Unit.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Domain/Students/Academic.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Domain/Students/Academic.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Domain/Students/Club.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Domain/Students/Club.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Domain/Students/Financial.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Domain/Students/Financial.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Domain/Students/Student.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Domain/Students/Student.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Domain/Teachers/Teacher.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Domain/Teachers/Teacher.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Domain/Token/AllToken.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Domain/Token/AllToken.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Domain/Token/RevokedToken.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Domain/Token/RevokedToken.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Domain/Universities/University.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Domain/Universities/University.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Properties/launchSettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/Properties/launchSettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repository/Analysis/AnalyticsRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repository/Analysis/AnalyticsRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repository/Analysis/IAnalyticsRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repository/Analysis/IAnalyticsRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repository/Colleges/CollegeRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repository/Colleges/CollegeRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repository/Colleges/ICollegeRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repository/Colleges/ICollegeRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repository/Content/ArticleRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repository/Content/ArticleRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repository/Content/AssignmentRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repository/Content/AssignmentRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repository/Content/AttendanceRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repository/Content/AttendanceRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repository/Content/EventRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repository/Content/EventRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repository/Content/FAQRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repository/Content/FAQRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repository/Content/FileRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repository/Content/FileRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repository/Content/HelpRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repository/Content/HelpRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repository/Content/IArticleRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repository/Content/IArticleRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repository/Content/IAssignmentRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repository/Content/IAssignmentRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repository/Content/IAttendanceRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repository/Content/IAttendanceRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repository/Content/IEventRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repository/Content/IEventRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repository/Content/IFAQRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repository/Content/IFAQRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repository/Content/IFileRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repository/Content/IFileRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repository/Content/IHelpRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repository/Content/IHelpRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repository/Content/INoticeRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repository/Content/INoticeRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repository/Content/IResultRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repository/Content/IResultRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repository/Content/IScheduleRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repository/Content/IScheduleRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repository/Content/ISyllabusRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repository/Content/ISyllabusRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repository/Content/ITeacherScheduleRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repository/Content/ITeacherScheduleRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repository/Content/NoticeRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repository/Content/NoticeRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repository/Content/ResultRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repository/Content/ResultRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repository/Content/ScheduleRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repository/Content/ScheduleRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repository/Content/SyllabusRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repository/Content/SyllabusRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repository/Content/TeacherScheduleRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repository/Content/TeacherScheduleRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repository/Students/ClubRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repository/Students/ClubRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repository/Students/IClubRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repository/Students/IClubRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repository/Students/IStudentRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repository/Students/IStudentRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repository/Students/StudentRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repository/Students/StudentRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repository/Teachers/ITeacherRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repository/Teachers/ITeacherRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repository/Teachers/TeacherRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repository/Teachers/TeacherRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repository/Token/ITokenRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repository/Token/ITokenRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repository/Token/TokenRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repository/Token/TokenRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repository/Universities/IUniversityRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repository/Universities/IUniversityRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repository/Universities/UniversityRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repository/Universities/UniversityRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/appsettings.Development.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/appsettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/backend.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend.http" beforeDir="false" afterPath="$PROJECT_DIR$/backend.http" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="Toolset" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 8,
+  "fromUser": false
+}]]></component>
+  <component name="ProjectId" id="3Dd0JmCg7HvaT2jOP1O0g95PBv6" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "cidr.known.project.marker": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "git-widget-placeholder": "main",
+    "junie.onboarding.icon.badge.shown": "true",
+    "to.speed.mode.migration.done": "true",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a4e5a047-9a4a-42df-b158-928432e004c3" name="Changes" comment="" />
+      <created>1778596570392</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1778596570392</updated>
+      <workItem from="1778596571988" duration="3000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
+  <component name="VcsManagerConfiguration">
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="DotNet_Exception_Breakpoints">
+          <properties exception="System.OperationCanceledException" breakIfHandledByOtherCode="false" displayValue="System.OperationCanceledException" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+        <breakpoint enabled="true" type="DotNet_Exception_Breakpoints">
+          <properties exception="System.Threading.Tasks.TaskCanceledException" breakIfHandledByOtherCode="false" displayValue="System.Threading.Tasks.TaskCanceledException" />
+          <option name="timeStamp" value="2" />
+        </breakpoint>
+        <breakpoint enabled="true" type="DotNet_Exception_Breakpoints">
+          <properties exception="System.Threading.ThreadAbortException" breakIfHandledByOtherCode="false" displayValue="System.Threading.ThreadAbortException" />
+          <option name="timeStamp" value="3" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

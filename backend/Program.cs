@@ -71,9 +71,9 @@ builder.Services.AddCors(options =>
 
 //Setting up database.
 builder.Services.AddDbContext<CampusBridgeDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("GeneralConnection")));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("GeneralConnection")).UseSnakeCaseNamingConvention());
 builder.Services.AddDbContext<CampusBridgeAuthDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("AuthConnection")));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("GeneralConnection")).UseSnakeCaseNamingConvention());
 
 
 // Register MLContext as a Singleton service
