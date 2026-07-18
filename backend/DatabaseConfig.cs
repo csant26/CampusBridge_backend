@@ -6,20 +6,20 @@ public static class DatabaseConfig
 {
     public static string GetConnectionString(IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString("GeneralConnection");
-        if (!string.IsNullOrWhiteSpace(connectionString))
-        {
-            return connectionString;
-        }
-
         var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
         if (!string.IsNullOrWhiteSpace(databaseUrl))
         {
             return ParseDatabaseUrl(databaseUrl);
         }
 
+        var connectionString = configuration.GetConnectionString("GeneralConnection");
+        if (!string.IsNullOrWhiteSpace(connectionString))
+        {
+            return connectionString;
+        }
+
         throw new InvalidOperationException(
-            "No database connection configured. Set ConnectionStrings:GeneralConnection or DATABASE_URL.");
+            "No database connection configured. Set DATABASE_URL or ConnectionStrings:GeneralConnection.");
     }
 
     private static string ParseDatabaseUrl(string databaseUrl)
