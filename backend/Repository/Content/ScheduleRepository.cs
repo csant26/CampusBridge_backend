@@ -2,7 +2,6 @@
 using backend.Models.Domain.Content.Schedules;
 using backend.Models.Domain.Content.Syllabi;
 using backend.Models.Domain.Students;
-using backend.Models.DTO.Content.Schedule;
 using backend.Repository.Teachers;
 using Google.OrTools.Sat;
 using Microsoft.EntityFrameworkCore;
@@ -132,7 +131,7 @@ namespace backend.Repository.Content
                 {
                     //Id = count+1,
                     Title = $"{course.CourseTitle} Examination {optimalSchedule[0].Year}",
-                    DirectedTo = new List<string> { "Student", "Teacher", "College","University" },
+                    DirectedTo = new List<string> { "Student", "Teacher", "College" },
                     Date = optimalSchedule[count],
                     Category="Examination"
                 };
@@ -147,7 +146,7 @@ namespace backend.Repository.Content
                 {
                     //Id = count + 1,
                     Title = $"{course.CourseTitle} Examination {optimalSchedule[0].Year}",
-                    DirectedTo = new List<string> { "Student", "Teacher", "College","University" },
+                    DirectedTo = new List<string> { "Student", "Teacher", "College" },
                     Date = optimalSchedule[finalCount],
                     Category = "Examination"
                 };
@@ -192,10 +191,10 @@ namespace backend.Repository.Content
             throw new NotImplementedException();
         }
 
-        //public async Task<Schedule> CreateTeacherSchedule(TeacherSchedule schedule)
-        //{
-        //    return await teacherScheduleRepository.CreateTeacherSchedule(schedule);
-        //}
+        public async Task<Schedule> CreateTeacherSchedule(TeacherSchedule schedule)
+        {
+            return await teacherScheduleRepository.CreateTeacherSchedule(schedule);
+        }
 
         public async Task<List<Schedule>> GetScheduleByRole(string Role)
         {
@@ -203,8 +202,6 @@ namespace backend.Repository.Content
             var role = "";
             if (singleRole.Contains("Student")) { role = "Student"; }
             if (singleRole.Contains("Teacher")) { role = "Teacher"; }
-            if (singleRole.Contains("College")) { role = "College"; }
-            if (singleRole.Contains("University")) { role = "University"; }
 
             var schedules = await campusBridgeDbContext
                 .Schedules
@@ -220,11 +217,5 @@ namespace backend.Repository.Content
                 .ToListAsync();
             return schedules;
         }
-
-        public async Task<List<TeacherSchedule>> GetScheduleByTeacherId(string Id)
-            {
-            var teacher = await campusBridgeDbContext.Teachers.FirstOrDefaultAsync(x => (x.Email == Id) || (x.TeacherId == Id));
-            return await campusBridgeDbContext.TeacherSchedules.Where(x => x.TeacherId == teacher.TeacherId).ToListAsync();
-            }
-        }
+    }
 }

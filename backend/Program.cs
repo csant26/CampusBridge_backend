@@ -11,6 +11,7 @@ using backend.Repository.Teachers;
 using backend.Repository.Token;
 using backend.Repository.Universities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
@@ -20,7 +21,17 @@ using Microsoft.OpenApi.Models;
 using System.Text;
 
 
+// Render's free containers have low inotify limits; disable config file watching.
+Environment.SetEnvironmentVariable("DOTNET_HOSTBUILDER__RELOADCONFIGONCHANGE", "false");
+
 var builder = WebApplication.CreateBuilder(args);
+
+// Render sets PORT; locally, launchSettings.json controls URLs (https://localhost:7276)
+var port = Environment.GetEnvironmentVariable("PORT");
+if (!string.IsNullOrWhiteSpace(port))
+{
+    builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
+}
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -57,12 +68,16 @@ builder.Services.AddSwaggerGen(options =>
 
 
 //Setting up CORS.
+var corsOrigins = builder.Configuration["Cors:AllowedOrigins"]?
+    .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+    ?? ["http://localhost:3000"];
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReactApp",
-        builder =>
+        policy =>
         {
-            builder.AllowAnyOrigin()
+            policy.WithOrigins(corsOrigins)
                    .AllowAnyHeader()
                    .AllowAnyMethod();
         });
@@ -70,10 +85,11 @@ builder.Services.AddCors(options =>
 
 
 //Setting up database.
+var connectionString = DatabaseConfig.GetConnectionString(builder.Configuration);
 builder.Services.AddDbContext<CampusBridgeDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("GeneralConnection")));
+    options.UseNpgsql(connectionString).UseSnakeCaseNamingConvention());
 builder.Services.AddDbContext<CampusBridgeAuthDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("AuthConnection")));
+    options.UseNpgsql(connectionString).UseSnakeCaseNamingConvention());
 
 
 // Register MLContext as a Singleton service
@@ -148,9 +164,14 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 var app = builder.Build();
 
 
-//Seeding database with the developer account
+// Apply pending migrations and seed data
 using (var scope = app.Services.CreateScope())
 {
+    var mainDb = scope.ServiceProvider.GetRequiredService<CampusBridgeDbContext>();
+    var authDb = scope.ServiceProvider.GetRequiredService<CampusBridgeAuthDbContext>();
+    await mainDb.Database.MigrateAsync();
+    await authDb.Database.MigrateAsync();
+
     var seedData = scope.ServiceProvider.GetRequiredService<SeedData>();
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
@@ -161,14 +182,18 @@ using (var scope = app.Services.CreateScope())
 //Configure CORS.
 app.UseCors("AllowReactApp");
 
+app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+});
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseHttpsRedirection();
 }
-
-app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
@@ -178,6 +203,7 @@ app.UseStaticFiles(new StaticFileOptions
     RequestPath = "/Files"
 });
 
+app.MapGet("/health", () => Results.Ok(new { status = "healthy" }));
 app.MapControllers();
 
 app.Run();

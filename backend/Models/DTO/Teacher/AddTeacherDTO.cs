@@ -21,6 +21,5 @@ namespace backend.Models.DTO.Teacher
     {
         public string CourseTitle { get; set; }
         public string TeacherId { get; set; }
-        public string Name { get; set; }
     }
 }

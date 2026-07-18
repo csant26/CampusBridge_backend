@@ -153,10 +153,10 @@ namespace backend.Repository.Teachers
         public async Task<List<CourseTeacherResult>> GetCourseTeacherDataAsync()
         {
             string query = @"
-            SELECT C.CourseTitle, T.TeacherId,T.Name 
-            FROM dbo.CourseTeacher(NOLOCK) CT
-            LEFT JOIN dbo.Course(NOLOCK) C ON CT.CoursesCourseId = C.CourseId
-            LEFT JOIN dbo.Teachers(NOLOCK) T ON CT.TeachersTeacherId = T.TeacherId";
+            SELECT C.course_title, T.teacher_id 
+            FROM course_teacher CT
+            LEFT JOIN course C ON CT.courses_course_id = C.course_id
+            LEFT JOIN teachers T ON CT.teachers_teacher_id = T.teacher_id";
 
             // Execute the raw SQL and map it to CourseTeacherResult
             return await campusBridgeDbContext.Set<CourseTeacherResult>().FromSqlRaw(query).ToListAsync();

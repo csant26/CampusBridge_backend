@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: campusbridge-api
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      - key: DOTNET_HOSTBUILDER__RELOADCONFIGONCHANGE
+        value: false
+      - key: DATABASE_URL
+        sync: false
+      - key: Jwt__Issuer
+        sync: false
+      - key: Jwt__Audience
+        sync: false
+      - key: Jwt__Key
+        generateValue: true
+      - key: Cors__AllowedOrigins
+        sync: false
