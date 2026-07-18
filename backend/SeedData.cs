@@ -39,7 +39,7 @@ public class SeedData
             return;
         }
 
-        if (userManager.Users.All(u => u.Email != developerEmail))
+        if (await userManager.FindByEmailAsync(developerEmail) is null)
         {
             var developerUser = new IdentityUser
             {
@@ -51,53 +51,83 @@ public class SeedData
             await userManager.AddToRoleAsync(developerUser, "Developer");
         }
 
-        await SeedUser(userManager, roleManager, "Seed:University", "University");
-        await SeedUser(userManager, roleManager, "Seed:College", "College");
-        await SeedUser(userManager, roleManager, "Seed:Teacher", "Teacher");
-        await SeedUser(userManager, roleManager, "Seed:Student", "Student");
-
         var universityEmail = configuration["Seed:University:Email"];
         var universityPassword = configuration["Seed:University:Password"];
-        if (!string.IsNullOrWhiteSpace(universityEmail) &&
-            !string.IsNullOrWhiteSpace(universityPassword) &&
-            await campusBridgeDbContext.Universities.FindAsync(universityEmail) is null)
+        if (!string.IsNullOrWhiteSpace(universityEmail) && !string.IsNullOrWhiteSpace(universityPassword))
         {
-            await campusBridgeDbContext.Universities.AddAsync(new University
+            if (await userManager.FindByEmailAsync(universityEmail) is null)
             {
-                UniversityId = universityEmail,
-                Name = universityEmail,
-                Email = universityEmail,
-                Description = universityEmail,
-                Password = universityPassword,
-                CreatorId = developerEmail
-            });
-            await campusBridgeDbContext.SaveChangesAsync();
-        }
-    }
+                var universityUser = new IdentityUser
+                {
+                    UserName = universityEmail,
+                    Email = universityEmail,
+                    EmailConfirmed = true
+                };
+                await userManager.CreateAsync(universityUser, universityPassword);
+                await userManager.AddToRoleAsync(universityUser, "University");
+            }
 
-    private async Task SeedUser(
-        UserManager<IdentityUser> userManager,
-        RoleManager<IdentityRole> roleManager,
-        string configPrefix,
-        string role)
-    {
-        var email = configuration[$"{configPrefix}:Email"];
-        var password = configuration[$"{configPrefix}:Password"];
-        if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
-        {
-            return;
-        }
-
-        if (userManager.Users.All(u => u.Email != email))
-        {
-            var user = new IdentityUser
+            if (await campusBridgeDbContext.Universities.FindAsync(universityEmail) is null)
             {
-                UserName = email,
-                Email = email,
+                await campusBridgeDbContext.Universities.AddAsync(new University
+                {
+                    UniversityId = universityEmail,
+                    Name = universityEmail,
+                    Email = universityEmail,
+                    Description = universityEmail,
+                    Password = universityPassword,
+                    CreatorId = developerEmail
+                });
+                await campusBridgeDbContext.SaveChangesAsync();
+            }
+        }
+
+        var collegeEmail = configuration["Seed:College:Email"];
+        var collegePassword = configuration["Seed:College:Password"];
+        if (!string.IsNullOrWhiteSpace(collegeEmail) &&
+            !string.IsNullOrWhiteSpace(collegePassword) &&
+            await userManager.FindByEmailAsync(collegeEmail) is null)
+        {
+            var collegeUser = new IdentityUser
+            {
+                UserName = collegeEmail,
+                Email = collegeEmail,
                 EmailConfirmed = true
             };
-            await userManager.CreateAsync(user, password);
-            await userManager.AddToRoleAsync(user, role);
+            await userManager.CreateAsync(collegeUser, collegePassword);
+            await userManager.AddToRoleAsync(collegeUser, "College");
+        }
+
+        var teacherEmail = configuration["Seed:Teacher:Email"];
+        var teacherPassword = configuration["Seed:Teacher:Password"];
+        if (!string.IsNullOrWhiteSpace(teacherEmail) &&
+            !string.IsNullOrWhiteSpace(teacherPassword) &&
+            await userManager.FindByEmailAsync(teacherEmail) is null)
+        {
+            var teacherUser = new IdentityUser
+            {
+                UserName = teacherEmail,
+                Email = teacherEmail,
+                EmailConfirmed = true
+            };
+            await userManager.CreateAsync(teacherUser, teacherPassword);
+            await userManager.AddToRoleAsync(teacherUser, "Teacher");
+        }
+
+        var studentEmail = configuration["Seed:Student:Email"];
+        var studentPassword = configuration["Seed:Student:Password"];
+        if (!string.IsNullOrWhiteSpace(studentEmail) &&
+            !string.IsNullOrWhiteSpace(studentPassword) &&
+            await userManager.FindByEmailAsync(studentEmail) is null)
+        {
+            var studentUser = new IdentityUser
+            {
+                UserName = studentEmail,
+                Email = studentEmail,
+                EmailConfirmed = true
+            };
+            await userManager.CreateAsync(studentUser, studentPassword);
+            await userManager.AddToRoleAsync(studentUser, "Student");
         }
     }
 }
