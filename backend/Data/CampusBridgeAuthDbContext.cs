@@ -20,6 +20,9 @@ namespace backend.Data
             builder.Entity<IdentityUserLogin<string>>().ToTable("aspnetuserlogins");
             builder.Entity<IdentityRoleClaim<string>>().ToTable("aspnetroleclaims");
             builder.Entity<IdentityUserToken<string>>().ToTable("aspnetusertokens");
+
+            builder.Entity<AllToken>().ToTable("all_tokens");
+            builder.Entity<RevokedToken>().ToTable("revoked_tokens");
         }
         public DbSet<RevokedToken> RevokedTokens { get; set; }
         public DbSet<AllToken> AllTokens { get; set; }

@@ -12,7 +12,6 @@ using backend.Models.Domain.Content.Schedules;
 using backend.Models.Domain.Content.Syllabi;
 using backend.Models.Domain.Students;
 using backend.Models.Domain.Teachers;
-using backend.Models.Domain.Token;
 using backend.Models.Domain.Universities;
 using backend.Models.DTO.Teacher;
 using Microsoft.EntityFrameworkCore;
@@ -65,9 +64,6 @@ namespace backend.Data
             modelBuilder.Entity<Schedule>().ToTable("schedules");
 
             modelBuilder.Entity<Attendance>().ToTable("attendances");
-
-            modelBuilder.Entity<AllToken>().ToTable("all_tokens");
-            modelBuilder.Entity<RevokedToken>().ToTable("revoked_tokens");
             
             //Student model relationships.
             modelBuilder.Entity<Student>()
@@ -197,7 +193,11 @@ namespace backend.Data
             new FAQ { FAQId = 40, Question = "How do I participate in student elections?", Answer = "Elections are organized by the student council; check the portal for dates.", Category = "Student Life" }
         );
 
-            modelBuilder.Entity<CourseTeacherResult>().HasNoKey();
+            modelBuilder.Entity<CourseTeacherResult>(entity =>
+            {
+                entity.HasNoKey();
+                entity.ToTable("course_teacher_result", t => t.ExcludeFromMigrations());
+            });
         }
 
         //Student-related Tables.
