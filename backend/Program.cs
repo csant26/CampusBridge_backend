@@ -21,6 +21,9 @@ using Microsoft.OpenApi.Models;
 using System.Text;
 
 
+// Render's free containers have low inotify limits; disable config file watching.
+Environment.SetEnvironmentVariable("DOTNET_HOSTBUILDER__RELOADCONFIGONCHANGE", "false");
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Render sets PORT; locally, launchSettings.json controls URLs (https://localhost:7276)

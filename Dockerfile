@@ -10,5 +10,6 @@ WORKDIR /app
 COPY --from=build /app/publish .
 RUN mkdir -p Files
 ENV ASPNETCORE_URLS=http://0.0.0.0:8080
+ENV DOTNET_HOSTBUILDER__RELOADCONFIGONCHANGE=false
 EXPOSE 8080
 ENTRYPOINT ["dotnet", "backend.dll"]
